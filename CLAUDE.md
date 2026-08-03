@@ -147,3 +147,24 @@ Further reading:
 - `11_REPORTS/PROJECT_HANDOVER.md` — full operator handover document
 - `11_REPORTS/COMMAND_REFERENCE.md` — complete command list by category
 - `11_REPORTS/FINAL_SYSTEM_REPORT.md` — current integration status of WF-01~WF-16
+
+## 11. Development Operating Agreement (2026-08-03~)
+
+이 저장소에서의 개발 협업은 다음 역할 분담으로 진행한다.
+
+- **사용자 (Product Owner)**: 목표 결정, 실 데이터 제공(키워드/레퍼런스/WordPress/Search Console/AdSense), 결과 검토, Publish/Sprint 승인, GitHub 관리(Commit/Push/Release/Issue). Python, Workflow, Registry, Constitution을 직접 수정하지 않는다.
+- **Claude (Lead AI Developer, 이 세션)**: Workflow/Python/Browser Agent/WordPress 연동/Registry/Memory/CLI 구현, 버그 수정, 테스트(Mock→Dry Run→Real Test), 문서화. Constitution과 Workflow를 준수하며 구현 세부사항은 자율적으로 결정하되, Rule/Pattern/Template/Workflow/Schema/Config/Policy 등 핵심 자산 변경은 WF-15 Governance를 거친다(3.2, 3.8 원칙).
+- **ChatGPT (외부, CTO/AI Architect)**: 기술 방향·아키텍처·Workflow 개선·Prompt 설계·SEO/애드센스 전략 검토. 이 세션 밖에서 진행되며 이 세션이 직접 관여하지 않는다.
+
+**작업 완료 보고 형식**: 본 섹션 채택 이후, 작업 단위(Sprint) 완료 시 Section 9 보고 항목을 아래 형식으로 대체한다(Section 9의 항목을 포함하는 상위 호환 형식).
+
+```
+[현재 Sprint] 목표 / 진행률 / 완료한 작업 / 생성 파일 / 수정 파일 / 테스트 결과 /
+발견한 문제 / 원인 / 해결 방법 / 사용자가 해야 하는 일 / 다음 Sprint / 예상 소요시간
+```
+
+**Sprint 운영 규칙**: 한 번에 하나의 Sprint만 진행하며, 완료 전 다음 Sprint를 시작하지 않는다. Product Owner 입력이 필요하면 즉시 멈추고 필요한 항목만 요청한다(추측 금지).
+
+**자동화 허용 범위** (Section 7 Default Publishing Safety와 일치, 추가 확장 없음): Browser Agent, Reference Analysis, Keyword Analysis, Content Generation, Quality Review, Export, WordPress Draft — 허용. Auto Publish, Delete, Schedule Publish, AdSense 자동 신청, Search Console 자동 수정, Theme/Plugin 변경 — 금지.
+
+**알려진 제약**: Browser Agent(자동 레퍼런스 수집)는 이 클라우드 세션(Claude Code on the web)에서 실행 불가 — 세션 네트워크 정책이 임의 외부 사이트 접근을 차단하며(naver.com, wordpress.org, wikipedia.org 등에서 curl/WebFetch/사내 Chromium 모두로 확인됨), 이는 우회 대상이 아닌 조직 정책 거부다. Browser Agent 구현·실행·테스트는 사용자 로컬 PC의 Claude Code + Claude in Chrome 세션에서 진행하며, 산출물(Rule/Pattern/Template/Memory 갱신)은 동일 GitHub 저장소를 통해 이 세션과 공유된다.
