@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0",
+  "workflow": "WF-06",
+  "review_id": "REVIEW-0001",
+  "draft_id": "DRAFT-0001",
+  "architecture_id": "ARCH-0001",
+  "keyword_id": "KW-0001",
+  "reviewed_at": "2026-08-03T15:10:00+09:00",
+
+  "quality_scores": {
+    "architecture_compliance": 100,
+    "content_completeness": 100,
+    "factuality": 93,
+    "source_quality": 90,
+    "originality": 96,
+    "readability": 92,
+    "seo": 95,
+    "internal_links": 60,
+    "visual_plan": 65,
+    "faq_and_schema": 95,
+    "policy_suitability": 100,
+    "html_quality": 97
+  },
+
+  "quality_weights": {
+    "architecture_compliance": 10,
+    "content_completeness": 12,
+    "factuality": 15,
+    "source_quality": 10,
+    "originality": 10,
+    "readability": 10,
+    "seo": 8,
+    "internal_links": 5,
+    "visual_plan": 3,
+    "faq_and_schema": 4,
+    "policy_suitability": 8,
+    "html_quality": 5
+  },
+
+  "final_quality": {
+    "weighted_score": 92.95,
+    "grade": "A-",
+    "critical_issues": 0,
+    "major_issues": 0,
+    "minor_issues": 2,
+    "passed": true
+  },
+
+  "issues": [
+    {
+      "issue_id": "ISSUE-0001",
+      "severity": "MINOR",
+      "category": "INTERNAL_LINK",
+      "description": "저장소에 게시된 다른 콘텐츠가 없어 내부링크가 하나도 없다.",
+      "root_cause": "STRUCTURAL — 콘텐츠 결함이 아니라 이 저장소의 첫(유일한) 콘텐츠라는 환경적 사실",
+      "action": "수정하지 않음 — 향후 관련 키워드 콘텐츠가 추가되면 연결",
+      "blocking": false
+    },
+    {
+      "issue_id": "ISSUE-0002",
+      "severity": "MINOR",
+      "category": "VISUAL",
+      "description": "대표 이미지가 아직 생성되지 않았다 (PENDING_ASSET).",
+      "root_cause": "이 실행 환경에 이미지 생성/조달 기능이 연결되어 있지 않음",
+      "action": "수정하지 않음 — WF-06 STEP 19.2 APPROVED_WITH_PENDING_ASSETS로 처리, 본문 콘텐츠 자체는 승인",
+      "blocking": false
+    }
+  ],
+
+  "checklist_results": {
+    "search_intent_fulfilled": true,
+    "title_body_match": true,
+    "architecture_compliance": true,
+    "information_completeness": true,
+    "temperature_time_expression_appropriate": true,
+    "factuality": true,
+    "source_linkage": true,
+    "originality": true,
+    "repetition": "NONE_FOUND",
+    "readability": true,
+    "mobile_readability": true,
+    "seo": true,
+    "keyword_stuffing": "NOT_FOUND",
+    "policy_suitability": true,
+    "low_value_content_risk": "LOW",
+    "markdown_html_match": true,
+    "html_structure_valid": true
+  },
+
+  "handoff": {
+    "source_workflow": "WF-06",
+    "next_workflow": "WF-07",
+    "status": "APPROVED_WITH_PENDING_ASSETS",
+    "ready": true,
+    "blocking_issues": [],
+    "pending_assets": ["featured_image", "internal_links (target content 없음)"]
+  }
+}

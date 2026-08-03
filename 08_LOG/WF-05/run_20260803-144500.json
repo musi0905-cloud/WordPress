@@ -1,0 +1,25 @@
+{
+  "workflow": "WF-05",
+  "run_type": "CLAUDE_LLM_COMPLETION",
+  "started_at": "2026-08-03T14:20:00+09:00",
+  "completed_at": "2026-08-03T14:45:00+09:00",
+  "input_blueprints": ["ARCH-0001"],
+  "processed": 1,
+  "draft_ready": 1,
+  "review_required": 0,
+  "blocked": 0,
+  "unchanged": 0,
+  "sources_verified": 5,
+  "sources_rejected": 0,
+  "facts_removed": 0,
+  "self_check_score": 95,
+  "errors": [],
+  "created_files": [
+    "05_OUTPUT/drafts/KW-0001_에어프라이어-고구마-굽는-법.md",
+    "05_OUTPUT/drafts/KW-0001_에어프라이어-고구마-굽는-법.html",
+    "05_OUTPUT/drafts/KW-0001_에어프라이어-고구마-굽는-법.json",
+    "05_OUTPUT/drafts/KW-0001_에어프라이어-고구마-굽는-법_sources.json",
+    "05_OUTPUT/drafts/KW-0001_에어프라이어-고구마-굽는-법_generation_report.md"
+  ],
+  "updated_files": []
+}

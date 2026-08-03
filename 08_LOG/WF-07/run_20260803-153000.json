@@ -1,0 +1,33 @@
+{
+  "workflow": "WF-07",
+  "run_type": "CLAUDE_LLM_COMPLETION",
+  "started_at": "2026-08-03T15:10:00+09:00",
+  "completed_at": "2026-08-03T15:30:00+09:00",
+  "mode": "EXPORT_ONLY",
+  "input_reviews": ["REVIEW-0001"],
+  "processed": 1,
+  "exported": 1,
+  "wordpress_drafts_created": 0,
+  "wordpress_api_calls": 0,
+  "blocked": 0,
+  "errors": [],
+  "created_files": [
+    "05_OUTPUT/publishing/KW-0001_에어프라이어-고구마-굽는-법/content_final.md",
+    "05_OUTPUT/publishing/KW-0001_에어프라이어-고구마-굽는-법/content_final.html",
+    "05_OUTPUT/publishing/KW-0001_에어프라이어-고구마-굽는-법/content_wordpress.html",
+    "05_OUTPUT/publishing/KW-0001_에어프라이어-고구마-굽는-법/publication_payload.json",
+    "05_OUTPUT/publishing/KW-0001_에어프라이어-고구마-굽는-법/wordpress_payload.json",
+    "05_OUTPUT/publishing/KW-0001_에어프라이어-고구마-굽는-법/schema.json",
+    "05_OUTPUT/publishing/KW-0001_에어프라이어-고구마-굽는-법/metadata.json",
+    "05_OUTPUT/publishing/KW-0001_에어프라이어-고구마-굽는-법/sources.json",
+    "05_OUTPUT/publishing/KW-0001_에어프라이어-고구마-굽는-법/internal_links.json",
+    "05_OUTPUT/publishing/KW-0001_에어프라이어-고구마-굽는-법/media_manifest.json",
+    "05_OUTPUT/publishing/KW-0001_에어프라이어-고구마-굽는-법/publication_checklist.md",
+    "05_OUTPUT/publishing/KW-0001_에어프라이어-고구마-굽는-법/publication_report.md"
+  ],
+  "updated_files": [
+    "06_MEMORY/KEYWORD_LIBRARY/content_inventory.json",
+    "06_MEMORY/PUBLICATION_LIBRARY/publication_registry.json",
+    "06_MEMORY/PUBLICATION_LIBRARY/published_content_index.json"
+  ]
+}

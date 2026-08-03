@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.0",
+  "keyword_id": "KW-0001",
+  "media": [],
+  "featured_image": { "status": "PENDING_ASSET", "direction": "에어프라이어 바스켓에 담긴 통고구마, 조리 전/후 비교 또는 완성된 단면" },
+  "note": "이 실행 환경에는 이미지 생성/업로드 기능이 연결되어 있지 않아 실제 미디어 자산이 없다. media.upload_enabled: false (publication_config.yaml)."
+}

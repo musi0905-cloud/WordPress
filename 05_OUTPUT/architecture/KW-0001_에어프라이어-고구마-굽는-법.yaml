@@ -1,0 +1,264 @@
+schema_version: "1.0"
+workflow: WF-04
+architecture_id: ARCH-0001
+keyword_id: KW-0001
+status: ARCHITECTURE_READY
+version: "1.0"
+created_at: "2026-08-03T14:20:00+09:00"
+updated_at: "2026-08-03T14:20:00+09:00"
+
+source_brief:
+  path: 05_OUTPUT/briefs/KW-0001_에어프라이어-고구마-굽는-법.yaml
+  version: "1.0"
+
+keyword:
+  original: 에어프라이어 고구마 굽는 법
+  normalized: 에어프라이어 고구마 굽는 법
+
+content_strategy:
+  primary_objective: 고구마 크기별 온도·시간과 확인법을 제시해 독자가 바로 실행하게 한다
+  secondary_objectives:
+    - 겉만 타거나 덜 익는 실패 원인을 구조적으로 정리해 재실패를 줄인다
+  primary_search_intent: KNOW_HOW
+  reader_stage: ACTION
+  primary_audience: 집에서 에어프라이어로 고구마를 굽는 초·중급 사용자
+  knowledge_level: BEGINNER_TO_INTERMEDIATE
+  content_type: HOW_TO_GUIDE
+  primary_template: HOW_TO_GUIDE_WITH_TABLE_AND_TROUBLESHOOTING
+  content_role: STANDALONE
+  differentiation_strategy: 단일 정답 대신 크기별 범위 제시 + 기기 편차 인정 + 증상별(겉탐/덜익음/퍽퍽함) 원인-해결 구조
+  trust_strategy: 여러 공개 조리 가이드의 온도·시간을 상호 대조한 범위로 제시하고, 편차와 한계를 숨기지 않음
+
+title:
+  final: "에어프라이어 고구마 굽는 법: 크기별 온도와 시간, 안 익을 때 해결법"
+  keyword_position: FRONT
+  character_count: 37
+  title_pattern: "핵심 키워드 + 핵심 정보(크기별 온도·시간) + 보조 약속(실패 해결)"
+  differentiation: 검색 결과 상위 노출작들이 흔히 쓰는 "무조건 O분" 단정 대신 "안 익을 때 해결법"으로 실패 대응까지 포함함을 제목에서부터 알림
+
+slug:
+  final: 에어프라이어-고구마-굽는-법
+  duplicate_check: PASSED — 06_MEMORY/PUBLICATION_LIBRARY/published_content_index.json에 동일 Slug 없음(첫 콘텐츠)
+
+information_architecture:
+  opening_question: 지금 가진 고구마를 몇 도에서 몇 분 구워야 하는가
+  initial_context: 온도·시간을 몰라 검색 중이거나 이전에 실패(설익음/겉탐)한 경험이 있는 상태
+  information_sequence:
+    - 준비(손질)
+    - 예열 여부
+    - 크기별 온도·시간표
+    - 뒤집기 여부
+    - 완성 확인법
+    - 실패 원인별 해결
+    - FAQ
+  decision_points:
+    - 내 고구마가 작은지/중간인지/큰지 판단
+    - 바스켓형인지 트레이형인지에 따라 뒤집기 여부 판단
+  final_resolution: 크기에 맞는 시간을 적용하고, 시간이 다 되면 반드시 직접 찔러 확인한 뒤 꺼낸다
+
+outline:
+  h1: "에어프라이어 고구마 굽는 법: 크기별 온도와 시간, 안 익을 때 해결법"
+  sections:
+    - id: SEC-01
+      h2: "굽기 전 준비: 세척과 물기 제거"
+    - id: SEC-02
+      h2: "예열이 꼭 필요할까"
+    - id: SEC-03
+      h2: "고구마 크기별 온도와 시간"
+    - id: SEC-04
+      h2: "중간에 뒤집어야 할까: 바스켓형 vs 트레이형"
+    - id: SEC-05
+      h2: "다 익었는지 확인하는 방법"
+    - id: SEC-06
+      h2: "자주 겪는 문제와 해결법"
+    - id: SEC-07
+      h2: "자주 묻는 질문"
+
+section_specifications:
+  - section_id: SEC-01
+    purpose: 조리 전 손질(세척·물기 제거·구멍 뚫기)의 이유와 방법을 안내
+    answers_question: 고구마를 씻고 바로 넣어도 되는지, 물기를 닦아야 하는지
+    required_points:
+      - 흐르는 물에 표면을 씻고 필요하면 솔로 문지른다
+      - 물기를 완전히 제거해야 겉면이 고르게 익고 눅눅해지지 않는다
+      - 포크로 2~3군데 찔러 껍질에 구멍을 내면 조리 중 김이 빠져나갈 통로가 생긴다
+    evidence_needed: LOW — 일반적인 조리 상식 수준, 별도 수치 검증 불필요
+    target_length: 120~180자
+  - section_id: SEC-02
+    purpose: 예열 필요 여부를 기기별로 정리해 불필요한 단정을 피함
+    answers_question: 예열은 꼭 해야 하는지
+    required_points:
+      - 대부분의 가정용 에어프라이어는 예열 없이도 조리 가능
+      - 예열을 지원하는 기기는 예열 시 겉면이 더 고르게 익는 경향
+      - 정확한 예열 필요 여부는 제조사 설명서를 우선 따른다
+    evidence_needed: LOW
+    target_length: 100~150자
+  - section_id: SEC-03
+    purpose: 크기별 온도·시간 기준표 제시 (핵심 섹션)
+    answers_question: 몇 도에서 몇 분 구워야 하는가
+    required_points:
+      - 온도 기준 약 190~200°C(375~400°F)
+      - 작은 고구마(약 150g 이하) 약 25~30분
+      - 중간 고구마(약 150~250g) 약 35~45분
+      - 큰 고구마(약 250g 이상) 약 45~55분
+      - 기기·고구마 굵기에 따라 5~10분 이상 차이날 수 있다는 점을 명시
+    evidence_needed: HIGH — 수치 검증 필요, 실제 공개 자료 대조 완료(Source Package 참조)
+    table_required: true
+    target_length: 250~350자 + 표
+  - section_id: SEC-04
+    purpose: 뒤집기 필요 여부를 기기 유형별로 구분
+    answers_question: 중간에 뒤집어야 하는지
+    required_points:
+      - 바스켓형(공기 순환 구조)은 대체로 뒤집지 않아도 고르게 익음
+      - 트레이(오븐)형이거나 판 위에 올려 굽는 경우 중간에 한 번 뒤집는 것이 좋음
+    evidence_needed: MEDIUM
+    target_length: 120~180자
+  - section_id: SEC-05
+    purpose: 완성 확인법을 구체적 동작으로 안내
+    answers_question: 다 익었는지 어떻게 확인하는지
+    required_points:
+      - 꼬치나 젓가락으로 가장 굵은 부분을 찔러 부드럽게 들어가는지 확인
+      - 손으로 살짝 눌렀을 때 말랑한 느낌인지 확인
+      - 겉면에 캐러멜화된 즙이 배어나오면 잘 익은 신호일 수 있음
+    evidence_needed: LOW
+    target_length: 120~180자
+  - section_id: SEC-06
+    purpose: 증상별 실패 원인과 해결법을 구조적으로 제시 (핵심 섹션)
+    answers_question: 왜 겉은 탔는데 속은 안 익는지, 왜 덜 익는지, 왜 퍽퍽한지
+    required_points:
+      - "겉만 타고 속은 안 익음": 온도가 높거나 고구마가 큰데 시간이 짧은 경우 → 온도를 10~15°C 낮추고 시간을 늘리거나, 전자레인지로 3~5분 초벌 후 에어프라이어로 마무리
+      - "전체적으로 덜 익음": 시간 부족, 크기 과소평가, 바스켓에 여러 개를 겹쳐 담아 밀집된 경우 → 시간을 늘리고 여유 공간을 두고 다시 확인
+      - "퍽퍽함": 크기에 비해 지나치게 오래 조리한 경우 → 크기별 권장 시간을 지키고 다 익으면 바로 꺼낸다
+    evidence_needed: HIGH — 실제 공개 트러블슈팅 자료 대조 완료(Source Package 참조)
+    target_length: 300~400자
+  - section_id: SEC-07
+    purpose: 본문에서 다루지 않은 보조 질문에 대한 짧은 답
+    faq_items:
+      - question: 에어프라이어 고구마는 호일에 싸서 구워야 하나요?
+        answer_direction: 필수는 아니며, 감싸지 않아야 겉면이 더 바삭해진다는 점을 안내
+      - question: 냉동 고구마도 같은 시간에 구우면 되나요?
+        answer_direction: 냉동 상태면 해동 여부에 따라 시간이 더 필요할 수 있다는 점을 안내(정확한 수치는 확인된 자료 부족으로 단정하지 않음)
+      - question: 구운 고구마는 얼마나 보관할 수 있나요?
+        answer_direction: 일반적인 냉장 보관 상식 수준에서 짧게 안내, 과도한 보존 기간 단정은 피함
+    evidence_needed: LOW_TO_MEDIUM
+    target_length: 각 60~100자
+
+evidence_plan:
+  - claim: "온도 약 190~200°C(375~400°F), 크기별 25~55분 범위"
+    source_type: PUBLIC_RECIPE_GUIDE
+    verification_status: VERIFIED_VIA_WEB_SEARCH
+    note: 여러 출처 간 시간 편차가 커서(예 25~30분 vs 40~55분) 단일 값 대신 범위와 "직접 확인 권장"으로 서술
+  - claim: "겉만 타고 속이 안 익는 원인은 온도 과다 또는 크기 대비 시간 부족"
+    source_type: PUBLIC_TROUBLESHOOTING_GUIDE
+    verification_status: VERIFIED_VIA_WEB_SEARCH
+  - claim: "바스켓형은 뒤집지 않아도 고르게 익는 경향"
+    source_type: PUBLIC_RECIPE_GUIDE
+    verification_status: VERIFIED_VIA_WEB_SEARCH
+
+internal_link_architecture:
+  inbound: []
+  outbound: []
+  # 저장소에 게시된 다른 콘텐츠가 없어(첫 스모크 테스트) 연결 대상 없음. WF-04 STEP 14 카니벌라이제이션 검토 결과도 NONE.
+
+visual_plan:
+  featured_image:
+    required: true
+    direction: 에어프라이어 바스켓에 담긴 통고구마, 조리 전/후 비교 또는 완성된 단면 이미지
+    status: PENDING_ASSET
+  inline_visuals:
+    - section_id: SEC-03
+      type: TABLE
+      description: 크기별 온도·시간 비교표 (텍스트 표로 대체 가능, 별도 이미지 필수 아님)
+      status: INCLUDED_AS_TEXT_TABLE
+
+metadata:
+  meta_title: "에어프라이어 고구마 굽는 법 | 크기별 온도·시간"
+  meta_description: "에어프라이어로 고구마 구울 때 크기별 온도와 시간, 뒤집기 여부, 다 익었는지 확인하는 법과 겉만 타거나 덜 익을 때 해결법을 정리했습니다."
+  excerpt: 고구마 크기별 에어프라이어 온도·시간표와 실패 원인별 해결법을 한 번에 정리했습니다.
+  category: 생활/요리
+  tags:
+    - 에어프라이어
+    - 고구마
+    - 에어프라이어 요리
+  canonical_direction: PUBLIC_URL_ONLY
+  robots_direction: INDEX_FOLLOW
+  featured_image_alt: 에어프라이어 바스켓에 담긴 통고구마
+
+faq_plan:
+  required: true
+  count: 3
+  questions:
+    - 에어프라이어 고구마는 호일에 싸서 구워야 하나요?
+    - 냉동 고구마도 같은 시간에 구우면 되나요?
+    - 구운 고구마는 얼마나 보관할 수 있나요?
+
+schema_plan:
+  primary_type: Recipe
+  secondary_types:
+    - FAQPage
+  eligibility: LIKELY — 조리 단계·시간·온도가 명확한 실행형 콘텐츠
+  required_fields:
+    - name
+    - totalTime
+    - recipeIngredient
+    - recipeInstructions
+  prohibited_schema:
+    - Review (허구의 평점/리뷰 데이터 생성 금지 — Project Constitution)
+
+conclusion_plan:
+  purpose: 크기에 맞는 시간 적용 + 직접 확인이라는 실행 지침으로 마무리
+  key_takeaway: 온도 190~200°C 기준, 크기별 시간 범위를 참고하되 마지막엔 반드시 찔러서 확인한다
+  decision_support: 크기별 표를 다시 참조하도록 안내
+  next_action: 지금 고구마 크기를 확인하고 표에서 해당하는 시간부터 시작해보라는 제안
+  caution: 기기·고구마 굵기에 따라 시간이 달라질 수 있다는 점 재강조
+  cta_type: SOFT_GUIDANCE — 광고성 CTA 없음
+
+duplication_review:
+  title_overlap: NONE — 저장소 내 첫 콘텐츠
+  intent_overlap: NONE
+  cannibalization_risk: NONE
+  differentiation_point: 크기별 범위 제시 + 증상별 트러블슈팅 구조
+
+writing_contract:
+  workflow: WF-05_CONTENT_GENERATION
+  keyword_id: KW-0001
+  architecture_id: ARCH-0001
+  title: "에어프라이어 고구마 굽는 법: 크기별 온도와 시간, 안 익을 때 해결법"
+  slug: 에어프라이어-고구마-굽는-법
+  primary_objective: 고구마 크기별 온도·시간과 확인법을 제시해 독자가 바로 실행하게 한다
+  target_audience: 집에서 에어프라이어로 고구마를 굽는 초·중급 사용자
+  search_intent: KNOW_HOW
+  primary_template: HOW_TO_GUIDE_WITH_TABLE_AND_TROUBLESHOOTING
+  content_dna_profile: PENDING — Content DNA 미생성(WF-02 미실행)
+  mandatory_rules: []
+  conditional_rules: []
+  prohibited_rules: []
+  tone: 친절하고 실용적, 단정적 과장 없이 범위와 한계를 솔직하게 밝히는 톤
+  point_of_view: 2인칭 안내형("~하세요", "~하면 좋습니다")
+  factuality_standard: 수치(온도·시간)는 조사된 공개 자료 범위 내에서만 서술, 확인 안 된 수치 창작 금지
+  evidence_standard: 온도·시간·트러블슈팅 원인은 Source Package에 근거를 남긴다
+  originality_standard: 특정 출처의 문장·구성을 그대로 옮기지 않고 종합·재구성한다
+  structure_locked: true
+  allowed_adjustments:
+    - 문장 흐름을 위한 H3 표현 조정
+    - 중복 제거
+    - 근거 부족으로 인한 표현 완화
+    - 가독성을 위한 문단 재배치
+  prohibited_adjustments:
+    - H2 삭제
+    - 핵심 정보 누락
+    - 제목 변경
+    - 검색 의도 변경
+    - 콘텐츠 유형 변경
+    - 확인되지 않은 정보 추가
+    - 임의 CTA 삽입
+    - 내부링크 대상 변경
+  final_output_requirements:
+    - Markdown과 HTML 모두 생성
+    - 크기별 온도·시간표 포함
+    - 트러블슈팅 섹션에 3가지 증상(겉탐/덜익음/퍽퍽함) 모두 포함
+    - FAQ 3문항 포함
+
+generation:
+  status: COMPLETED
+  note: Claude가 WF-04_CONTENT_ARCHITECTURE.md STEP 07~16 판단 로직에 따라 직접 설계함. Content DNA는 WF-02 미실행으로 PENDING.

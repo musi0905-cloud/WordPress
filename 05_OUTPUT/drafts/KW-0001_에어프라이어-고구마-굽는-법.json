@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "workflow": "WF-05",
+  "draft_id": "DRAFT-0001",
+  "architecture_id": "ARCH-0001",
+  "keyword_id": "KW-0001",
+  "status": "DRAFT_READY_FOR_REVIEW",
+  "version": "1.0",
+  "created_at": "2026-08-03T14:45:00+09:00",
+  "updated_at": "2026-08-03T14:45:00+09:00",
+
+  "source_architecture": {
+    "path": "05_OUTPUT/architecture/KW-0001_에어프라이어-고구마-굽는-법.yaml",
+    "version": "1.0"
+  },
+
+  "content": {
+    "title": "에어프라이어 고구마 굽는 법: 크기별 온도와 시간, 안 익을 때 해결법",
+    "slug": "에어프라이어-고구마-굽는-법",
+    "markdown_path": "05_OUTPUT/drafts/KW-0001_에어프라이어-고구마-굽는-법.md",
+    "html_path": "05_OUTPUT/drafts/KW-0001_에어프라이어-고구마-굽는-법.html",
+    "character_count_markdown": 7356,
+    "section_count": 7,
+    "table_count": 1,
+    "faq_count": 3
+  },
+
+  "section_status": [
+    { "section_id": "SEC-01", "h2": "굽기 전 준비: 세척과 물기 제거", "status": "COMPLETE" },
+    { "section_id": "SEC-02", "h2": "예열이 꼭 필요할까", "status": "COMPLETE" },
+    { "section_id": "SEC-03", "h2": "고구마 크기별 온도와 시간", "status": "COMPLETE", "notes": "표 포함, evidence_plan 근거 적용" },
+    { "section_id": "SEC-04", "h2": "중간에 뒤집어야 할까: 바스켓형 vs 트레이형", "status": "COMPLETE" },
+    { "section_id": "SEC-05", "h2": "다 익었는지 확인하는 방법", "status": "COMPLETE" },
+    { "section_id": "SEC-06", "h2": "자주 겪는 문제와 해결법", "status": "COMPLETE", "notes": "3개 증상(겉탐/덜익음/퍽퍽함) 모두 포함" },
+    { "section_id": "SEC-07", "h2": "자주 묻는 질문", "status": "COMPLETE", "notes": "FAQ 3문항" }
+  ],
+
+  "faq": [
+    { "question": "에어프라이어 고구마는 호일에 싸서 구워야 하나요?", "answered": true },
+    { "question": "냉동 고구마도 같은 시간에 구우면 되나요?", "answered": true, "note": "정확한 추가 시간은 근거 부족으로 단정하지 않고 범위·확인법으로 안내" },
+    { "question": "구운 고구마는 얼마나 보관할 수 있나요?", "answered": true }
+  ],
+
+  "source_ids": ["SRC-0001", "SRC-0002", "SRC-0003", "SRC-0004", "SRC-0005"],
+
+  "internal_link_markers": [],
+  "visual_markers": [
+    { "type": "featured_image", "status": "PENDING_ASSET", "direction": "에어프라이어 바스켓에 담긴 통고구마" }
+  ],
+
+  "quality": {
+    "self_check_status": "SEE_generation_report",
+    "note": "공식 WF-06 검수는 별도 단계에서 수행됨 — 이 필드는 WF-05 자체 self-check 결과만 참조"
+  },
+
+  "handoff": {
+    "source_workflow": "WF-05",
+    "next_workflow": "WF-06",
+    "status": "READY",
+    "ready": true,
+    "blocking_issues": []
+  },
+
+  "generation": {
+    "status": "COMPLETED",
+    "note": "Claude가 WF-05_CONTENT_GENERATION.md STEP 07~18 판단 로직에 따라 Writing Contract를 준수하며 직접 집필함."
+  }
+}

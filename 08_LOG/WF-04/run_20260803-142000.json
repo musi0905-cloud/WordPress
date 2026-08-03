@@ -1,0 +1,21 @@
+{
+  "workflow": "WF-04",
+  "run_type": "CLAUDE_LLM_COMPLETION",
+  "started_at": "2026-08-03T14:20:00+09:00",
+  "completed_at": "2026-08-03T14:20:00+09:00",
+  "input_briefs": ["KW-0001"],
+  "processed": 1,
+  "architecture_ready": 1,
+  "review_required": 0,
+  "merged": 0,
+  "held": 0,
+  "blocked": 0,
+  "unchanged": 0,
+  "architecture_quality_score": 95,
+  "errors": [],
+  "created_files": [
+    "05_OUTPUT/architecture/KW-0001_에어프라이어-고구마-굽는-법.yaml",
+    "05_OUTPUT/architecture/KW-0001_에어프라이어-고구마-굽는-법.md"
+  ],
+  "updated_files": []
+}

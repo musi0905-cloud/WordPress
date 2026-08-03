@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "workflow": "WF-07",
+  "keyword_id": "KW-0001",
+  "eligibility_note": "totalTime은 대표값(중간 크기 기준)이며 본문은 크기별 범위(25~55분)를 안내한다. 리뷰/평점(Review, AggregateRating)은 실제 데이터가 없어 절대 포함하지 않는다 — Project Constitution 및 ARCH-0001 prohibited_schema 준수.",
+  "json_ld": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "에어프라이어 고구마 굽는 법",
+      "description": "고구마 크기별 에어프라이어 온도와 시간, 다 익었는지 확인하는 법을 정리한 조리 가이드",
+      "recipeCategory": "간식",
+      "recipeCuisine": "한식",
+      "prepTime": "PT10M",
+      "cookTime": "PT40M",
+      "totalTime": "PT50M",
+      "recipeYield": "1인분 (고구마 1개 기준)",
+      "recipeIngredient": ["고구마 1개"],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "name": "손질", "text": "고구마를 씻어 물기를 완전히 제거하고 포크로 2~3군데 구멍을 낸다." },
+        { "@type": "HowToStep", "name": "예열", "text": "기종에 따라 필요 시 3~5분 예열한다." },
+        { "@type": "HowToStep", "name": "조리", "text": "190~200°C에서 고구마 크기에 맞는 시간(25~55분) 동안 굽는다." },
+        { "@type": "HowToStep", "name": "확인", "text": "꼬치로 찔러 부드럽게 들어가는지 확인한 뒤 꺼낸다." }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "에어프라이어 고구마는 호일에 싸서 구워야 하나요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "꼭 감쌀 필요는 없습니다. 감싸지 않아야 겉면이 더 바삭해집니다." }
+        },
+        {
+          "@type": "Question",
+          "name": "냉동 고구마도 같은 시간에 구우면 되나요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "냉동 상태라면 더 오래 걸릴 수 있습니다. 자연 해동 후 굽거나 시간을 넉넉히 잡고 꼬치로 확인하는 것을 권합니다." }
+        },
+        {
+          "@type": "Question",
+          "name": "구운 고구마는 얼마나 보관할 수 있나요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "완전히 식힌 뒤 밀폐용기에 담아 냉장 보관하면 2~3일 내로 먹는 것이 좋습니다." }
+        }
+      ]
+    }
+  ]
+}

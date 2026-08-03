@@ -1,0 +1,10 @@
+{
+  "workflow": "WF-03",
+  "keyword_id": "KW-0001",
+  "status": "PENDING_CONTENT_GENERATION",
+  "output_paths": [
+    "/home/user/WordPress/05_OUTPUT/briefs/KW-0001_에어프라이어-고구마-굽는-법.yaml",
+    "/home/user/WordPress/05_OUTPUT/briefs/KW-0001_에어프라이어-고구마-굽는-법.md"
+  ],
+  "at": "2026-08-03T13:45:52+09:00"
+}

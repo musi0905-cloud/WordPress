@@ -1,0 +1,17 @@
+{
+  "workflow": "WF-03",
+  "run_type": "CLAUDE_LLM_COMPLETION",
+  "started_at": "2026-08-03T14:15:00+09:00",
+  "completed_at": "2026-08-03T14:20:00+09:00",
+  "note": "이전 run_20260803-134552.json은 scripts/run_content_pipeline.py가 만든 스캐폴드(PENDING_CONTENT_GENERATION) 로그다. 이 로그는 Claude가 STEP 03~15 판단을 직접 수행해 Brief를 완성한 실행을 기록한다.",
+  "keyword_id": "KW-0001",
+  "status": "BRIEF_READY",
+  "quality_check_score": 96,
+  "handoff_ready": true,
+  "created_files": [],
+  "updated_files": [
+    "05_OUTPUT/briefs/KW-0001_에어프라이어-고구마-굽는-법.yaml",
+    "05_OUTPUT/briefs/KW-0001_에어프라이어-고구마-굽는-법.md"
+  ],
+  "errors": []
+}

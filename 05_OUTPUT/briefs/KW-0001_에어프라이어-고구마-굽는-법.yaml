@@ -1,0 +1,206 @@
+schema_version: "1.0"
+workflow: "WF-03"
+keyword_id: KW-0001
+status: BRIEF_READY
+created_at: "2026-08-03T13:45:52+09:00"
+updated_at: "2026-08-03T14:20:00+09:00"
+
+source:
+  file: 04_INPUT/keywords.csv
+  row: 1
+
+keyword:
+  original: 에어프라이어 고구마 굽는 법
+  normalized: 에어프라이어 고구마 굽는 법
+  meaning: 에어프라이어(전기 튀김기/열풍기)로 통고구마를 조리하는 구체적인 방법을 찾는 요리·생활 정보 키워드
+  ambiguity_level: LOW
+
+metrics:
+  monthly_search_volume: null
+  pc_search_volume: null
+  mobile_search_volume: null
+  pc_cpc: null
+  mobile_cpc: null
+
+risk:
+  ymyl_level: NONE
+  overall_risk: LOW
+  publishing_status: ALLOWED
+  guardrails:
+    - 확인되지 않은 건강 효과(다이어트 효과, 혈당 관리 효과 등) 주장 금지
+    - 조리 온도·시간은 범위로 제시하고 기기·고구마 크기에 따른 편차를 명시
+    - 식품 안전과 관련된 수치(온도·시간)는 조사된 공개 자료 범위 내에서만 서술
+
+search_intent:
+  primary: KNOW_HOW — 에어프라이어로 고구마를 실패 없이 구워내는 구체적 방법을 알고 싶음
+  secondary:
+    - 크기별 조리 시간이 궁금함
+    - 왜 안 익거나 겉만 타는지 원인이 궁금함
+  desired_outcome: 지금 가진 고구마 크기에 맞는 온도·시간을 바로 적용해 성공적으로 굽는 것
+  urgency: HIGH — 대체로 조리 직전/직후에 검색하는 즉시 실행형 키워드
+  decision_stage: ACTION
+
+audience:
+  primary_user: 집에서 에어프라이어로 처음 또는 자주 고구마를 굽는 일반 소비자
+  knowledge_level: BEGINNER_TO_INTERMEDIATE
+  current_situation: 고구마와 에어프라이어를 앞에 두고 온도·시간을 몰라 검색 중이거나, 이전에 덜 익거나 겉만 탄 실패를 경험함
+  main_problem: 고구마 크기에 맞는 정확한 온도·시간을 몰라 설익거나 겉만 타는 문제
+  main_question: 에어프라이어로 고구마를 몇 도에서 몇 분 구워야 하는가
+  hidden_questions:
+    - 뒤집어야 하는가
+    - 다 익었는지 어떻게 확인하는가
+    - 왜 겉은 탔는데 속은 안 익는가
+  concerns:
+    - 시간을 잘못 맞춰 고구마를 버리게 될까봐 걱정
+    - 기기마다 달라서 레시피를 믿기 어려움
+
+content_objective:
+  primary_goal: 고구마 크기별 온도·시간 범위와 확인법을 제시해 독자가 바로 실행하게 한다
+  reader_value: 크기별 기준표 + 실패 원인별 해결법으로 시행착오를 줄여준다
+  completion_condition: 독자가 자기 고구마 크기에 맞는 온도·시간을 선택하고, 실패 시 원인을 스스로 진단할 수 있으면 목적 달성
+
+content_type:
+  primary_template: HOW_TO_GUIDE
+  secondary_components:
+    - COMPARISON_TABLE (크기별 온도·시간표)
+    - TROUBLESHOOTING_LIST (실패 원인별 해결법)
+    - FAQ
+  selection_reason: 검색 의도가 명확한 실행형(KNOW_HOW) 키워드이므로 단계별 가이드 + 표 + 문제해결 조합이 가장 직접적으로 답한다
+
+dna_profile:
+  selected_dna_profile: PENDING — WF-02_KNOWLEDGE_ENGINEERING이 아직 실행되지 않아 06_MEMORY/KNOWLEDGE_LIBRARY/CONTENT_DNA.md가 비어 있음(Version 0). Content DNA 압축본 없이, 아래 information_flow/heading_strategy/evidence_strategy/trust_strategy는 이 Brief 수준에서 직접 설계함
+  information_flow: 준비(손질) → 예열 여부 → 크기별 온도·시간표 → 뒤집기 여부 → 완성 확인법 → 실패 원인별 해결 → FAQ
+  heading_strategy: H2로 준비/온도-시간표/뒤집기/확인법/문제해결/FAQ를 명확히 분리, 표는 H2 "크기별 온도와 시간" 아래 배치
+  evidence_strategy: 공개된 여러 조리 가이드의 온도·시간을 상호 대조해 범위로 제시하고, 출처 간 편차를 숨기지 않고 명시
+  trust_strategy: 단일 정답이 아니라 범위 + 기기별 편차 인정 + 마지막엔 직접 확인을 권장해 과신 대신 실제 성공률을 높이는 방향으로 신뢰 확보
+
+selected_rules:
+  mandatory: []
+  conditional: []
+  prohibited: []
+  # WF-01_REFERENCE_ANALYSIS이 아직 실행되지 않아 06_MEMORY/RULE_LIBRARY/RULES.md에 등록된 Rule이 없음(0건).
+  # 존재하지 않는 Rule ID를 인용하지 않는다 — Project Constitution 및 WF-03 "3.x 절대 규칙" 준수.
+  library_status: EMPTY — WF-01 최초 실행 전
+
+information_requirements:
+  must_answer:
+    - 고구마 크기별(작은/중간/큰) 온도와 시간
+    - 뒤집어야 하는지 여부와 그 이유
+    - 다 익었는지 확인하는 구체적인 방법
+  must_explain:
+    - 세척과 물기 제거가 왜 필요한가
+    - 예열이 꼭 필요한가
+    - 겉만 타고 속이 안 익는 원인
+    - 전체적으로 덜 익는 원인
+    - 퍽퍽해지는 원인
+  must_compare:
+    - 작은 고구마 vs 중간 고구마 vs 큰 고구마의 시간 차이
+    - 바스켓형 vs 트레이(오븐)형 에어프라이어의 뒤집기 필요 여부
+  must_warn:
+    - 온도·시간은 기기와 고구마 굵기에 따라 달라질 수 있음을 명시
+  optional_information:
+    - 다 구운 고구마 보관/재가열 간단 팁
+  excluded_information:
+    - 검증되지 않은 건강·다이어트 효과 주장
+    - 특정 브랜드 에어프라이어에 대한 과장된 비교
+
+reader_questions:
+  primary_question: 에어프라이어로 고구마를 몇 도에서 몇 분 구워야 하나요?
+  supporting_questions:
+    - 고구마를 씻고 바로 넣어도 되나요, 물기를 닦아야 하나요?
+    - 예열은 꼭 해야 하나요?
+    - 중간에 뒤집어야 하나요?
+    - 다 익었는지 어떻게 확인하나요?
+    - 왜 겉은 타는데 속은 안 익나요?
+    - 고구마가 퍽퍽하게 나오는 이유는 무엇인가요?
+  faq_candidates:
+    - 에어프라이어 고구마는 호일에 싸서 구워야 하나요?
+    - 냉동 고구마도 같은 시간에 구우면 되나요?
+    - 구운 고구마는 얼마나 보관할 수 있나요?
+
+evidence_requirements:
+  official_source_required: false
+  current_information_required: false
+  numerical_verification_required: true
+  expert_review_required: false
+
+title_direction:
+  required_keyword: 에어프라이어 고구마 굽는 법
+  preferred_structure: "핵심 키워드 + 핵심 정보(크기별 온도·시간) + 보조 약속(실패 해결)"
+  target_length_range: "28~40자"
+  prohibited_patterns:
+    - 무조건
+    - "100%"
+    - 충격
+    - 모르면 손해
+    - 완벽한
+    - 한 번에 해결
+
+working_titles:
+  - "에어프라이어 고구마 굽는 법: 크기별 온도와 시간, 안 익을 때 해결법"
+  - "고구마 에어프라이어 굽기, 크기별 온도·시간표와 실패 원인 정리"
+
+outline_direction:
+  opening_purpose: 독자의 핵심 질문(몇 도, 몇 분)에 먼저 방향을 제시하고 이 글에서 얻을 것을 명확히 함
+  section_sequence:
+    - 준비 단계(세척·물기 제거·구멍 뚫기)
+    - 예열 필요 여부
+    - 크기별 온도와 시간(표)
+    - 뒤집기 여부(기기 유형별)
+    - 다 익었는지 확인하는 법
+    - 자주 겪는 문제와 해결법(겉만 탐/덜 익음/퍽퍽함)
+    - FAQ
+  required_sections:
+    - 크기별 온도와 시간표
+    - 문제 해결(트러블슈팅)
+  optional_sections:
+    - 보관·재가열 팁
+  closing_purpose: 크기에 맞는 시간을 적용하고, 마지막엔 반드시 직접 확인하라는 실행 지침으로 마무리
+  faq_required: true
+
+cluster:
+  cluster_id: null
+  cluster_topic: 에어프라이어 요리
+  role: STANDALONE
+  parent_keyword: null
+  sibling_keywords: []
+  child_keywords: []
+  # 06_MEMORY/KEYWORD_LIBRARY/content_inventory.json에 다른 콘텐츠가 없어 클러스터 구성 불가 — 첫 콘텐츠이므로 STANDALONE
+
+internal_link_plan:
+  inbound_candidates: []
+  outbound_candidates: []
+  anchor_direction: []
+  orphan_risk: HIGH
+  # 저장소에 게시된 다른 콘텐츠가 없어(첫 스모크 테스트) 내부링크 후보가 존재하지 않음. 향후 관련 키워드가 추가되면 WF-14 또는 재실행 시 연결.
+
+priority:
+  benchmark_fit: PENDING — WF-01 미실행으로 벤치마킹 적합도 판단 근거 없음
+  content_dna_fit: PENDING — Content DNA 미생성
+  adsense_suitability: MEDIUM — 실용 정보성 콘텐츠로 정책 위반 요소는 없으나 사이트 전체 신뢰 요소(정책 페이지 등) 구축 여부에 따라 달라짐
+  informational_value: HIGH
+  originality_opportunity: MEDIUM — 주제 자체는 흔하지만 "크기별 범위 제시 + 실패 원인별 해결"의 구조로 차별화 가능
+  production_feasibility: HIGH
+  duplicate_risk: LOW — 현재 저장소 내 중복 콘텐츠 없음
+  policy_risk: LOW
+  final_score: null
+  grade: null
+  reason: PENDING — WF-01/WF-02 Rule·Pattern·Content DNA 자산이 없어 벤치마킹/DNA 적합도를 정량화할 근거가 없음. 나머지 항목(정보 가치·실행 가능성·중복 위험·정책 위험)은 평가 완료.
+
+conflicts:
+  cannibalization_risk: NONE
+  overlapping_keywords: []
+  resolution_action: null
+  differentiation_point: 단일 정답 대신 크기별 범위 제시 + 실패 원인별 트러블슈팅 구조로 차별화
+
+handoff:
+  next_workflow: "WF-04_CONTENT_ARCHITECTURE"
+  ready: true
+  blocking_issues: []
+
+generation:
+  status: COMPLETED
+  note: >-
+    search_intent~outline_direction까지 Claude(WF-16 CLAUDE.md 기준 실행 에이전트)가
+    WF-03_KEYWORD_INTELLIGENCE.md STEP 03~15 판단 로직에 따라 직접 작성함.
+    Rule/Pattern/Template/Content DNA는 WF-01/WF-02 미실행으로 존재하지 않아 인용하지 않고 PENDING으로 표기.

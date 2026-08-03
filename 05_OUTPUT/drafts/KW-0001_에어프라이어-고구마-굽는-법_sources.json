@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "workflow": "WF-05",
+  "keyword_id": "KW-0001",
+  "draft_id": "DRAFT-0001",
+  "created_at": "2026-08-03T14:45:00+09:00",
+  "sources": [
+    {
+      "source_id": "SRC-0001",
+      "title": "Air Fryer Sweet Potatoes (Crispy & Fast) - Wholesome Yum",
+      "url": "https://www.wholesomeyum.com/air-fryer-sweet-potatoes/",
+      "type": "PUBLIC_RECIPE_GUIDE",
+      "accessed_at": "2026-08-03",
+      "used_for": ["온도 약 375~400°F 범위", "물기 제거의 중요성"],
+      "freshness": "UNVERIFIED_PUBLISH_DATE — 웹 검색 스니펫 기준으로만 확인, 원문 게시일 미확인"
+    },
+    {
+      "source_id": "SRC-0002",
+      "title": "air fryer sweet potatoes 13176142 - Food Network Kitchen",
+      "url": "https://www.foodnetwork.com/recipes/food-network-kitchen/air-fryer-sweet-potatoes-13176142",
+      "type": "PUBLIC_RECIPE_GUIDE",
+      "accessed_at": "2026-08-03",
+      "used_for": ["통고구마 400°F, 35~40분, 중간에 뒤집기"],
+      "freshness": "UNVERIFIED_PUBLISH_DATE"
+    },
+    {
+      "source_id": "SRC-0003",
+      "title": "Air Fryer Baked Sweet Potato - Kristine's Kitchen",
+      "url": "https://kristineskitchenblog.com/air-fryer-baked-sweet-potato/",
+      "type": "PUBLIC_RECIPE_GUIDE",
+      "accessed_at": "2026-08-03",
+      "used_for": ["크기별(중간/큰) 시간 편차 — 25~30분 vs 40~55분", "바스켓형은 뒤집기 불필요 언급"],
+      "freshness": "UNVERIFIED_PUBLISH_DATE"
+    },
+    {
+      "source_id": "SRC-0004",
+      "title": "12 Mistakes You're Making When Air Frying Potatoes - Tasting Table",
+      "url": "https://www.tastingtable.com/1343660/mistakes-air-fryer-potatoes/",
+      "type": "PUBLIC_TROUBLESHOOTING_GUIDE",
+      "accessed_at": "2026-08-03",
+      "used_for": ["겉은 타고 속이 안 익는 원인 — 온도 과다, 온도를 낮추고 시간을 늘리는 해결법"],
+      "freshness": "UNVERIFIED_PUBLISH_DATE"
+    },
+    {
+      "source_id": "SRC-0005",
+      "title": "How To Fix Potatoes In Air Fryer - Air Fryer at Tiffany's",
+      "url": "https://airfryerattiffanys.com/how-to-fix-potatoes-in-air-fryer/",
+      "type": "PUBLIC_TROUBLESHOOTING_GUIDE",
+      "accessed_at": "2026-08-03",
+      "used_for": ["전자레인지 초벌 후 에어프라이어 마무리 방법", "겹쳐 담기(밀집)로 인한 덜 익음 원인"],
+      "freshness": "UNVERIFIED_PUBLISH_DATE"
+    }
+  ],
+  "excluded_claims": [
+    "냉동 고구마의 정확한 추가 조리 시간 — 검색된 자료로는 신뢰할 수 있는 구체적 수치를 확인하지 못해 본문에서도 범위 단정 대신 확인법으로만 안내함",
+    "다이어트·혈당 관리 등 건강 효과 — 근거 부족 및 정책 위험으로 본문에서 제외"
+  ],
+  "verification_method": "WebSearch (2026-08-03 실행) — 여러 출처의 온도·시간 수치를 상호 대조해 수렴 범위를 도출. 단일 출처만으로 확정한 수치 없음.",
+  "note": "동일 URL은 향후 재사용 시 새 Source ID로 생성하지 않고 06_MEMORY/DRAFT_LIBRARY/source_library.json에서 갱신한다 (WF-05 STEP 19.3)."
+}

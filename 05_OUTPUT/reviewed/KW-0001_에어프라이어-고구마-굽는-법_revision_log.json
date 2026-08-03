@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "workflow": "WF-06",
+  "keyword_id": "KW-0001",
+  "review_id": "REVIEW-0001",
+  "revision_cycles": 0,
+  "note": "1차 검수에서 Critical/Major 문제가 발견되지 않아(STEP 16 CONTROLLED AUTOMATIC REVISION 대상 없음) 원고 수정 없이 그대로 최종본으로 확정함. Minor 2건(내부링크 없음, 대표 이미지 미생성)은 콘텐츠 결함이 아닌 구조적 한계로 판단해 수정 대상에서 제외.",
+  "changes": []
+}

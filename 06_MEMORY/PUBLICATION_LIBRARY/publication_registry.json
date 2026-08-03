@@ -1,5 +1,19 @@
 {
   "schema_version": "1.0",
-  "updated_at": null,
-  "publications": []
+  "updated_at": "2026-08-03T15:30:00+09:00",
+  "publications": [
+    {
+      "keyword_id": "KW-0001",
+      "review_id": "REVIEW-0001",
+      "mode": "EXPORT_ONLY",
+      "title": "에어프라이어 고구마 굽는 법: 크기별 온도와 시간, 안 익을 때 해결법",
+      "slug": "에어프라이어-고구마-굽는-법",
+      "export_path": "05_OUTPUT/publishing/KW-0001_에어프라이어-고구마-굽는-법/",
+      "wordpress_enabled": false,
+      "wordpress_post_id": null,
+      "public_url": null,
+      "created_at": "2026-08-03T15:30:00+09:00",
+      "updated_at": "2026-08-03T15:30:00+09:00"
+    }
+  ]
 }

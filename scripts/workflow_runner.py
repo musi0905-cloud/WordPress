@@ -246,7 +246,7 @@ def run_wf05_draft(keyword_id: str) -> StageResult:
                             blocking_issues=["upstream Architecture is not content-complete"],
                             message="WF-05 will not fabricate a draft from an incomplete Blueprint")
 
-    slug = keyword_id.lower()
+    slug = slugify(architecture.get("slug", {}).get("final") or architecture.get("keyword", {}).get("normalized") or keyword_id)
     draft_md_path = project_path("05_OUTPUT/drafts", f"{keyword_id}_{slug}.md")
     draft_json_path = project_path("05_OUTPUT/drafts", f"{keyword_id}_{slug}.json")
     sources_path = project_path("05_OUTPUT/drafts", f"{keyword_id}_{slug}_sources.json")

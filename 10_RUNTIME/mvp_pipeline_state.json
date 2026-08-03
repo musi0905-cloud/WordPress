@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "updated_at": "2026-08-03T15:30:00+09:00",
+  "keywords": {
+    "KW-0001": {
+      "keyword_id": "KW-0001",
+      "status": "EXPORT_READY",
+      "history": [
+        {
+          "from": null,
+          "to": "BRIEF_PENDING_GENERATION",
+          "at": "2026-08-03T13:45:52+09:00",
+          "note": "Brief scaffold created by scripts/run_content_pipeline.py; semantic fields still needed LLM completion"
+        },
+        {
+          "from": "BRIEF_PENDING_GENERATION",
+          "to": "BRIEF_READY",
+          "at": "2026-08-03T14:20:00+09:00",
+          "note": "Claude completed WF-03 Brief semantic fields per WF-03_KEYWORD_INTELLIGENCE.md"
+        },
+        {
+          "from": "BRIEF_READY",
+          "to": "ARCHITECTURE_READY",
+          "at": "2026-08-03T14:20:00+09:00",
+          "note": "Claude completed WF-04 Blueprint + Writing Contract (ARCH-0001)"
+        },
+        {
+          "from": "ARCHITECTURE_READY",
+          "to": "DRAFT_READY",
+          "at": "2026-08-03T14:45:00+09:00",
+          "note": "Claude completed WF-05 Draft (DRAFT-0001) — Markdown, HTML, Source Package, Generation Report"
+        },
+        {
+          "from": "DRAFT_READY",
+          "to": "REVIEW_APPROVED",
+          "at": "2026-08-03T15:10:00+09:00",
+          "note": "Claude completed WF-06 Quality Review (REVIEW-0001) — weighted_score 92.95, APPROVED_WITH_PENDING_ASSETS"
+        },
+        {
+          "from": "REVIEW_APPROVED",
+          "to": "EXPORT_READY",
+          "at": "2026-08-03T15:30:00+09:00",
+          "note": "Claude completed WF-07 Export (EXPORT_ONLY) — no WordPress API call made"
+        }
+      ]
+    }
+  }
+}

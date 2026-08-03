@@ -1,5 +1,37 @@
 {
   "schema_version": "1.0",
-  "updated_at": null,
-  "keywords": []
+  "updated_at": "2026-08-03T15:30:00+09:00",
+  "keywords": [
+    {
+      "keyword_id": "KW-0001",
+      "input_hash": "13ffbf8f327de03c78fd8c42bda658f8c7f1a18f47bc53a68ea878792a352592",
+      "keyword": "에어프라이어 고구마 굽는 법",
+      "source_row": 1,
+      "category": "생활/요리",
+      "priority": "P1",
+      "cluster": "STANDALONE",
+      "intent": "KNOW_HOW",
+      "template": "HOW_TO_GUIDE_WITH_TABLE_AND_TROUBLESHOOTING",
+      "risk": "LOW",
+      "status": "EXPORTED",
+      "output_path": "05_OUTPUT/publishing/KW-0001_에어프라이어-고구마-굽는-법/",
+      "created_at": "2026-08-03T13:45:52+09:00",
+      "updated_at": "2026-08-03T15:30:00+09:00",
+      "handoff": {
+        "source_workflow": "WF-03",
+        "next_workflow": "WF-04",
+        "status": "READY",
+        "ready": true,
+        "input_paths": ["04_INPUT/keywords.csv"],
+        "output_paths": [
+          "05_OUTPUT/briefs/KW-0001_에어프라이어-고구마-굽는-법.yaml",
+          "05_OUTPUT/briefs/KW-0001_에어프라이어-고구마-굽는-법.md"
+        ],
+        "blocking_issues": [],
+        "warnings": [],
+        "version": "1.0",
+        "created_at": "2026-08-03T14:20:00+09:00"
+      }
+    }
+  ]
 }

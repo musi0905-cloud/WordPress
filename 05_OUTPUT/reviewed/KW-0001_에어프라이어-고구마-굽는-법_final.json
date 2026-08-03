@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "workflow": "WF-06",
+  "review_id": "REVIEW-0001",
+  "draft_id": "DRAFT-0001",
+  "architecture_id": "ARCH-0001",
+  "keyword_id": "KW-0001",
+  "status": "APPROVED_WITH_PENDING_ASSETS",
+  "title": "에어프라이어 고구마 굽는 법: 크기별 온도와 시간, 안 익을 때 해결법",
+  "slug": "에어프라이어-고구마-굽는-법",
+  "final_markdown_path": "05_OUTPUT/reviewed/KW-0001_에어프라이어-고구마-굽는-법_final.md",
+  "final_html_path": "05_OUTPUT/reviewed/KW-0001_에어프라이어-고구마-굽는-법_final.html",
+  "quality_report_path": "05_OUTPUT/reviewed/KW-0001_quality_report.json",
+  "weighted_score": 92.95,
+  "grade": "A-",
+  "critical_issue_count": 0,
+  "major_issue_count": 0,
+  "minor_issue_count": 2,
+  "pending_assets": ["featured_image", "internal_links"],
+  "reviewed_at": "2026-08-03T15:10:00+09:00",
+  "handoff": {
+    "source_workflow": "WF-06",
+    "next_workflow": "WF-07",
+    "status": "APPROVED_WITH_PENDING_ASSETS",
+    "ready": true,
+    "blocking_issues": []
+  }
+}

@@ -1,5 +1,11 @@
 {
   "schema_version": "1.0",
-  "updated_at": null,
-  "sources": []
+  "updated_at": "2026-08-03T14:45:00+09:00",
+  "sources": [
+    { "source_id": "SRC-0001", "title": "Air Fryer Sweet Potatoes (Crispy & Fast) - Wholesome Yum", "url": "https://www.wholesomeyum.com/air-fryer-sweet-potatoes/", "type": "PUBLIC_RECIPE_GUIDE", "first_used_by": "KW-0001", "verified_at": "2026-08-03", "freshness_status": "UNVERIFIED_PUBLISH_DATE" },
+    { "source_id": "SRC-0002", "title": "air fryer sweet potatoes 13176142 - Food Network Kitchen", "url": "https://www.foodnetwork.com/recipes/food-network-kitchen/air-fryer-sweet-potatoes-13176142", "type": "PUBLIC_RECIPE_GUIDE", "first_used_by": "KW-0001", "verified_at": "2026-08-03", "freshness_status": "UNVERIFIED_PUBLISH_DATE" },
+    { "source_id": "SRC-0003", "title": "Air Fryer Baked Sweet Potato - Kristine's Kitchen", "url": "https://kristineskitchenblog.com/air-fryer-baked-sweet-potato/", "type": "PUBLIC_RECIPE_GUIDE", "first_used_by": "KW-0001", "verified_at": "2026-08-03", "freshness_status": "UNVERIFIED_PUBLISH_DATE" },
+    { "source_id": "SRC-0004", "title": "12 Mistakes You're Making When Air Frying Potatoes - Tasting Table", "url": "https://www.tastingtable.com/1343660/mistakes-air-fryer-potatoes/", "type": "PUBLIC_TROUBLESHOOTING_GUIDE", "first_used_by": "KW-0001", "verified_at": "2026-08-03", "freshness_status": "UNVERIFIED_PUBLISH_DATE" },
+    { "source_id": "SRC-0005", "title": "How To Fix Potatoes In Air Fryer - Air Fryer at Tiffany's", "url": "https://airfryerattiffanys.com/how-to-fix-potatoes-in-air-fryer/", "type": "PUBLIC_TROUBLESHOOTING_GUIDE", "first_used_by": "KW-0001", "verified_at": "2026-08-03", "freshness_status": "UNVERIFIED_PUBLISH_DATE" }
+  ]
 }

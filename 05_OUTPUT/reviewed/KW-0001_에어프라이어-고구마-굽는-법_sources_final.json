@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "workflow": "WF-06",
+  "keyword_id": "KW-0001",
+  "review_id": "REVIEW-0001",
+  "status": "VERIFIED_NO_CHANGE",
+  "note": "WF-05 Source Package(_sources.json)를 WF-06 검수 과정에서 그대로 재확인함 — 삭제/추가된 출처 없음. 5개 출처 모두 본문 claim과 대조 완료.",
+  "sources": [
+    { "source_id": "SRC-0001", "title": "Air Fryer Sweet Potatoes (Crispy & Fast) - Wholesome Yum", "url": "https://www.wholesomeyum.com/air-fryer-sweet-potatoes/", "verified": true },
+    { "source_id": "SRC-0002", "title": "air fryer sweet potatoes 13176142 - Food Network Kitchen", "url": "https://www.foodnetwork.com/recipes/food-network-kitchen/air-fryer-sweet-potatoes-13176142", "verified": true },
+    { "source_id": "SRC-0003", "title": "Air Fryer Baked Sweet Potato - Kristine's Kitchen", "url": "https://kristineskitchenblog.com/air-fryer-baked-sweet-potato/", "verified": true },
+    { "source_id": "SRC-0004", "title": "12 Mistakes You're Making When Air Frying Potatoes - Tasting Table", "url": "https://www.tastingtable.com/1343660/mistakes-air-fryer-potatoes/", "verified": true },
+    { "source_id": "SRC-0005", "title": "How To Fix Potatoes In Air Fryer - Air Fryer at Tiffany's", "url": "https://airfryerattiffanys.com/how-to-fix-potatoes-in-air-fryer/", "verified": true }
+  ]
+}
