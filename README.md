@@ -25,11 +25,12 @@ Rule이 수천 개로 늘어나도 이 계층의 정점인 Content DNA는 압축
 
 ## 현재 진행 단계
 
-1. `00_PROJECT_CONSTITUTION` (v1.3) — 완료
+1. `00_PROJECT_CONSTITUTION` (v1.4) — 완료
 2. `WF-01 : REFERENCE ANALYSIS ENGINE` (v2.0) — 완료 (`02_WORKFLOW/WF-01_REFERENCE_ANALYSIS.md`)
 3. `WF-02 : KNOWLEDGE ENGINEERING ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-02_KNOWLEDGE_ENGINEERING.md`)
 4. `WF-03 : KEYWORD INTELLIGENCE ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-03_KEYWORD_INTELLIGENCE.md`)
-5. `WF-04_CONTENT_ARCHITECTURE` (Content Architect) 이후 — 예정
+5. `WF-04 : CONTENT ARCHITECTURE ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-04_CONTENT_ARCHITECTURE.md`)
+6. `WF-05_CONTENT_GENERATION` (Writer) 이후 — 예정
 
 ## WF-01 : Reference Analysis Engine
 
@@ -82,6 +83,21 @@ WF-03은 키워드를 분류/설명하는 단계가 아니다. Content DNA / Dec
 
 위험도가 `BLOCKED`이거나 품질 검증(`score < 90`, 3회 재수정 후에도 미통과)을 통과하지 못한 브리프는 `handoff.ready: false`로 표시되며 WF-04로 자동 전달되지 않는다.
 
-다음 단계(WF-04_CONTENT_ARCHITECTURE)부터는 Rule Library 전체가 아니라 Content DNA, Decision Tree, 그리고 이 Content Brief를 기준으로 동작한다.
+## WF-04 : Content Architecture Engine
+
+WF-04는 WF-03의 Content Brief를 실제 글의 구조 설계도(**Content Blueprint**)로 변환한다. 본문은 여전히 쓰지 않지만, 최종 제목·Slug·H1~H3 구조·섹션별 작성 명세·근거 계획·내부링크 위치·이미지 위치·메타데이터·FAQ/구조화 데이터 방향·분량 계획·`WF-05` 집필 계약(Writing Contract)까지 모두 확정해서, WF-05가 추가 판단 없이 그대로 집필할 수 있게 만든다.
+
+사용법:
+
+1. WF-01~WF-03이 완료되어 `handoff.ready: true`인 Content Brief가 `05_OUTPUT/briefs/`에 있어야 한다.
+2. `02_WORKFLOW/WF-04_CONTENT_ARCHITECTURE.md`를 실행한다.
+3. 결과는 아래에 저장된다.
+   - `05_OUTPUT/architecture/KW-XXXX_*.yaml` / `.md` — 키워드별 Content Blueprint (WF-05 Writing Contract 포함)
+   - `06_MEMORY/ARCHITECTURE_LIBRARY/architecture_registry.json` — Blueprint 누적 인덱스
+   - `06_MEMORY/KEYWORD_LIBRARY/internal_link_map.json`, `content_inventory.json` — 갱신
+   - `08_LOG/WF-04/environment_validation.json`, `run_<timestamp>.json` — 검증/실행 로그
+   - `05_OUTPUT/WF-04_CONTENT_ARCHITECTURE_REPORT.md` — 실행 1회분 종합 리포트
+
+품질 점수 92점 미만(3회 재수정 후에도 미통과), 또는 카니벌라이제이션 검사 결과가 `MERGE`/`HOLD`/`BLOCK`인 Blueprint는 `WF-05_CONTENT_GENERATION`으로 자동 전달되지 않는다. Blueprint의 `writing_contract.structure_locked: true`가 기본값이며, WF-05는 구조를 임의로 바꿀 수 없다.
 
 전체 운영 원칙은 `00_PROJECT_CONSTITUTION/CONSTITUTION.md`를 따른다.

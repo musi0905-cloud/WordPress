@@ -1,7 +1,7 @@
 # ============================================================
 # CONTENT OS
 # PROJECT CONSTITUTION
-# VERSION 1.3
+# VERSION 1.4
 # ============================================================
 
 # Identity
@@ -69,6 +69,8 @@ Template Library
 Workflow Library
 
 Knowledge Library
+
+Architecture Library
 
 모든 Workflow는 위 라이브러리를 우선적으로 활용한다.
 
@@ -327,3 +329,5 @@ VERSION 1.1 — WF-02의 이름과 역할을 WF-02_RULE_EXTRACTION에서 WF-02_K
 VERSION 1.2 — WF-03이 Content Brief(YAML/JSON)와 같은 기계 판독용 구조화 데이터를 생성해야 하는 요구가 생김에 따라 Output Policy에 "Markdown 기본 + 필요 시 YAML/JSON 병행" 원칙을 명시. 기존 "Markdown을 기본으로 한다" 원칙과 충돌하지 않도록, 사람이 읽는 요약은 항상 Markdown으로 병행 생성하도록 제한을 추가.
 
 VERSION 1.3 — WF-03의 이름을 WF-03_KEYWORD_ANALYSIS에서 WF-03_KEYWORD_INTELLIGENCE로 변경. WF-03은 키워드를 단순 분석하는 단계가 아니라 Content DNA/Decision Tree/Rule Library를 이용해 키워드마다 실행 가능한 Content Brief를 만드는 단계로 확정됨.
+
+VERSION 1.4 — WF-04_CONTENT_ARCHITECTURE가 Content Brief를 Content Blueprint(제목/Slug/목차/섹션 명세/근거 계획/내부링크/시각 자료/FAQ/메타데이터/WF-05 집필 계약)로 확정하는 자산을 생성함에 따라, Project Memory에 Architecture Library를 8번째 라이브러리로 추가.
