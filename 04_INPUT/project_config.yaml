@@ -1,0 +1,24 @@
+# Content OS 프로젝트 기본 설정.
+# 스키마 설명은 02_WORKFLOW/WF-16_FINAL_COMMAND_CENTER.md의 "15. DEFAULT CONFIG GENERATION" 참조.
+#
+# automatic_continue는 WF-16 문서 기본값(true)이 아니라 false로 시딩한다 — MVP 스모크 테스트
+# 단계에서는 Workflow가 다음 단계로 자동 진행하지 않고 매 단계 결과를 확인할 수 있게 하기 위함.
+# 운영 전환 시 명시적으로 true로 바꾼다.
+
+schema_version: "1.0"
+
+project:
+  name: "Content OS"
+  language: "ko-KR"
+  timezone: "Asia/Seoul"
+  environment: "development"
+
+workflow:
+  automatic_continue: false
+  stop_on_critical: true
+  continue_on_warning: true
+
+quality:
+  minimum_score: 92
+  critical_allowed: 0
+  major_allowed: 0

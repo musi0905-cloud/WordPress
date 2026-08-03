@@ -1,0 +1,24 @@
+# Content OS 사이트 기본 설정.
+# 스키마 설명은 02_WORKFLOW/WF-16_FINAL_COMMAND_CENTER.md의 "15. DEFAULT CONFIG GENERATION" 참조.
+#
+# site.name/base_url은 실제 배포 사이트가 정해지기 전까지 비워둔다 (존재하지 않는 값을 임의로
+# 채우지 않는다 — Project Constitution Operating Principles / WF-16 3.7 참조). WordPress 연동
+# 시 04_INPUT/wordpress_config.yaml의 site.base_url과 함께 채운다.
+
+schema_version: "1.0"
+
+site:
+  name:
+  base_url:
+  language: "ko-KR"
+  timezone: "Asia/Seoul"
+
+content:
+  default_author:
+  body_h1: false
+
+sources:
+  display_mode: SOURCE_SECTION
+
+seo:
+  canonical_mode: PUBLIC_URL_ONLY
