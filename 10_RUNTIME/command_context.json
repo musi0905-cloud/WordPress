@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "command_context": {
+    "command_id": null,
+    "received_at": null,
+    "raw_command": null,
+    "normalized_command": null,
+    "command_category": null,
+    "execution_mode": null,
+    "scope": {
+      "project": null,
+      "site_ids": [],
+      "keyword_ids": [],
+      "content_ids": [],
+      "publication_ids": [],
+      "case_ids": [],
+      "experiment_ids": [],
+      "proposal_ids": [],
+      "changeset_ids": [],
+      "release_ids": []
+    },
+    "routing": {
+      "controller": null,
+      "workflows": [],
+      "start_workflow": null,
+      "end_workflow": null
+    },
+    "permissions": {
+      "allow_file_changes": false,
+      "allow_wordpress_draft": false,
+      "allow_schedule": false,
+      "allow_publish": false,
+      "allow_delete": false,
+      "allow_adsense_submission": false
+    },
+    "safety": {
+      "require_quality_gate": true,
+      "require_test": true,
+      "require_snapshot": true,
+      "require_governance": true,
+      "require_manual_review": false
+    },
+    "state": {
+      "project_version": null,
+      "current_run": null,
+      "active_batch": null,
+      "active_incident": null,
+      "active_remediation": null,
+      "active_optimization": null,
+      "active_release": null
+    },
+    "status": "NOT_INITIALIZED",
+    "blocking_issues": []
+  }
+}

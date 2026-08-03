@@ -12,7 +12,7 @@
 | `decision_tree_history.json` | Decision Tree 버전별 정확도 검토 이력 |
 | `change_proposals.json` | 자동 적용하지 못한 변경 제안 (PROPOSED → APPROVED/REJECTED → APPLIED/ROLLED_BACK) — WF-08은 제안만 하고 자동 승인하지 않는다 |
 | `project_health.json` | 프로젝트 전체 건강도 (영역별 점수, 종합 등급, 차단 조건) |
-| `project_versions.json` | 프로젝트 버전 이력 (PATCH/MINOR/MAJOR, 변경 내역, rollback snapshot 경로) |
+| `project_versions.json` | 프로젝트 버전 이력 (PATCH/MINOR/MAJOR, 변경 내역, rollback snapshot 경로). WF-08이 파일을 예약했고, WF-16_FINAL_COMMAND_CENTER이 최초 통합 버전 `1.0.0`(`INITIAL_INTEGRATED_RELEASE`)을 기록했다. 이후 버전은 WF-15_GOVERNANCE_AND_CHANGE_CONTROL의 Release가 갱신한다 |
 
 WF-08이 자동으로 반영할 수 있는 변경은 PATCH 수준(오탈자, 상태값, 통계, 경로)으로 제한된다. Rule/Pattern/Template 삭제, Content DNA 핵심 변경, 품질·안전 기준 완화는 절대 자동 적용되지 않고 `change_proposals.json`에 제안으로만 남는다 — 승인은 사람의 몫이다.
 

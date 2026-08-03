@@ -1,5 +1,30 @@
 {
   "schema_version": "1.0",
-  "updated_at": null,
-  "versions": []
+  "updated_at": "2026-08-03T00:00:00+09:00",
+  "versions": [
+    {
+      "version": "1.0.0",
+      "status": "INITIAL_INTEGRATED_RELEASE",
+      "released_by": "WF-16_FINAL_COMMAND_CENTER",
+      "released_at": "2026-08-03T00:00:00+09:00",
+      "workflows": {
+        "WF-01": "1.0",
+        "WF-02": "1.0",
+        "WF-03": "1.0",
+        "WF-04": "1.0",
+        "WF-05": "1.0",
+        "WF-06": "1.0",
+        "WF-07": "1.0",
+        "WF-08": "1.0",
+        "WF-09": "1.0",
+        "WF-10": "1.0",
+        "WF-11": "1.0",
+        "WF-12": "1.0",
+        "WF-13": "1.0",
+        "WF-14": "1.0",
+        "WF-15": "1.0",
+        "WF-16": "1.0"
+      }
+    }
+  ]
 }

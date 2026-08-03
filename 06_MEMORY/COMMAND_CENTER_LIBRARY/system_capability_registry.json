@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "updated_at": null,
+  "capabilities": {
+    "reference_analysis": { "workflow": "WF-01", "enabled": true, "status": "READY" },
+    "knowledge_engineering": { "workflow": "WF-02", "enabled": true, "status": "READY" },
+    "keyword_intelligence": { "workflow": "WF-03", "enabled": true, "status": "READY" },
+    "content_architecture": { "workflow": "WF-04", "enabled": true, "status": "READY" },
+    "content_generation": { "workflow": "WF-05", "enabled": true, "status": "READY" },
+    "quality_review": { "workflow": "WF-06", "enabled": true, "status": "READY" },
+    "export": { "workflow": "WF-07", "enabled": true, "status": "READY" },
+    "wordpress_draft": { "workflow": "WF-07", "enabled": true, "status": "READY" },
+    "project_learning": { "workflow": "WF-08", "enabled": true, "status": "READY" },
+    "orchestration": { "workflow": "WF-09", "enabled": true, "status": "READY" },
+    "system_validation": { "workflow": "WF-10", "enabled": true, "status": "READY" },
+    "production_operations": { "workflow": "WF-11", "enabled": true, "status": "READY" },
+    "performance_analysis": { "workflow": "WF-12", "enabled": true, "status": "READY" },
+    "adsense_tracking": { "workflow": "WF-12", "enabled": true, "status": "READY" },
+    "remediation": { "workflow": "WF-13", "enabled": true, "status": "READY" },
+    "optimization": { "workflow": "WF-14", "enabled": true, "status": "READY" },
+    "governance": { "workflow": "WF-15", "enabled": true, "status": "READY" },
+    "auto_publish": { "workflow": "WF-07", "enabled": false, "status": "DISABLED_BY_DEFAULT" },
+    "adsense_auto_submission": { "enabled": false, "status": "PROHIBITED" }
+  }
+}

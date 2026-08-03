@@ -1,7 +1,7 @@
 # ============================================================
 # CONTENT OS
 # PROJECT CONSTITUTION
-# VERSION 2.4
+# VERSION 2.5
 # ============================================================
 
 # Identity
@@ -89,6 +89,8 @@ Remediation Library
 Optimization Library
 
 Governance Library
+
+Command Center Library
 
 모든 Workflow는 위 라이브러리를 우선적으로 활용한다.
 
@@ -215,6 +217,10 @@ WF-13_ADSENSE_AND_SITE_REMEDIATION은 파이프라인의 다음 단계가 아니
 WF-14_CONTENT_OPTIMIZATION은 WF-13과 대상이 다른 별도의 계층이다. WF-13이 승인 거절·색인·사이트 구조 "문제"를 수정하는 복구 단계라면, WF-14는 이미 정상 게시·색인된 콘텐츠의 검색 성과·클릭률·정보 최신성·내부링크·사용자 반응을 개선하는 운영 최적화 단계다. 관찰 데이터가 부족한 콘텐츠는 성과 부진으로 단정하지 않고, 색인·Canonical·Robots 같은 기술 문제는 콘텐츠 문제로 오인하지 않으며 WF-13 또는 WF-07로 되돌린다. 모든 최적화는 하나의 주요 가설만 시험하는 `Optimization Experiment`로 관리되며, 검색 순위·CTR·수익 상승을 보장하지 않는다. 변경 후 최소 관찰 기간(기본 28일) 동안 동일 콘텐츠를 반복 수정하지 않고, Slug와 게시 URL은 자동 변경하지 않으며, 콘텐츠는 자동 삭제하지 않는다 — 삭제·Merge·Redirect·Noindex가 필요하면 WF-13에 Proposal만 전달한다.
 
 WF-15_GOVERNANCE_AND_CHANGE_CONTROL은 WF-08·WF-10·WF-11·WF-12·WF-13·WF-14가 생성하는 모든 변경 후보(Change Proposal)를 중앙에서 접수·심사·배포·롤백하는 통제 계층이다. Project Constitution, Content DNA, Rule/Template/Workflow 정의, Quality Gate, Security/Publication Policy, WordPress 권한 등 핵심 자산은 명백한 PATCH 수준(오탈자·경로·통계값)을 제외하면 정식 Change Proposal 없이 변경되지 않으며, 승인과 실제 배포는 항상 분리된다(`PROPOSED → ... → APPROVED_FOR_ROLLOUT → LIMITED_ROLLOUT → PRODUCTION_VALIDATED → RELEASED`). 모든 변경은 Sandbox에서 먼저 적용되어 WF-10 검증(변경 등급에 따라 Quick/Targeted/Full Test)을 통과해야 하며, MINOR 이상은 제한된 범위의 Limited Rollout을 거친 뒤에만 정식 반영된다. 품질·보안 기준을 낮추는 변경, 근거가 부족한 변경, Rollback 경로가 없는 변경은 승인하지 않으며, Constitution·Content DNA 핵심 정의·보안/게시 정책·Workflow Major 변경 등은 수동 승인 없이 자동 Release되지 않는다. WF-15 자신도 Project Constitution을 우회할 수 없다 — 충돌이 발견되면 `REJECTED_CONSTITUTION_CONFLICT` 또는 `CONSTITUTION_AMENDMENT_REQUIRED`로 처리하며, Amendment는 항상 사람이 수행한다.
+
+WF-16_FINAL_COMMAND_CENTER은 WF-01~WF-15 중 어느 것의 책임도 대체하지 않는 Content OS의 마지막 워크플로우다. 지금까지 구축된 모든 Workflow, System Rule, Memory, Registry, Configuration, Runtime을 하나의 최종 실행 체계로 통합해, 저장소 루트 `CLAUDE.md`와 `01_SYSTEM/COMMAND_ROUTER.md`를 통해 사용자가 개별 Workflow 파일을 직접 찾지 않고도 자연어 명령 하나로 초기화·전체 실행·키워드 처리·WordPress 초안·성과 분석·거절 대응·최적화·운영 복구·Governance를 다룰 수 있게 한다. WF-16은 이전까지 예약 디렉터리였던 `01_SYSTEM/`에 System Prompt, Core Rules, Quality Gate, Error Policy, Command Router, State Machine, Security Policy, Handoff Policy 8개 파일을 최초로 채우고, `10_RUNTIME/dependency_graph.json`과 `workflow_state.json`을 WF-01~WF-16 전체 범위로 확장하며, 프로젝트 최초 통합 버전 `1.0.0`(`INITIAL_INTEGRATED_RELEASE`)을 기록한다. WF-16 자신도 Project Constitution을 임의로 변경하거나 우회하지 않고, 기존 운영 파일을 무단 삭제·덮어쓰지 않으며, 자동 Publish·Delete·애드센스 자동 신청을 활성화하지 않는다. Project Memory에 Command Center Library를 18번째 라이브러리로 추가 (Project Directory는 신규 최상위 디렉터리를 추가하지 않음 — WF-16은 `01_SYSTEM`을 포함한 기존 디렉터리를 채우는 워크플로우다).
+
+WF-16 완료로 Content OS의 전체 설계(WF-01~WF-16)가 완성되었다. Constitution v2.5는 이 저장소가 도달한 최종 설계 버전이며, 이후의 모든 변경은 WF-15_GOVERNANCE_AND_CHANGE_CONTROL을 통해서만 이루어진다.
 
 ------------------------------------------------------------
 
@@ -399,3 +405,5 @@ VERSION 2.2 — WF-13_ADSENSE_AND_SITE_REMEDIATION 도입. WF-12가 확인한 �
 VERSION 2.3 — WF-14_CONTENT_OPTIMIZATION 도입. 정상 게시·색인된 콘텐츠 중 충분한 관찰 데이터가 축적된 것만 대상으로 검색 성과·CTR·정보 최신성·내부링크·사용자 반응을 개선하는 운영 최적화 계층이 추가됨. WF-13이 문제를 복구하는 계층이라면 WF-14는 정상 콘텐츠의 성과를 끌어올리는 계층으로 역할이 명확히 분리된다. 데이터가 부족한 콘텐츠는 성과 부진으로 단정하지 않고 `INSUFFICIENT_DATA`/`WAITING_FOR_OBSERVATION` 등으로 기록하며, 색인·Canonical·Robots 같은 기술 문제는 콘텐츠 문제로 오인하지 않고 WF-13 또는 WF-07로 되돌린다. 검색 순위·CTR·수익 상승을 보장하는 표현을 절대 사용하지 않으며, 모든 최적화는 하나의 주요 가설만 시험하는 `Optimization Experiment`로 관리되어 여러 변수를 동시에 무계획 변경하지 않는다. 변경 후 최소 관찰 기간(기본 28일, 최대 90일) 동안 동일 콘텐츠의 반복 수정을 금지하고, Slug와 게시 URL은 자동 변경하지 않으며, 콘텐츠는 자동 삭제·Merge·Redirect·Noindex를 수행하지 않고 WF-13에 Proposal만 전달한다. 모든 변경은 변경 전 Snapshot과 Rollback 경로를 필수로 가지며, 변경된 콘텐츠는 WF-06 재검증과 WF-07을 통한 기존 게시물 업데이트(Slug·Post ID 유지)를 거친다. 단일 Experiment 결과를 전체 프로젝트 규칙으로 일반화하지 않고, 상관관계를 인과관계로 확정하지 않는다. Project Directory에 `16_OPTIMIZATION`을 추가하고, Project Memory에 Optimization Library를 16번째 라이브러리로 추가.
 
 VERSION 2.4 — WF-15_GOVERNANCE_AND_CHANGE_CONTROL 도입. WF-08·WF-10·WF-11·WF-12·WF-13·WF-14가 생성하는 모든 변경 후보를 중앙에서 접수·심사·배포·롤백하는 통제 계층이 추가됨. Project Constitution, Content DNA, Rule/Template/Workflow 정의, Quality Gate, Security/Publication Policy, WordPress 권한 등 핵심 자산은 명백한 PATCH 수준을 제외하면 정식 Change Proposal 없이 변경되지 않으며, 승인(`APPROVED_FOR_ROLLOUT`)과 실제 배포(`RELEASED`)는 항상 분리된 상태 흐름을 따른다. 모든 변경은 운영 파일을 직접 건드리지 않는 Sandbox에서 먼저 적용되어 변경 등급(PATCH/MINOR/MAJOR/CONSTITUTIONAL)에 따른 WF-10 테스트를 통과해야 하며, MINOR 이상은 제한된 범위의 Limited Rollout과 Production Validation을 거친 뒤에만 정식 Release로 반영된다. 품질·보안 기준을 낮추는 변경, 근거가 부족한(신뢰도 `HIGH` 미만) 변경, 단일 사례를 근거로 한 전체 Rule 일반화, Rollback 경로가 없는 변경은 기본적으로 거절하며, Constitution·Content DNA 핵심 정의·보안/게시 정책·자동 게시 및 Delete 권한·Workflow Major 변경은 수동 승인 없이 자동 Release되지 않는다(`MANUAL_APPROVAL_REQUIRED`). WF-15 자신도 Project Constitution을 우회할 수 없다 — 충돌 시 `REJECTED_CONSTITUTION_CONFLICT` 또는 `CONSTITUTION_AMENDMENT_REQUIRED`로 처리하며 Amendment는 자동 수행하지 않는다. Critical Incident, WF-10 REJECTED, Security/WordPress Safety Test 실패 등의 상황에서는 신규 Release를 중단하는 Change Freeze가 발동한다. Project Directory에 `17_GOVERNANCE`를 추가하고, Project Memory에 Governance Library를 17번째 라이브러리로 추가.
+
+VERSION 2.5 — WF-16_FINAL_COMMAND_CENTER 도입으로 Content OS 전체 설계(WF-01~WF-16)가 완성됨. WF-16은 어떤 개별 Workflow의 책임도 대체하지 않고, 지금까지 구축된 모든 Workflow·System Rule·Memory·Registry·Configuration·Runtime을 하나의 최종 실행 체계로 통합한다. WF-01 도입 시점부터 예약 디렉터리였던 `01_SYSTEM/`을 최초로 채워 System Prompt, Core Rules, Quality Gate, Error Policy, Command Router, State Machine, Security Policy, Handoff Policy 8개 파일을 생성하고, 저장소 루트 `CLAUDE.md`를 최종 표준(Project Identity/Objective/Absolute Rules/Workflow Map/Execution Order/Default Behavior/Publishing Safety/Quality Gate/Reporting)에 맞춰 재작성했다. 사용자는 이제 개별 Workflow 파일을 직접 찾지 않고도 `Content OS 초기화`, `Content OS 전체 실행`, `Content OS 키워드 실행`, `WordPress 초안 생성`, `애드센스 상태 분석`, `애드센스 거절 대응`, `콘텐츠 최적화`, `Content OS 전체 테스트`, `Content OS 상태`, `Content OS 운영 상태`, `Content OS 복구`, `변경 제안 검토` 같은 자연어 명령만으로 시스템 전체를 사용할 수 있다. WF-16은 WF-01~WF-16 전체 범위의 Dependency Graph를 `10_RUNTIME/dependency_graph.json`에 기록하고, 프로젝트 최초 통합 버전 `1.0.0`(`INITIAL_INTEGRATED_RELEASE`)을 `06_MEMORY/WORKFLOW_LIBRARY/project_versions.json`에 기록했다. 기존 프로젝트 파일은 무단 삭제·덮어쓰지 않았으며, 자동 Publish·Delete·애드센스 자동 신청은 여전히 기본 비활성이다. Project Memory에 Command Center Library를 18번째이자 마지막 라이브러리로 추가 (신규 최상위 Project Directory는 없음 — WF-16은 기존 디렉터리, 특히 `01_SYSTEM`을 채우는 통합 워크플로우다). 이 시점 이후의 모든 변경은 WF-15_GOVERNANCE_AND_CHANGE_CONTROL을 통해서만 이루어진다.
