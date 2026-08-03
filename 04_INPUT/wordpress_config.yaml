@@ -1,0 +1,42 @@
+# WF-07 입력: WordPress 연동 설정
+#
+# 기본값은 WordPress 연동 비활성(wordpress.enabled: false in publication_config.yaml)이다.
+# 이 파일은 연동을 켤 때 채우는 템플릿이며, 실제 비밀번호/토큰 값을 절대 이 파일에 적지 않는다.
+# authentication.*_env에는 "환경변수 이름"만 적는다 — 실제 값은 세션/서버의 환경변수 또는
+# Secret Store에서만 읽는다 (02_WORKFLOW/WF-07_EXPORT_AND_PUBLISHING.md 3.4, 6장 참조).
+#
+# 이 파일과 그 안의 환경변수 이름은 커밋해도 안전하지만, 실제 인증 값이 담긴 .env 등은
+# 절대 이 저장소에 커밋하지 않는다.
+
+schema_version: "1.0"
+
+site:
+  base_url:
+  api_base_url:
+  site_name:
+
+authentication:
+  method: APPLICATION_PASSWORD
+  username_env: WP_USERNAME
+  password_env: WP_APPLICATION_PASSWORD
+
+content:
+  post_type: posts
+  default_status: draft
+  default_author_id:
+  default_comment_status: closed
+  default_ping_status: closed
+
+taxonomy:
+  category_mode: EXISTING_ONLY
+  tag_mode: EXISTING_ONLY
+
+media:
+  upload_enabled: false
+  featured_image_required: false
+
+safety:
+  allow_create: true
+  allow_update: true
+  allow_publish: false
+  allow_delete: false

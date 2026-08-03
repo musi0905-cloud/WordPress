@@ -25,14 +25,15 @@ Rule이 수천 개로 늘어나도 이 계층의 정점인 Content DNA는 압축
 
 ## 현재 진행 단계
 
-1. `00_PROJECT_CONSTITUTION` (v1.5) — 완료
+1. `00_PROJECT_CONSTITUTION` (v1.6) — 완료
 2. `WF-01 : REFERENCE ANALYSIS ENGINE` (v2.0) — 완료 (`02_WORKFLOW/WF-01_REFERENCE_ANALYSIS.md`)
 3. `WF-02 : KNOWLEDGE ENGINEERING ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-02_KNOWLEDGE_ENGINEERING.md`)
 4. `WF-03 : KEYWORD INTELLIGENCE ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-03_KEYWORD_INTELLIGENCE.md`)
 5. `WF-04 : CONTENT ARCHITECTURE ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-04_CONTENT_ARCHITECTURE.md`)
 6. `WF-05 : CONTENT GENERATION ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-05_CONTENT_GENERATION.md`)
 7. `WF-06 : QUALITY REVIEW ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-06_QUALITY_REVIEW.md`)
-8. `WF-07_EXPORT` (Publisher) 이후 — 예정
+8. `WF-07 : EXPORT AND PUBLISHING ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-07_EXPORT_AND_PUBLISHING.md`)
+9. `WF-08_PROJECT_LEARNING` (Learning Engine) — 예정
 
 ## WF-01 : Reference Analysis Engine
 
@@ -138,5 +139,25 @@ WF-06은 새 글을 기획하지 않는다. WF-05가 만든 Draft Package를 WF-
    - `05_OUTPUT/WF-06_QUALITY_REVIEW_REPORT.md` — 실행 1회분 종합 리포트
 
 가중 점수 92점 미만이거나 CRITICAL/MAJOR 문제가 하나라도 남아 있으면(점수가 높아도) 통과하지 않는다. 최종 상태는 `APPROVED_FOR_EXPORT` / `APPROVED_WITH_PENDING_ASSETS`(이미지·내부링크 등 자산만 미확정) / `MANUAL_REVIEW_REQUIRED` / `WF05_REVISION_REQUIRED` / `WF04_REVISION_REQUIRED` / `SOURCE_RESEARCH_REQUIRED` / `POLICY_BLOCKED` / `PACKAGE_CORRUPTED` 중 하나로 기록되며, 앞의 두 상태만 `WF-07_EXPORT`로 자동 전달된다.
+
+## WF-07 : Export and Publishing Engine
+
+WF-07은 게시 자동화보다 **안전한 배포 상태 관리**가 핵심이다. WF-06 승인 콘텐츠를 새로 기획하거나 재작성하지 않고, 최종 원고·이미지 자산·내부링크·메타데이터·Schema·WordPress 필드를 하나의 게시 패키지로 조립한다. 기본 게시 모드는 항상 `DRAFT`이며, `04_INPUT/publication_config.yaml`에서 자동 게시를 명시적으로 허용하지 않는 한 절대 자동 공개하지 않는다. WordPress 인증정보는 환경변수에서만 읽고 어떤 산출물·로그에도 기록하지 않으며, 존재하지 않는 URL/Category/Tag/Author/Media는 임의로 만들지 않고 Pending 상태로 남긴다.
+
+사용법:
+
+1. WF-01~WF-06이 완료되어 `handoff.status`가 `APPROVED_FOR_EXPORT` 또는 `APPROVED_WITH_PENDING_ASSETS`인 Final Package가 `05_OUTPUT/reviewed/`에 있어야 한다.
+2. (선택) `04_INPUT/publication_config.yaml`(안전 기본값으로 시딩됨)과, WordPress 연동이 필요하면 `04_INPUT/wordpress_config.yaml`(환경변수 이름만 기록, 실제 비밀번호는 절대 기록하지 않음)을 채운다.
+3. `02_WORKFLOW/WF-07_EXPORT_AND_PUBLISHING.md`를 실행한다.
+4. 결과는 아래에 저장된다.
+   - `05_OUTPUT/publishing/KW-XXXX/` — 키워드별 게시 패키지 (최종 원고 사본, WordPress HTML, Payload, Schema, Metadata, 체크리스트, 리포트, WordPress 연동 시 `wordpress_result.json`)
+   - `06_MEMORY/PUBLICATION_LIBRARY/publication_registry.json` — 게시 패키지 누적 인덱스
+   - `06_MEMORY/PUBLICATION_LIBRARY/published_content_index.json` — 실제 배포된 콘텐츠 색인
+   - `06_MEMORY/PUBLICATION_LIBRARY/media_library.json` — 미디어 자산 상태
+   - `06_MEMORY/KEYWORD_LIBRARY/content_inventory.json`, `internal_link_map.json` — 갱신
+   - `08_LOG/WF-07/environment_validation.json`, `run_<timestamp>.json` — 검증/실행 로그
+   - `05_OUTPUT/WF-07_EXPORT_AND_PUBLISHING_REPORT.md` — 실행 1회분 종합 리포트
+
+최종 Publication Mode는 `EXPORT_ONLY` / `WORDPRESS_DRAFT` / `SCHEDULE_READY` / `PUBLISH_READY` / `BLOCKED` 중 하나로 결정되며, WordPress가 비활성이거나 인증정보가 없으면 항상 `EXPORT_ONLY`로 떨어진다. 기존 WordPress Draft가 있으면 새 Post를 만들지 않고 업데이트한다.
 
 전체 운영 원칙은 `00_PROJECT_CONSTITUTION/CONSTITUTION.md`를 따른다.

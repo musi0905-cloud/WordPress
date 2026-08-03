@@ -1,7 +1,7 @@
 # ============================================================
 # CONTENT OS
 # PROJECT CONSTITUTION
-# VERSION 1.5
+# VERSION 1.6
 # ============================================================
 
 # Identity
@@ -73,6 +73,8 @@ Knowledge Library
 Architecture Library
 
 Draft Library
+
+Publication Library
 
 모든 Workflow는 위 라이브러리를 우선적으로 활용한다.
 
@@ -335,3 +337,5 @@ VERSION 1.3 — WF-03의 이름을 WF-03_KEYWORD_ANALYSIS에서 WF-03_KEYWORD_IN
 VERSION 1.4 — WF-04_CONTENT_ARCHITECTURE가 Content Brief를 Content Blueprint(제목/Slug/목차/섹션 명세/근거 계획/내부링크/시각 자료/FAQ/메타데이터/WF-05 집필 계약)로 확정하는 자산을 생성함에 따라, Project Memory에 Architecture Library를 8번째 라이브러리로 추가.
 
 VERSION 1.5 — WF-05_CONTENT_GENERATION이 프로젝트 최초로 실제 본문을 생성하는 워크플로우로 도입됨. WF-04의 Writing Contract를 잠금 상태로 실행하며 구조를 임의로 변경하지 않는다. 생성된 Draft와 그 근거 출처(Source Library)를 위해 Project Memory에 Draft Library를 9번째 라이브러리로 추가.
+
+VERSION 1.6 — WF-07_EXPORT_AND_PUBLISHING이 프로젝트 최초로 외부 게시 시스템(WordPress)과 연동하는 워크플로우로 도입됨. 기본 게시 모드는 항상 DRAFT이며, 자동 공개는 프로젝트 설정에서 명시적으로 허용된 경우에만 가능하다. 인증정보(비밀번호/토큰)는 환경변수에서만 읽고 어떤 산출물에도 기록하지 않는다. 게시 패키지와 실제 배포 상태(초안/예약/게시/동기화 실패)를 위해 Project Memory에 Publication Library를 10번째 라이브러리로 추가.

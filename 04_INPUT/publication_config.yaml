@@ -1,0 +1,56 @@
+# WF-07 입력: 게시 설정
+#
+# 안전 기본값으로 시딩됨 (WordPress 비활성, 자동 게시/예약 비활성).
+# WF-07은 이 값을 명시적으로 바꾸지 않는 한 DRAFT 이상의 상태로 게시하지 않는다.
+# 스키마 설명은 02_WORKFLOW/WF-07_EXPORT_AND_PUBLISHING.md의 "5. PUBLICATION CONFIGURATION" 참조.
+
+schema_version: "1.0"
+
+publication:
+  default_mode: EXPORT_ONLY
+  allow_auto_publish: false
+  allow_scheduling: false
+  require_featured_image: false
+  require_all_internal_links_resolved: false
+  require_manual_review_for_ymyl: true
+  publication_timezone: Asia/Seoul
+
+export:
+  markdown: true
+  html: true
+  wordpress_html: true
+  json_payload: true
+  schema_json: true
+  source_manifest: true
+  media_manifest: true
+
+wordpress:
+  enabled: false
+  create_draft: true
+  allow_update_existing_draft: true
+  allow_publish: false
+  allow_schedule: false
+  default_author_id:
+  default_status: draft
+  default_comment_status: closed
+  default_ping_status: closed
+
+schema:
+  enabled: true
+  embed_in_html: false
+  output_separate_file: true
+
+links:
+  unresolved_internal_link_policy: KEEP_PLACEHOLDER
+  broken_link_policy: BLOCK
+  external_link_target_blank: false
+  external_link_nofollow_policy: CONFIG_ONLY
+
+media:
+  upload_enabled: false
+  generate_missing_assets: false
+  allowed_types:
+    - image/jpeg
+    - image/png
+    - image/webp
+  max_file_size_mb: 5
