@@ -1,0 +1,25 @@
+# WF-14 Rollback 정책.
+# 스키마 설명은 02_WORKFLOW/WF-14_CONTENT_OPTIMIZATION.md의 "10. ROLLBACK POLICY" (STEP 21 참조).
+
+schema_version: "1.0"
+
+rollback:
+  require_before_snapshot: true
+  require_rollback_path_for_every_experiment: true
+  automatic_rollback: false
+
+triggers:
+  quality_issue: true
+  policy_issue: true
+  factuality_error: true
+  indexing_status_regression: true
+  canonical_error: true
+  internal_link_damage: true
+  wordpress_content_damage: true
+  clear_performance_decline: true
+  scope_violation: true
+
+after_rollback:
+  require_wf06_revalidation: true
+  require_wf07_revalidation: true
+  mark_experiment_resolved: false

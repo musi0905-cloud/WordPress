@@ -1,0 +1,51 @@
+# WF-14 Optimization Candidate 탐지 정책.
+# 스키마 설명은 02_WORKFLOW/WF-14_CONTENT_OPTIMIZATION.md의 "7. CANDIDATE POLICY" 참조.
+
+schema_version: "1.0"
+
+candidate_types:
+  HIGH_IMPRESSIONS_LOW_CTR:
+    enabled: true
+    minimum_impressions: 100
+
+  POSITION_OPPORTUNITY:
+    enabled: true
+    minimum_position: 4
+    maximum_position: 20
+
+  DECLINING_PERFORMANCE:
+    enabled: true
+    minimum_previous_impressions: 100
+
+  QUERY_INTENT_MISMATCH:
+    enabled: true
+    minimum_observed_queries: 5
+
+  OUTDATED_INFORMATION:
+    enabled: true
+
+  LOW_ENGAGEMENT:
+    enabled: true
+    minimum_sessions: 10
+
+  INTERNAL_LINK_OPPORTUNITY:
+    enabled: true
+
+  ORPHAN_CONTENT:
+    enabled: true
+
+  CANNIBALIZATION_RISK:
+    enabled: true
+    route_to_wf13: true
+
+  HIGH_PERFORMING_REFRESH:
+    enabled: false
+
+exclusions:
+  - NOT_INDEXED
+  - INDEXING_PENDING
+  - INSUFFICIENT_OBSERVATION_PERIOD
+  - POLICY_BLOCKED
+  - MANUAL_REVIEW_REQUIRED
+  - ACTIVE_REMEDIATION
+  - ACTIVE_OPTIMIZATION

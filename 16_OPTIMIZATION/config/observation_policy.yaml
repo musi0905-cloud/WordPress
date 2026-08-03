@@ -1,0 +1,22 @@
+# WF-14 사후 관찰 정책.
+# 스키마 설명은 02_WORKFLOW/WF-14_CONTENT_OPTIMIZATION.md의 "9. OBSERVATION POLICY (CONFIG)" 및 "19. OBSERVATION POLICY" 참조.
+
+schema_version: "1.0"
+
+observation:
+  minimum_days: 28
+  maximum_days: 90
+  do_not_modify_during_observation: true
+
+hold_conditions:
+  indexing_reprocessing_incomplete: true
+  insufficient_impression_data: true
+  sudden_search_demand_change: true
+  sitewide_outage: true
+  other_large_scale_site_change: true
+  policy_or_technical_incident: true
+
+status:
+  - OBSERVING
+  - EXTENDED_OBSERVATION
+  - INCONCLUSIVE

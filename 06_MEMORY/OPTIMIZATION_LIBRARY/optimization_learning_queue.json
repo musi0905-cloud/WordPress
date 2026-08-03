@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "package_id": null,
+  "generated_at": null,
+  "experiment_ids": [],
+  "optimization_types": [],
+  "hypotheses": [],
+  "changes": [],
+  "outcomes": [],
+  "successful_patterns": [],
+  "failed_patterns": [],
+  "inconclusive_patterns": [],
+  "rollbacks": [],
+  "candidate_rule_updates": [],
+  "candidate_template_updates": [],
+  "candidate_workflow_updates": [],
+  "data_confidence": null,
+  "restrictions": {
+    "causal_claims_allowed": false,
+    "single_experiment_generalization": false
+  },
+  "handoff": {
+    "next_workflow": "WF-08_PROJECT_LEARNING",
+    "ready": false
+  }
+}

@@ -1,0 +1,33 @@
+# WF-14 Optimization Experiment 정책.
+# 스키마 설명은 02_WORKFLOW/WF-14_CONTENT_OPTIMIZATION.md의 "8. EXPERIMENT POLICY" 참조.
+
+schema_version: "1.0"
+
+experiments:
+  require_primary_hypothesis: true
+  require_primary_metric: true
+  require_secondary_metrics: true
+  require_controlled_scope: true
+  require_before_after_snapshot: true
+  require_change_log: true
+  require_rollback_plan: true
+
+change_limits:
+  max_primary_change_groups: 1
+  max_secondary_change_groups: 2
+  allow_title_and_body_change_together: false
+  allow_slug_change: false
+  allow_template_replacement: false
+
+observation:
+  minimum_days: 28
+  maximum_days: 90
+  do_not_modify_during_observation: true
+
+outcomes:
+  - IMPROVED
+  - PARTIALLY_IMPROVED
+  - NO_MEANINGFUL_CHANGE
+  - DECLINED
+  - INCONCLUSIVE
+  - ROLLED_BACK

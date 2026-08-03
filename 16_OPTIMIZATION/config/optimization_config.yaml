@@ -1,0 +1,40 @@
+# WF-14 Content Optimization 기본 설정.
+# 스키마 설명은 02_WORKFLOW/WF-14_CONTENT_OPTIMIZATION.md의 "6. OPTIMIZATION CONFIGURATION" 참조.
+
+schema_version: "1.0"
+
+optimization:
+  enabled: true
+  timezone: Asia/Seoul
+  max_active_experiments: 5
+  max_content_items_per_run: 10
+  max_experiments_per_content_per_90_days: 2
+  require_before_snapshot: true
+  require_post_change_validation: true
+  allow_automatic_metadata_update: true
+  allow_automatic_content_revision: true
+  allow_automatic_internal_link_update: true
+  allow_slug_change: false
+  allow_content_deletion: false
+  allow_auto_publish: false
+
+data:
+  minimum_observation_days: 28
+  minimum_indexed_days: 14
+  minimum_impressions_for_ctr_test: 100
+  minimum_clicks_for_engagement_test: 10
+  minimum_queries_for_intent_analysis: 5
+
+safety:
+  do_not_optimize_unindexed_content: true
+  do_not_optimize_during_remediation: true
+  do_not_run_overlapping_experiments: true
+  do_not_estimate_missing_metrics: true
+  do_not_reduce_quality_thresholds: true
+  do_not_use_clickbait: true
+  do_not_keyword_stuff: true
+
+validation:
+  require_wf06_revalidation: true
+  require_wf07_update: true
+  require_wf12_post_change_observation: true

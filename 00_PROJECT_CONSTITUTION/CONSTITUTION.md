@@ -1,7 +1,7 @@
 # ============================================================
 # CONTENT OS
 # PROJECT CONSTITUTION
-# VERSION 2.2
+# VERSION 2.3
 # ============================================================
 
 # Identity
@@ -86,6 +86,8 @@ Performance Library
 
 Remediation Library
 
+Optimization Library
+
 모든 Workflow는 위 라이브러리를 우선적으로 활용한다.
 
 이 자산들은 아래 계층 구조를 이룬다.
@@ -143,6 +145,8 @@ Rule의 개수가 아무리 늘어나도(수백~수천 개), Knowledge Library�
 14_PERFORMANCE
 
 15_REMEDIATION
+
+16_OPTIMIZATION
 
 ------------------------------------------------------------
 
@@ -203,6 +207,8 @@ WF-11_PRODUCTION_OPERATIONS은 WF-10을 통과한 시스템을 실제 운영으�
 WF-12_PERFORMANCE_AND_APPROVAL_INTELLIGENCE는 WF-11이 실제로 게시한 이후의 결과(색인, 검색 노출, 애드센스 신청/승인, 수익)를 수집·검증하는 계층이다. 콘텐츠를 생성하거나 게시하지 않고, Workflow·Rule·Content DNA·Constitution을 직접 변경하지도 않는다 — 실제 근거가 있는 데이터만 구조화하여 `WF-08_PROJECT_LEARNING`에 전달하고, 그 판단은 WF-08에 맡긴다. 애드센스 승인/거절은 공식 출처로 검증된 경우에만 확정하며, 상관관계를 인과관계로 단정하지 않는다.
 
 WF-13_ADSENSE_AND_SITE_REMEDIATION은 파이프라인의 다음 단계가 아니라, WF-12가 관찰·분석한 문제 중 근거가 확인된 것만 선별해 실제 수정 작업으로 전환하는 별도의 계층이다. WF-13은 애드센스 승인 가능성을 보장하지 않고, 공식적으로 확인되지 않은(`UNCONFIRMED`) 거절 사유를 사실처럼 다루지 않으며, 모든 콘텐츠를 일괄 재작성하지 않는다. 수정 작업은 직접 수행하지 않고 문제 유형에 맞는 Workflow(WF-01~WF-12)로 되돌리며, 콘텐츠는 삭제보다 보존과 수정을 우선한다(`KEEP → CORRECT → EXPAND_IF_NEEDED → MERGE → REDIRECT → NOINDEX → ARCHIVE → DELETE_PROPOSAL`). 모든 자동 수정은 변경 전 Snapshot과 Rollback 경로를 가져야 하며, 애드센스 재신청은 내부 준비 상태(Reapplication Readiness)가 충족되어도 자동 제출하지 않는다 — 최종 판단은 항상 사람이 내린다.
+
+WF-14_CONTENT_OPTIMIZATION은 WF-13과 대상이 다른 별도의 계층이다. WF-13이 승인 거절·색인·사이트 구조 "문제"를 수정하는 복구 단계라면, WF-14는 이미 정상 게시·색인된 콘텐츠의 검색 성과·클릭률·정보 최신성·내부링크·사용자 반응을 개선하는 운영 최적화 단계다. 관찰 데이터가 부족한 콘텐츠는 성과 부진으로 단정하지 않고, 색인·Canonical·Robots 같은 기술 문제는 콘텐츠 문제로 오인하지 않으며 WF-13 또는 WF-07로 되돌린다. 모든 최적화는 하나의 주요 가설만 시험하는 `Optimization Experiment`로 관리되며, 검색 순위·CTR·수익 상승을 보장하지 않는다. 변경 후 최소 관찰 기간(기본 28일) 동안 동일 콘텐츠를 반복 수정하지 않고, Slug와 게시 URL은 자동 변경하지 않으며, 콘텐츠는 자동 삭제하지 않는다 — 삭제·Merge·Redirect·Noindex가 필요하면 WF-13에 Proposal만 전달한다.
 
 ------------------------------------------------------------
 
@@ -383,3 +389,5 @@ VERSION 2.0 — WF-11_PRODUCTION_OPERATIONS 도입으로 Content OS가 설계·�
 VERSION 2.1 — WF-12_PERFORMANCE_AND_APPROVAL_INTELLIGENCE 도입. 실제 운영 이후의 색인·검색·사용자 반응·애드센스 신청/승인/거절·수익 데이터를 수집·검증하여 WF-08에 전달하는 계층이 추가됨. 존재하지 않는 성과 데이터(노출·클릭·CTR·수익·애드센스 결과 등)는 절대 추정하지 않고 `UNAVAILABLE`로 기록하며, 애드센스 승인/거절은 공식 출처(OFFICIAL_EXPORT/DIRECT_API/PLATFORM_REPORT/MANUAL_VERIFIED)로 검증된 경우에만 확정한다. 상관관계 분석은 허용하되 인과관계 단정(예: "이 Rule 때문에 승인되었다")은 절대 금지. WF-12는 Workflow·Rule·Content DNA·Constitution을 직접 변경하지 않고 WF-08에 근거 데이터만 전달한다. Project Directory에 `14_PERFORMANCE`를 추가하고, Project Memory에 Performance Library를 14번째 라이브러리로 추가.
 
 VERSION 2.2 — WF-13_ADSENSE_AND_SITE_REMEDIATION 도입. WF-12가 확인한 애드센스 거절, 색인 실패, 저가치/중복 콘텐츠, 사이트 구조 문제 중 근거가 확인된 것만 선별해 Remediation Case로 전환하고, 적절한 Workflow(WF-01~WF-12)로 되돌려 안전하게 수정을 실행하는 계층이 추가됨. 모든 문제는 `OFFICIAL`/`OBSERVED`/`INFERRED`/`UNCONFIRMED`로 증거 수준을 분리하며, `UNCONFIRMED` 문제를 근거로 대규모 수정을 수행하지 않는다. 승인 보장 표현(예: "수정하면 승인된다")을 절대 사용하지 않으며, 사이트 전체 콘텐츠 일괄 재작성이나 근거 없는 글자 수 확대를 금지한다. 콘텐츠 처리는 삭제보다 보존과 수정을 우선하는 고정 순서(`KEEP → CORRECT → EXPAND_IF_NEEDED → MERGE → REDIRECT → NOINDEX → ARCHIVE → DELETE_PROPOSAL`)를 따르며, WF-13은 원칙적으로 콘텐츠를 직접 삭제하지 않고 `DELETE_PROPOSAL`만 생성한다. 모든 자동 수정은 변경 전 Snapshot과 Rollback 경로를 필수로 가지며, 변경된 콘텐츠는 WF-06(품질)과 필요 시 WF-07(게시)·WF-10(시스템 회귀)의 재검증을 다시 통과해야 한다. 애드센스 재신청은 Reapplication Readiness가 충족되어도 자동 제출하지 않고 사람이 최종 판단하며, 고정된 재신청 대기 기간을 임의로 설정하지 않는다. Project Directory에 `15_REMEDIATION`을 추가하고, Project Memory에 Remediation Library를 15번째 라이브러리로 추가.
+
+VERSION 2.3 — WF-14_CONTENT_OPTIMIZATION 도입. 정상 게시·색인된 콘텐츠 중 충분한 관찰 데이터가 축적된 것만 대상으로 검색 성과·CTR·정보 최신성·내부링크·사용자 반응을 개선하는 운영 최적화 계층이 추가됨. WF-13이 문제를 복구하는 계층이라면 WF-14는 정상 콘텐츠의 성과를 끌어올리는 계층으로 역할이 명확히 분리된다. 데이터가 부족한 콘텐츠는 성과 부진으로 단정하지 않고 `INSUFFICIENT_DATA`/`WAITING_FOR_OBSERVATION` 등으로 기록하며, 색인·Canonical·Robots 같은 기술 문제는 콘텐츠 문제로 오인하지 않고 WF-13 또는 WF-07로 되돌린다. 검색 순위·CTR·수익 상승을 보장하는 표현을 절대 사용하지 않으며, 모든 최적화는 하나의 주요 가설만 시험하는 `Optimization Experiment`로 관리되어 여러 변수를 동시에 무계획 변경하지 않는다. 변경 후 최소 관찰 기간(기본 28일, 최대 90일) 동안 동일 콘텐츠의 반복 수정을 금지하고, Slug와 게시 URL은 자동 변경하지 않으며, 콘텐츠는 자동 삭제·Merge·Redirect·Noindex를 수행하지 않고 WF-13에 Proposal만 전달한다. 모든 변경은 변경 전 Snapshot과 Rollback 경로를 필수로 가지며, 변경된 콘텐츠는 WF-06 재검증과 WF-07을 통한 기존 게시물 업데이트(Slug·Post ID 유지)를 거친다. 단일 Experiment 결과를 전체 프로젝트 규칙으로 일반화하지 않고, 상관관계를 인과관계로 확정하지 않는다. Project Directory에 `16_OPTIMIZATION`을 추가하고, Project Memory에 Optimization Library를 16번째 라이브러리로 추가.

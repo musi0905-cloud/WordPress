@@ -11,7 +11,7 @@
 - `03_REFERENCE/` — 참고 자료 원본 소재
 - `04_INPUT/` — Workflow별 실행 입력
 - `05_OUTPUT/` — Workflow별 산출물
-- `06_MEMORY/` — 프로젝트 영구 자산 (Rule/Pattern/Template/Reference/Keyword/Quality/Workflow/Knowledge/Architecture/Draft/Publication/Orchestration/Validation/Operations/Performance/Remediation Library)
+- `06_MEMORY/` — 프로젝트 영구 자산 (Rule/Pattern/Template/Reference/Keyword/Quality/Workflow/Knowledge/Architecture/Draft/Publication/Orchestration/Validation/Operations/Performance/Remediation/Optimization Library)
 - `07_TEMPLATE/` — 사람이 정의한 원본 템플릿 (예약)
 - `08_LOG/` — Workflow 실행 로그
 - `09_ARCHIVE/` — Deprecated/Replaced 자산 이력, Workflow 재실행 시 이전 버전 스냅샷
@@ -21,6 +21,7 @@
 - `13_OPERATIONS/` — WF-11의 실제 운영 환경 (Batch/Queue/Incident/지표/운영 리포트)
 - `14_PERFORMANCE/` — WF-12의 실제 성과·애드센스 승인 분석 환경 (색인/검색/AdSense/수익 데이터, Alert, 리포트)
 - `15_REMEDIATION/` — WF-13의 애드센스·사이트·콘텐츠 문제 수정 환경 (Case/Snapshot/Rollback, Site·Reapplication Readiness 리포트)
+- `16_OPTIMIZATION/` — WF-14의 게시 콘텐츠 성과 최적화 환경 (Candidate/Experiment/Snapshot/Rollback, Optimization·Experiment Result 리포트)
 
 ## 자산 계층 구조
 
@@ -32,7 +33,7 @@ Rule이 수천 개로 늘어나도 이 계층의 정점인 Content DNA는 압축
 
 ## 현재 진행 단계
 
-1. `00_PROJECT_CONSTITUTION` (v2.2) — 완료
+1. `00_PROJECT_CONSTITUTION` (v2.3) — 완료
 2. `WF-01 : REFERENCE ANALYSIS ENGINE` (v2.0) — 완료 (`02_WORKFLOW/WF-01_REFERENCE_ANALYSIS.md`)
 3. `WF-02 : KNOWLEDGE ENGINEERING ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-02_KNOWLEDGE_ENGINEERING.md`)
 4. `WF-03 : KEYWORD INTELLIGENCE ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-03_KEYWORD_INTELLIGENCE.md`)
@@ -46,8 +47,9 @@ Rule이 수천 개로 늘어나도 이 계층의 정점인 Content DNA는 압축
 12. `WF-11 : PRODUCTION OPERATIONS ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-11_PRODUCTION_OPERATIONS.md`)
 13. `WF-12 : PERFORMANCE AND APPROVAL INTELLIGENCE ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-12_PERFORMANCE_AND_APPROVAL_INTELLIGENCE.md`)
 14. `WF-13 : ADSENSE AND SITE REMEDIATION ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-13_ADSENSE_AND_SITE_REMEDIATION.md`)
+15. `WF-14 : CONTENT OPTIMIZATION ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-14_CONTENT_OPTIMIZATION.md`)
 
-**WF-01~WF-13, 13개 Workflow 정의가 모두 완료되었다.** WF-01~WF-08은 수집 → 압축 → 키워드 설계 → 구조 설계 → 집필 → 검수 → 배포 → 학습이 순환하는 파이프라인, WF-09는 그 8개를 하나의 명령으로 호출·재실행·복구하는 오케스트레이터, WF-10은 그 전체가 설계대로 실제로 동작하는지 `12_TEST/`의 격리된 환경에서 검증하는 품질 게이트, WF-11은 WF-10을 통과한 시스템을 실제 운영(Batch·처리량·비용·Incident·수동 검토)으로 전환하는 운영 계층, WF-12는 그 운영 이후의 실제 색인·검색·애드센스·수익 결과를 수집해 WF-08에 근거 데이터로 되먹임하는 계층, WF-13은 WF-12가 확인한 문제 중 근거가 확인된 것만 골라 실제 수정 작업(Remediation Case)으로 전환하고 재검증까지 관리하는 계층이다. WF-09/WF-10/WF-11/WF-12/WF-13 모두 개별 워크플로우의 판단을 대체하지 않는다 — Handoff가 `ready: false`면 다음 단계로 절대 넘어가지 않는다.
+**WF-01~WF-14, 14개 Workflow 정의가 모두 완료되었다.** WF-01~WF-08은 수집 → 압축 → 키워드 설계 → 구조 설계 → 집필 → 검수 → 배포 → 학습이 순환하는 파이프라인, WF-09는 그 8개를 하나의 명령으로 호출·재실행·복구하는 오케스트레이터, WF-10은 그 전체가 설계대로 실제로 동작하는지 `12_TEST/`의 격리된 환경에서 검증하는 품질 게이트, WF-11은 WF-10을 통과한 시스템을 실제 운영(Batch·처리량·비용·Incident·수동 검토)으로 전환하는 운영 계층, WF-12는 그 운영 이후의 실제 색인·검색·애드센스·수익 결과를 수집해 WF-08에 근거 데이터로 되먹임하는 계층, WF-13은 WF-12가 확인한 문제 중 근거가 확인된 것만 골라 실제 수정 작업(Remediation Case)으로 전환하고 재검증까지 관리하는 복구 계층, WF-14는 이미 정상 게시·색인된 콘텐츠의 검색 성과·CTR·최신성·내부링크를 근거 기반 실험(Optimization Experiment)으로 개선하는 운영 최적화 계층이다. WF-09/WF-10/WF-11/WF-12/WF-13/WF-14 모두 개별 워크플로우의 판단을 대체하지 않는다 — Handoff가 `ready: false`면 다음 단계로 절대 넘어가지 않는다.
 
 ## WF-01 : Reference Analysis Engine
 
@@ -300,5 +302,30 @@ WF-13은 WF-12가 관찰만 하고 끝냈던 문제를 실제 수정 작업으�
 - `08_LOG/WF-13/` — 검증/실행/이벤트 로그
 
 변경된 콘텐츠는 WF-06 품질 재검증을 반드시 다시 통과해야 하며, 게시 관련 변경은 WF-07, 시스템 변경은 WF-10 회귀 검증을 다시 거친다. Reapplication Readiness가 `READY_FOR_MANUAL_REAPPLICATION`이어도 이는 내부 기준 충족을 의미할 뿐 Google의 승인을 보장하지 않으며, 최종 재신청 여부는 사람이 결정한다.
+
+## WF-14 : Content Optimization Engine
+
+WF-14는 WF-13과 대상이 다른 별도의 계층이다. WF-13이 승인 거절·색인·사이트 구조 "문제"를 복구하는 단계라면, WF-14는 이미 정상 게시·색인된 콘텐츠 중 충분한 관찰 데이터가 축적된 것만 대상으로 검색 노출·CTR·순위·정보 최신성·내부링크·사용자 반응을 개선하는 운영 최적화 단계다. 데이터가 부족한 콘텐츠는 성과 부진으로 단정하지 않고(`INSUFFICIENT_DATA`), 색인·Canonical·Robots 같은 기술 문제는 콘텐츠 문제로 오인하지 않고 WF-13 또는 WF-07로 되돌린다. 모든 최적화는 하나의 주요 가설만 시험하는 `Optimization Experiment`로 관리되며 — 제목·Meta / 검색 의도 정렬 / 최신성 갱신 / 본문 구조 / 내부링크 중 원칙적으로 하나만 — 검색 순위·CTR·수익 상승을 보장하지 않는다.
+
+사용법 (명령은 자연어로, `02_WORKFLOW/WF-14_CONTENT_OPTIMIZATION.md`의 "17. COMMAND BEHAVIOR" 참조):
+
+- `WF-14 전체 실행` — 충분한 데이터가 있는 전체 게시 콘텐츠를 평가하고 후보를 생성한다.
+- `WF-14 후보 탐지` — 수정하지 않고 Optimization Candidate만 생성한다.
+- `WF-14 콘텐츠 분석: KW-0001` / `WF-14 Experiment 생성: KW-0001` / `WF-14 Experiment 실행: EXP-20260803-0001` — 특정 콘텐츠를 평가하고 Experiment를 생성·실행한다.
+- `WF-14 CTR 최적화` / `WF-14 최신성 갱신` / `WF-14 내부링크 최적화` / `WF-14 검색 의도 정렬` — 특정 최적화 유형만 처리한다.
+- `WF-14 관찰 상태` / `WF-14 결과 평가: EXP-20260803-0001` — 관찰 중인 Experiment 상태를 보거나, 사후 데이터가 있을 때만 결과를 평가한다.
+- `WF-14 롤백: EXP-20260803-0001` — 검증된 Before Snapshot으로 되돌리고 재검증한다.
+- `WF-14 상태` — 아무것도 바꾸지 않고 Candidate와 Experiment 상태만 출력한다.
+
+결과는 아래에 저장된다.
+
+- `16_OPTIMIZATION/config/` — Optimization/Candidate/Experiment/Observation/Rollback 정책 5종 (모두 안전 기본값으로 시딩됨)
+- `16_OPTIMIZATION/candidates/`, `16_OPTIMIZATION/experiments/`, `16_OPTIMIZATION/queue/`, `16_OPTIMIZATION/runtime/` — Candidate·Experiment 상태별 저장소, 4종 대기열, 현재 실행 상태
+- `16_OPTIMIZATION/snapshots/` — 변경 전/후/비교 Snapshot (모든 Experiment는 Snapshot과 Rollback 경로를 필수로 가진다)
+- `16_OPTIMIZATION/reports/` — Optimization/Content Opportunity/Experiment Result 리포트
+- `06_MEMORY/OPTIMIZATION_LIBRARY/` — Experiment 누적 인덱스, Candidate·Experiment 이력, 콘텐츠 변경 이력, WF-08 전달용 학습 패키지
+- `08_LOG/WF-14/` — 검증/실행/이벤트 로그
+
+변경된 콘텐츠는 WF-06 품질 재검증을 다시 통과해야 하며, WF-07을 통해 기존 WordPress Post ID와 Slug를 유지한 채 업데이트된다. 변경 후 최소 28일(최대 90일)의 관찰 기간 동안 동일 콘텐츠를 반복 수정하지 않으며, Slug 자동 변경과 콘텐츠 자동 삭제는 절대 수행하지 않는다 — 필요하면 WF-13에 Proposal만 전달한다. Experiment 결과는 검색 수요 변화나 계절성 같은 교란 요인을 함께 기록하며, 단일 결과를 전체 프로젝트 규칙으로 일반화하지 않는다.
 
 전체 운영 원칙은 `00_PROJECT_CONSTITUTION/CONSTITUTION.md`를 따른다.
