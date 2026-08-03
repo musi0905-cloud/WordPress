@@ -31,7 +31,8 @@ Rule이 수천 개로 늘어나도 이 계층의 정점인 Content DNA는 압축
 4. `WF-03 : KEYWORD INTELLIGENCE ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-03_KEYWORD_INTELLIGENCE.md`)
 5. `WF-04 : CONTENT ARCHITECTURE ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-04_CONTENT_ARCHITECTURE.md`)
 6. `WF-05 : CONTENT GENERATION ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-05_CONTENT_GENERATION.md`)
-7. `WF-06_QUALITY_REVIEW` (Quality AI) 이후 — 예정
+7. `WF-06 : QUALITY REVIEW ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-06_QUALITY_REVIEW.md`)
+8. `WF-07_EXPORT` (Publisher) 이후 — 예정
 
 ## WF-01 : Reference Analysis Engine
 
@@ -118,5 +119,24 @@ WF-05는 프로젝트에서 실제 본문을 작성하는 첫 워크플로우다
    - `05_OUTPUT/WF-05_CONTENT_GENERATION_REPORT.md` — 실행 1회분 종합 리포트
 
 자기 검증 점수 90점 미만(3회 자동 수정 후에도 미통과), 혹은 Blueprint 자체의 결함·근거 부족·존재하지 않는 내부링크 대상처럼 WF-05가 스스로 고칠 수 없는 문제가 있으면 상태가 `DRAFT_REVIEW_REQUIRED`로 기록되며 `WF-06_QUALITY_REVIEW`로 자동 전달되지 않는다.
+
+## WF-06 : Quality Review Engine
+
+WF-06은 새 글을 기획하지 않는다. WF-05가 만든 Draft Package를 WF-04 Blueprint와 Writing Contract 기준으로 21단계에 걸쳐 심사한다 — 패키지 무결성, 계약/구조 준수, 정보 완결성, 사실성, 출처, 독창성, 가독성, SEO/메타데이터, 내부링크, 시각자료, FAQ/Schema, 정책·저가치 콘텐츠 위험, HTML/기술 구조까지 검사하고, 허용된 범위(맞춤법, 중복 표현, HTML 오류 등) 안에서만 자동 수정한다. 제목·Slug·검색 의도·핵심 H2처럼 계약에 잠긴 요소는 절대 건드리지 않고, 구조적 결함이 발견되면 고치는 대신 WF-04/WF-05로 되돌린다.
+
+사용법:
+
+1. WF-01~WF-05가 완료되어 `handoff.ready: true`인 Draft Package가 `05_OUTPUT/drafts/`에 있어야 한다.
+2. `02_WORKFLOW/WF-06_QUALITY_REVIEW.md`를 실행한다.
+3. 결과는 아래에 저장된다.
+   - `05_OUTPUT/reviewed/KW-XXXX_*_final.md` / `.html` / `.json` — 검수를 통과한 최종 원고
+   - `05_OUTPUT/reviewed/KW-XXXX_*_quality_report.md` / `.json`, `_sources_final.json`, `_revision_log.json` — 심사 리포트, 확정 출처, 수정 이력
+   - `06_MEMORY/QUALITY_LIBRARY/quality_registry.json` — 심사 누적 인덱스
+   - `06_MEMORY/QUALITY_LIBRARY/quality_history.json` — 반복 품질 문제 패턴 (Rule 개정 필요 신호를 `WF-08_PROJECT_LEARNING`용으로 기록, WF-06은 Rule을 직접 고치지 않음)
+   - `06_MEMORY/KEYWORD_LIBRARY/content_inventory.json`, `06_MEMORY/DRAFT_LIBRARY/draft_registry.json`, `06_MEMORY/DRAFT_LIBRARY/source_library.json` — 갱신
+   - `08_LOG/WF-06/environment_validation.json`, `run_<timestamp>.json` — 검증/실행 로그
+   - `05_OUTPUT/WF-06_QUALITY_REVIEW_REPORT.md` — 실행 1회분 종합 리포트
+
+가중 점수 92점 미만이거나 CRITICAL/MAJOR 문제가 하나라도 남아 있으면(점수가 높아도) 통과하지 않는다. 최종 상태는 `APPROVED_FOR_EXPORT` / `APPROVED_WITH_PENDING_ASSETS`(이미지·내부링크 등 자산만 미확정) / `MANUAL_REVIEW_REQUIRED` / `WF05_REVISION_REQUIRED` / `WF04_REVISION_REQUIRED` / `SOURCE_RESEARCH_REQUIRED` / `POLICY_BLOCKED` / `PACKAGE_CORRUPTED` 중 하나로 기록되며, 앞의 두 상태만 `WF-07_EXPORT`로 자동 전달된다.
 
 전체 운영 원칙은 `00_PROJECT_CONSTITUTION/CONSTITUTION.md`를 따른다.
