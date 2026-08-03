@@ -11,12 +11,13 @@
 - `03_REFERENCE/` — 참고 자료 원본 소재
 - `04_INPUT/` — Workflow별 실행 입력
 - `05_OUTPUT/` — Workflow별 산출물
-- `06_MEMORY/` — 프로젝트 영구 자산 (Rule/Pattern/Template/Reference/Keyword/Quality/Workflow/Knowledge/Architecture/Draft/Publication/Orchestration Library)
+- `06_MEMORY/` — 프로젝트 영구 자산 (Rule/Pattern/Template/Reference/Keyword/Quality/Workflow/Knowledge/Architecture/Draft/Publication/Orchestration/Validation Library)
 - `07_TEMPLATE/` — 사람이 정의한 원본 템플릿 (예약)
 - `08_LOG/` — Workflow 실행 로그
 - `09_ARCHIVE/` — Deprecated/Replaced 자산 이력, Workflow 재실행 시 이전 버전 스냅샷
 - `10_RUNTIME/` — WF-09의 실행 상태 (Lock, 현재 Run, Workflow Queue, Dependency Graph)
 - `11_REPORTS/` — WF-09의 프로젝트 전체 실행 보고서
+- `12_TEST/` — WF-10의 테스트 전용 환경 (운영 데이터와 물리적으로 분리, Fixture/테스트 산출물/테스트 리포트)
 
 ## 자산 계층 구조
 
@@ -28,7 +29,7 @@ Rule이 수천 개로 늘어나도 이 계층의 정점인 Content DNA는 압축
 
 ## 현재 진행 단계
 
-1. `00_PROJECT_CONSTITUTION` (v1.8) — 완료
+1. `00_PROJECT_CONSTITUTION` (v1.9) — 완료
 2. `WF-01 : REFERENCE ANALYSIS ENGINE` (v2.0) — 완료 (`02_WORKFLOW/WF-01_REFERENCE_ANALYSIS.md`)
 3. `WF-02 : KNOWLEDGE ENGINEERING ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-02_KNOWLEDGE_ENGINEERING.md`)
 4. `WF-03 : KEYWORD INTELLIGENCE ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-03_KEYWORD_INTELLIGENCE.md`)
@@ -38,8 +39,9 @@ Rule이 수천 개로 늘어나도 이 계층의 정점인 Content DNA는 압축
 8. `WF-07 : EXPORT AND PUBLISHING ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-07_EXPORT_AND_PUBLISHING.md`)
 9. `WF-08 : PROJECT LEARNING ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-08_PROJECT_LEARNING.md`)
 10. `WF-09 : MASTER ORCHESTRATION ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-09_MASTER_ORCHESTRATION.md`)
+11. `WF-10 : SYSTEM VALIDATION AND ACCEPTANCE TEST ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-10_SYSTEM_VALIDATION.md`)
 
-**WF-01~WF-09, 9개 Workflow 정의가 모두 완료되었다.** WF-01~WF-08은 수집 → 압축 → 키워드 설계 → 구조 설계 → 집필 → 검수 → 배포 → 학습이 순환하는 파이프라인이고, WF-09는 그 8개를 하나의 명령("Content OS 전체 실행")으로 순서대로 호출·재실행·복구하는 오케스트레이터다. WF-09는 개별 워크플로우의 판단을 대체하지 않는다 — Handoff가 `ready: false`면 다음 단계로 절대 넘어가지 않는다.
+**WF-01~WF-10, 10개 Workflow 정의가 모두 완료되었다.** WF-01~WF-08은 수집 → 압축 → 키워드 설계 → 구조 설계 → 집필 → 검수 → 배포 → 학습이 순환하는 파이프라인, WF-09는 그 8개를 하나의 명령("Content OS 전체 실행")으로 호출·재실행·복구하는 오케스트레이터, WF-10은 그 전체가 설계대로 실제로 동작하는지 `12_TEST/`의 격리된 환경에서 검증하는 품질 게이트다. WF-09/WF-10 모두 개별 워크플로우의 판단을 대체하지 않는다 — Handoff가 `ready: false`면 다음 단계로 절대 넘어가지 않는다.
 
 ## WF-01 : Reference Analysis Engine
 
@@ -205,5 +207,21 @@ WF-09는 WF-01~WF-08 중 어느 것도 대체하지 않는 별도의 제어 계�
 - `08_LOG/WF-09/` — 검증/실행 로그, Workflow Event 로그
 
 재시도·반환 경로에는 한도가 있다 — 동일 콘텐츠가 WF-04~WF-07 사이를 무한히 오가지 않도록 워크플로우별 최대 재실행 횟수(WF-04 2회, WF-05 3회, WF-06 3회, WF-07 동기화 2회, 콘텐츠당 총 반환 5회)를 초과하면 `MANUAL_REVIEW_REQUIRED`로 넘어간다. WordPress 인증정보는 WF-09 자신도 출력하거나 저장하지 않으며, 자동 게시 권한을 임의로 확대하지 않는다.
+
+## WF-10 : System Validation and Acceptance Test Engine
+
+WF-10은 운영 콘텐츠를 대량 생성하지 않는다. 대신 `12_TEST/`라는 운영 데이터와 물리적으로 분리된 환경에서 최소 Fixture(참고 사이트 1건, 정상 키워드 1건, 고위험 키워드 1건, 의도적으로 깨진 파일 6종)로 WF-01~WF-09 전체가 설계대로 연결되고 동작하는지 시험한다 — 구조/Schema/Contract/Dependency 정적 검사부터 WF-01~WF-09 개별 Unit Test, 워크플로우 간 연결 Integration Test, 샘플 키워드 1개로 전체 파이프라인을 통과시키는 End-to-End Test, 의도적 오류 주입, 복구 경로, Retry/Loop 한도, 보안(Secret 노출), WordPress 안전성(MOCK/SANDBOX/DRAFT_ONLY만 허용), 동일 입력 재실행 시 중복 여부(Idempotency), Archive/Rollback, 그리고 이전 Baseline 대비 회귀(Regression)까지 검사한다.
+
+사용법:
+
+1. WF-01~WF-09가 정의되어 있어야 한다 (실행되어 있을 필요는 없다 — WF-10이 Fixture로 직접 시험한다).
+2. `02_WORKFLOW/WF-10_SYSTEM_VALIDATION.md`를 실행한다 (전체 테스트, 빠른 테스트, 특정 워크플로우 테스트, 보안 테스트 등 명령은 문서의 "12. COMMAND BEHAVIOR" 참조).
+3. 결과는 아래에 저장된다.
+   - `12_TEST/reports/ACCEPTANCE_REPORT.md` 등 — 이번 Test Run의 전체 판정과 영역별 리포트
+   - `12_TEST/test_registry.json` — 이번 Run의 테스트 결과 레지스트리
+   - `06_MEMORY/VALIDATION_LIBRARY/system_validation_registry.json`, `test_history.json`, `regression_baseline.json` — Test Run 누적 이력과 회귀 기준선
+   - `08_LOG/WF-10/environment_validation.json`, `run_<timestamp>.json` — 검증/실행 로그
+
+최종 판정은 `ACCEPTED` / `ACCEPTED_WITH_WARNINGS` / `CONDITIONALLY_ACCEPTED`(예: WordPress 연동은 실패해도 Export는 정상이면 그 범위만 운영 가능) / `REJECTED` / `BLOCKED` 중 하나다. Critical 또는 Major 실패가 하나라도 있으면 `ACCEPTED`가 될 수 없으며, WF-10은 통과율을 높이기 위해 품질·보안·Handoff·Retry·Loop 기준 자체를 낮추지 않는다 — 테스트가 실패하면 프로젝트를 고치는 것이지, 테스트 기준을 고치는 것이 아니다.
 
 전체 운영 원칙은 `00_PROJECT_CONSTITUTION/CONSTITUTION.md`를 따른다.

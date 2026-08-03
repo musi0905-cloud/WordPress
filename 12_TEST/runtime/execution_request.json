@@ -1,0 +1,5 @@
+{
+  "schema_version": "1.0",
+  "note": "Test-scope copy of 10_RUNTIME/execution_request.json, populated only during a WF-10 test run.",
+  "execution_request": null
+}

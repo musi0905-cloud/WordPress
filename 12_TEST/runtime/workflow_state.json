@@ -1,0 +1,15 @@
+{
+  "overall_status": "NOT_STARTED",
+  "workflow_states": {
+    "WF-01": "NOT_STARTED",
+    "WF-02": "NOT_STARTED",
+    "WF-03": "NOT_STARTED",
+    "WF-04": "NOT_STARTED",
+    "WF-05": "NOT_STARTED",
+    "WF-06": "NOT_STARTED",
+    "WF-07": "NOT_STARTED",
+    "WF-08": "NOT_STARTED",
+    "WF-09": "NOT_STARTED"
+  },
+  "updated_at": null
+}

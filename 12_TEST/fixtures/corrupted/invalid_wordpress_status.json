@@ -1,0 +1,7 @@
+{
+  "title": "Fixture Post",
+  "slug": "fixture-post",
+  "status": "publish_now",
+  "content": "<p>Fixture content.</p>",
+  "_fixture_note": "status 'publish_now' is not a valid WordPress REST status (draft/pending/future/publish/private). Used to test WF-07 STEP 14 payload validation and WF-10 STEP 25 WordPress safety test."
+}

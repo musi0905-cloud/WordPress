@@ -1,7 +1,7 @@
 # ============================================================
 # CONTENT OS
 # PROJECT CONSTITUTION
-# VERSION 1.8
+# VERSION 1.9
 # ============================================================
 
 # Identity
@@ -78,6 +78,8 @@ Publication Library
 
 Orchestration Library
 
+Validation Library
+
 모든 Workflow는 위 라이브러리를 우선적으로 활용한다.
 
 이 자산들은 아래 계층 구조를 이룬다.
@@ -127,6 +129,8 @@ Rule의 개수가 아무리 늘어나도(수백~수천 개), Knowledge Library�
 10_RUNTIME
 
 11_REPORTS
+
+12_TEST
 
 ------------------------------------------------------------
 
@@ -179,6 +183,8 @@ WF-08_PROJECT_LEARNING (Learning Engine)
 WF-02는 Rule을 만드는 워크플로우가 아니다. WF-01이 만든 Rule/Pattern/Template을 Content DNA / Knowledge Graph / Decision Tree / Template Graph로 압축·구조화하는 워크플로우다. WF-03 이후의 모든 워크플로우는 이 압축된 자산을 기준으로 동작한다.
 
 WF-09_MASTER_ORCHESTRATION은 이 체인 위에 있는 별도의 제어 계층이다. WF-01~WF-08 중 하나가 아니라, 그 8개를 프로젝트 상태·Handoff·의존성에 따라 순서대로 호출·재실행·복구하는 오케스트레이터다. WF-09는 개별 워크플로우의 판단을 대체하지 않는다.
+
+WF-10_SYSTEM_VALIDATION도 파이프라인의 9번째 단계가 아니라, WF-01~WF-09 전체가 설계대로 연결되고 동작하는지 검증하는 별도의 품질 게이트다. 운영 데이터와 물리적으로 분리된 `12_TEST/`에서만 동작하며, 실제 콘텐츠 대량 생성이나 실제 게시를 수행하지 않는다.
 
 ------------------------------------------------------------
 
@@ -351,3 +357,5 @@ VERSION 1.6 — WF-07_EXPORT_AND_PUBLISHING이 프로젝트 최초로 외부 게
 VERSION 1.7 — WF-08_PROJECT_LEARNING 도입으로 WF-01~WF-08 8개 핵심 Workflow 정의가 모두 완료됨. WF-08은 콘텐츠를 작성하거나 게시하지 않고, WF-01~WF-07의 실행 결과를 분석해 Rule/Pattern/Template/Content DNA/Decision Tree 성과를 평가하고 프로젝트 버전을 관리한다. 자동 반영 범위는 PATCH 수준(오탈자, 상태값, 통계, 경로)으로 제한되며, Rule 삭제·Content DNA 핵심 변경·품질/안전 기준 완화는 절대 자동 적용되지 않고 사람이 승인해야 하는 Change Proposal로만 남는다. 헌법 v1.0부터 예약되어 있던 Workflow Library를 이 워크플로우가 실제로 채운다 (신규 라이브러리 추가 없음). 이 시점부터 프로젝트는 실행 → 학습 → 개선이 순환하는 콘텐츠 운영체제로 완성된다.
 
 VERSION 1.8 — WF-09_MASTER_ORCHESTRATION 도입. WF-01~WF-08을 프로젝트 상태와 Handoff 기준으로 순서대로 호출·재실행·복구하는 통합 오케스트레이터가 추가되어, 사용자가 "Content OS 전체 실행" 한 번의 명령으로 전체 파이프라인을 운영할 수 있게 됨. WF-09는 개별 워크플로우의 판단을 대체하지 않으며, Handoff가 `ready: false`인 콘텐츠를 다음 단계로 넘기지 않는다. 실행 상태 관리를 위해 Project Directory에 `10_RUNTIME`, `11_REPORTS`를 추가하고, Project Memory에 Orchestration Library를 11번째 라이브러리로 추가. 저장소 루트에 `CLAUDE.md`를 두어 Claude Code 세션이 이 헌법과 워크플로우 체계를 자동으로 인식하도록 함.
+
+VERSION 1.9 — WF-10_SYSTEM_VALIDATION 도입. WF-01~WF-09 전체가 설계된 의존성·상태 전환·Handoff·보안 정책대로 실제로 동작하는지 검증하는 System Validation and Acceptance Test Engine이 추가됨. 운영 데이터와 물리적으로 분리된 `12_TEST/`에서만 동작하며, 운영 콘텐츠를 대량 생성하거나 실제 WordPress 공개/삭제를 수행하지 않는다(WordPress 테스트는 MOCK/SANDBOX/DRAFT_ONLY로 제한). 테스트 통과율을 높이기 위해 품질·보안·Handoff·Retry·Loop 기준을 낮추는 것을 명시적으로 금지. Project Directory에 `12_TEST`를 추가하고, Project Memory에 Validation Library를 12번째 라이브러리로 추가.

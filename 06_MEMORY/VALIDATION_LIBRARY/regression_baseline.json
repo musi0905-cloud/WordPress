@@ -1,0 +1,6 @@
+{
+  "schema_version": "1.0",
+  "updated_at": null,
+  "baseline": null,
+  "note": "No baseline yet. Set on the first ACCEPTED or ACCEPTED_WITH_WARNINGS WF-10 run; never overwritten afterward (see 09_ARCHIVE/WF-10/baselines/ for superseded baselines)."
+}

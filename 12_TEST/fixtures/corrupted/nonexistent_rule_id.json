@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0",
+  "keyword_id": "KW-9002",
+  "selected_rules": {
+    "mandatory": ["RULE-9999999"],
+    "conditional": [],
+    "prohibited": []
+  },
+  "_fixture_note": "RULE-9999999 does not exist in RULE_LIBRARY/RULES.md. WF-04 STEP 02 / WF-06 contract compliance must reject this."
+}

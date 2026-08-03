@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "test_run": {
+    "test_run_id": null,
+    "project_version": null,
+    "started_at": null,
+    "completed_at": null,
+    "mode": null,
+    "status": "NOT_RUN",
+    "summary": {
+      "total_tests": 0,
+      "passed": 0,
+      "passed_with_warning": 0,
+      "failed": 0,
+      "blocked": 0,
+      "skipped": 0
+    },
+    "severity": {
+      "critical": 0,
+      "major": 0,
+      "moderate": 0,
+      "minor": 0,
+      "info": 0
+    },
+    "test_groups": {
+      "static": null,
+      "schema": null,
+      "contract": null,
+      "dependency": null,
+      "unit": null,
+      "integration": null,
+      "end_to_end": null,
+      "failure": null,
+      "recovery": null,
+      "security": null,
+      "wordpress": null,
+      "idempotency": null,
+      "rollback": null,
+      "regression": null
+    },
+    "acceptance": {
+      "status": null,
+      "blocking_issues": [],
+      "warnings": []
+    },
+    "reports": [],
+    "created_files": [],
+    "updated_files": []
+  }
+}

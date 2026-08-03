@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0",
+  "keyword_id": "KW-9003",
+  "handoff": {
+    "next_workflow": null,
+    "ready": "yes",
+    "status": null
+  },
+  "_fixture_note": "handoff.ready should be a boolean, not the string 'yes'; next_workflow/status are missing. Used to test WF-09 STEP 03/13-20 Handoff validation."
+}

@@ -1,0 +1,6 @@
+# Fixture: YAML missing required fields (intentionally incomplete)
+# A valid Content Brief must have keyword_id, search_intent, content_objective, etc.
+# This fixture omits all of them on purpose to test WF-04 STEP 02 validation.
+schema_version: "1.0"
+workflow: "WF-03"
+status: unknown
