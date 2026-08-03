@@ -1,0 +1,43 @@
+# WF-13 Remediation 기본 설정.
+# 스키마 설명은 02_WORKFLOW/WF-13_ADSENSE_AND_SITE_REMEDIATION.md의 "6. REMEDIATION CONFIGURATION" 참조.
+
+schema_version: "1.0"
+
+remediation:
+  enabled: true
+  timezone: Asia/Seoul
+  max_active_cases: 5
+  max_content_items_per_case: 20
+  max_workflow_returns_per_item: 3
+  require_snapshot_before_change: true
+  require_post_change_validation: true
+  allow_automatic_content_revision: true
+  allow_automatic_technical_fix: true
+  allow_automatic_deletion: false
+  allow_automatic_reapplication: false
+
+scope:
+  adsense: true
+  content_quality: true
+  indexing: true
+  technical: true
+  internal_links: true
+  policy_pages: true
+  navigation: true
+  taxonomy: true
+  wordpress: true
+
+safety:
+  preserve_official_messages: true
+  separate_inference_from_official_reason: true
+  do_not_modify_unconfirmed_issues: true
+  do_not_bulk_rewrite: true
+  do_not_reduce_quality_thresholds: true
+  do_not_auto_publish: true
+  do_not_auto_reapply: true
+
+validation:
+  require_wf06_revalidation: true
+  require_wf07_revalidation_for_publishing_changes: true
+  require_wf10_for_system_changes: true
+  require_wf12_post_change_observation: true

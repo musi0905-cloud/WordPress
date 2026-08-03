@@ -11,7 +11,7 @@
 - `03_REFERENCE/` — 참고 자료 원본 소재
 - `04_INPUT/` — Workflow별 실행 입력
 - `05_OUTPUT/` — Workflow별 산출물
-- `06_MEMORY/` — 프로젝트 영구 자산 (Rule/Pattern/Template/Reference/Keyword/Quality/Workflow/Knowledge/Architecture/Draft/Publication/Orchestration/Validation/Operations/Performance Library)
+- `06_MEMORY/` — 프로젝트 영구 자산 (Rule/Pattern/Template/Reference/Keyword/Quality/Workflow/Knowledge/Architecture/Draft/Publication/Orchestration/Validation/Operations/Performance/Remediation Library)
 - `07_TEMPLATE/` — 사람이 정의한 원본 템플릿 (예약)
 - `08_LOG/` — Workflow 실행 로그
 - `09_ARCHIVE/` — Deprecated/Replaced 자산 이력, Workflow 재실행 시 이전 버전 스냅샷
@@ -20,6 +20,7 @@
 - `12_TEST/` — WF-10의 테스트 전용 환경 (운영 데이터와 물리적으로 분리, Fixture/테스트 산출물/테스트 리포트)
 - `13_OPERATIONS/` — WF-11의 실제 운영 환경 (Batch/Queue/Incident/지표/운영 리포트)
 - `14_PERFORMANCE/` — WF-12의 실제 성과·애드센스 승인 분석 환경 (색인/검색/AdSense/수익 데이터, Alert, 리포트)
+- `15_REMEDIATION/` — WF-13의 애드센스·사이트·콘텐츠 문제 수정 환경 (Case/Snapshot/Rollback, Site·Reapplication Readiness 리포트)
 
 ## 자산 계층 구조
 
@@ -31,7 +32,7 @@ Rule이 수천 개로 늘어나도 이 계층의 정점인 Content DNA는 압축
 
 ## 현재 진행 단계
 
-1. `00_PROJECT_CONSTITUTION` (v2.1) — 완료
+1. `00_PROJECT_CONSTITUTION` (v2.2) — 완료
 2. `WF-01 : REFERENCE ANALYSIS ENGINE` (v2.0) — 완료 (`02_WORKFLOW/WF-01_REFERENCE_ANALYSIS.md`)
 3. `WF-02 : KNOWLEDGE ENGINEERING ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-02_KNOWLEDGE_ENGINEERING.md`)
 4. `WF-03 : KEYWORD INTELLIGENCE ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-03_KEYWORD_INTELLIGENCE.md`)
@@ -44,8 +45,9 @@ Rule이 수천 개로 늘어나도 이 계층의 정점인 Content DNA는 압축
 11. `WF-10 : SYSTEM VALIDATION AND ACCEPTANCE TEST ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-10_SYSTEM_VALIDATION.md`)
 12. `WF-11 : PRODUCTION OPERATIONS ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-11_PRODUCTION_OPERATIONS.md`)
 13. `WF-12 : PERFORMANCE AND APPROVAL INTELLIGENCE ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-12_PERFORMANCE_AND_APPROVAL_INTELLIGENCE.md`)
+14. `WF-13 : ADSENSE AND SITE REMEDIATION ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-13_ADSENSE_AND_SITE_REMEDIATION.md`)
 
-**WF-01~WF-12, 12개 Workflow 정의가 모두 완료되었다.** WF-01~WF-08은 수집 → 압축 → 키워드 설계 → 구조 설계 → 집필 → 검수 → 배포 → 학습이 순환하는 파이프라인, WF-09는 그 8개를 하나의 명령으로 호출·재실행·복구하는 오케스트레이터, WF-10은 그 전체가 설계대로 실제로 동작하는지 `12_TEST/`의 격리된 환경에서 검증하는 품질 게이트, WF-11은 WF-10을 통과한 시스템을 실제 운영(Batch·처리량·비용·Incident·수동 검토)으로 전환하는 운영 계층, WF-12는 그 운영 이후의 실제 색인·검색·애드센스·수익 결과를 수집해 WF-08에 근거 데이터로 되먹임하는 계층이다. WF-09/WF-10/WF-11/WF-12 모두 개별 워크플로우의 판단을 대체하지 않는다 — Handoff가 `ready: false`면 다음 단계로 절대 넘어가지 않는다.
+**WF-01~WF-13, 13개 Workflow 정의가 모두 완료되었다.** WF-01~WF-08은 수집 → 압축 → 키워드 설계 → 구조 설계 → 집필 → 검수 → 배포 → 학습이 순환하는 파이프라인, WF-09는 그 8개를 하나의 명령으로 호출·재실행·복구하는 오케스트레이터, WF-10은 그 전체가 설계대로 실제로 동작하는지 `12_TEST/`의 격리된 환경에서 검증하는 품질 게이트, WF-11은 WF-10을 통과한 시스템을 실제 운영(Batch·처리량·비용·Incident·수동 검토)으로 전환하는 운영 계층, WF-12는 그 운영 이후의 실제 색인·검색·애드센스·수익 결과를 수집해 WF-08에 근거 데이터로 되먹임하는 계층, WF-13은 WF-12가 확인한 문제 중 근거가 확인된 것만 골라 실제 수정 작업(Remediation Case)으로 전환하고 재검증까지 관리하는 계층이다. WF-09/WF-10/WF-11/WF-12/WF-13 모두 개별 워크플로우의 판단을 대체하지 않는다 — Handoff가 `ready: false`면 다음 단계로 절대 넘어가지 않는다.
 
 ## WF-01 : Reference Analysis Engine
 
@@ -273,5 +275,30 @@ WF-12는 콘텐츠를 만들지도 게시하지도 않는, 순수하게 "실제�
 - `06_MEMORY/PERFORMANCE_LIBRARY/performance_learning_queue.json` — WF-08에 전달되는 학습 패키지 (WF-12는 여기까지만 하고, Rule/Content DNA 변경 판단은 WF-08의 몫이다)
 
 WF-12는 짧은 관찰 기간의 데이터를 실패로 단정하지 않고(`INSUFFICIENT_OBSERVATION_PERIOD`), 색인 지연을 자동으로 품질 문제로 판단하지 않으며, 표본이 부족한 Rule/Template/Workflow 비교는 학습 후보로 전달하지 않는다.
+
+## WF-13 : AdSense and Site Remediation Engine
+
+WF-13은 WF-12가 관찰만 하고 끝냈던 문제를 실제 수정 작업으로 전환하는 계층이다. 애드센스 공식 거절/Action Required, 저가치·중복·부족 콘텐츠, 색인 제외, Canonical/Robots/Noindex 오류, Soft 404, 내부링크 누락, 정책 페이지·신뢰 요소 누락 등을 다루되, 모든 문제를 `OFFICIAL`/`OBSERVED`/`INFERRED`/`UNCONFIRMED`로 분류하고 `UNCONFIRMED` 문제로는 대규모 수정을 하지 않는다. "수정하면 승인된다"류의 승인 보장 표현을 쓰지 않고, 사이트 전체 콘텐츠 일괄 재작성도 하지 않는다. 콘텐츠는 삭제보다 보존과 수정을 우선하는 고정 순서(`KEEP → CORRECT → EXPAND_IF_NEEDED → MERGE → REDIRECT → NOINDEX → ARCHIVE → DELETE_PROPOSAL`)를 따르며, WF-13 자신은 수정을 직접 수행하지 않고 문제 유형에 맞는 Workflow(WF-01~WF-12)로 되돌린다.
+
+사용법 (명령은 자연어로, `02_WORKFLOW/WF-13_ADSENSE_AND_SITE_REMEDIATION.md`의 "16. COMMAND BEHAVIOR" 참조):
+
+- `WF-13 전체 실행` — 확인된 모든 애드센스/색인/품질/사이트 문제를 분석하고 Case를 생성한다.
+- `WF-13 애드센스 거절 대응` / `WF-13 신청 대응: APPLICATION-0001` / `WF-13 사이트 대응: SITE-0001` — 범위를 좁혀 처리한다.
+- `WF-13 콘텐츠 수정: KW-0001` / `WF-13 색인 문제 수정` / `WF-13 저가치 콘텐츠 대응` — 특정 콘텐츠나 문제 유형만 처리한다.
+- `WF-13 Case 실행: CASE-20260803-0001` / `WF-13 Case 재검증: CASE-20260803-0001` — 생성된 계획을 실행하거나 수정 후 재검증한다.
+- `WF-13 재신청 준비 상태` — 내부 준비 상태만 평가한다. 애드센스 신청은 절대 자동 제출하지 않는다.
+- `WF-13 상태` / `WF-13 차단 목록` — 아무것도 바꾸지 않고 열린 Case와 차단 항목만 보고한다.
+- `WF-13 롤백: CASE-20260803-0001` — 검증된 Snapshot으로 되돌린다.
+
+결과는 아래에 저장된다.
+
+- `15_REMEDIATION/config/` — Remediation/우선순위/콘텐츠 처리/재신청/Rollback 정책 5종 (모두 안전 기본값으로 시딩됨)
+- `15_REMEDIATION/cases/`, `15_REMEDIATION/plans/`, `15_REMEDIATION/queue/`, `15_REMEDIATION/runtime/` — Case 상태별 저장소, 영역별 수정 계획, 4종 대기열, 현재 실행 상태
+- `15_REMEDIATION/snapshots/` — 변경 전/후/비교 Snapshot (모든 자동 수정은 Snapshot과 Rollback 경로를 필수로 가진다)
+- `15_REMEDIATION/reports/` — Remediation/AdSense Remediation/Site Readiness/Reapplication Readiness 리포트
+- `06_MEMORY/REMEDIATION_LIBRARY/` — Case 누적 인덱스, 수정 이력, Site/Reapplication Readiness 이력, WF-08 전달용 학습 패키지
+- `08_LOG/WF-13/` — 검증/실행/이벤트 로그
+
+변경된 콘텐츠는 WF-06 품질 재검증을 반드시 다시 통과해야 하며, 게시 관련 변경은 WF-07, 시스템 변경은 WF-10 회귀 검증을 다시 거친다. Reapplication Readiness가 `READY_FOR_MANUAL_REAPPLICATION`이어도 이는 내부 기준 충족을 의미할 뿐 Google의 승인을 보장하지 않으며, 최종 재신청 여부는 사람이 결정한다.
 
 전체 운영 원칙은 `00_PROJECT_CONSTITUTION/CONSTITUTION.md`를 따른다.

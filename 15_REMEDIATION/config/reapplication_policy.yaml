@@ -1,0 +1,30 @@
+# WF-13 애드센스 재신청 준비 정책.
+# 스키마 설명은 02_WORKFLOW/WF-13_ADSENSE_AND_SITE_REMEDIATION.md의 "9. REAPPLICATION POLICY" 참조.
+
+schema_version: "1.0"
+
+reapplication:
+  automatic_submission: false
+  require_official_previous_result: true
+  require_completed_remediation_case: true
+  require_no_open_critical_issues: true
+  require_no_open_major_issues: true
+  require_site_accessible: true
+  require_policy_pages_accessible: true
+  require_navigation_valid: true
+  require_indexing_review_complete: true
+  require_content_quality_review_complete: true
+  require_change_log: true
+  require_before_after_snapshot: true
+  require_manual_final_decision: true
+
+timing:
+  fixed_wait_period_days:
+  use_fixed_wait_period: false
+  readiness_based: true
+
+status:
+  - NOT_READY
+  - CONDITIONALLY_READY
+  - READY_FOR_MANUAL_REAPPLICATION
+  - BLOCKED

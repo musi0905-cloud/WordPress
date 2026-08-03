@@ -1,0 +1,44 @@
+# WF-13 콘텐츠 처리(Action) 정책.
+# 스키마 설명은 02_WORKFLOW/WF-13_ADSENSE_AND_SITE_REMEDIATION.md의 "8. CONTENT ACTION POLICY" 참조.
+
+schema_version: "1.0"
+
+actions:
+  KEEP:
+    automatic: true
+
+  CORRECT:
+    automatic: true
+    require_wf06_review: true
+
+  EXPAND_IF_NEEDED:
+    automatic: true
+    require_information_gap: true
+    require_wf04_or_wf05: true
+
+  MERGE:
+    automatic: false
+    require_cannibalization_evidence: true
+    require_redirect_plan: true
+
+  REDIRECT:
+    automatic: false
+    require_target_url: true
+
+  NOINDEX:
+    automatic: false
+    require_policy_or_duplicate_reason: true
+
+  ARCHIVE:
+    automatic: false
+
+  DELETE_PROPOSAL:
+    automatic: false
+    require_manual_review: true
+
+prohibitions:
+  no_word_count_based_expansion: true
+  no_keyword_stuffing: true
+  no_fake_experience: true
+  no_bulk_title_change: true
+  no_bulk_template_replacement: true

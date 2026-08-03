@@ -1,0 +1,23 @@
+# WF-13 Rollback 정책.
+# 스키마 설명은 02_WORKFLOW/WF-13_ADSENSE_AND_SITE_REMEDIATION.md의 "10. ROLLBACK POLICY" (STEP 17, STEP 18 참조).
+
+schema_version: "1.0"
+
+rollback:
+  require_snapshot_before_change: true
+  require_rollback_path_for_every_action: true
+  automatic_rollback: false
+
+triggers:
+  quality_score_drop: true
+  indexing_technical_regression: true
+  canonical_error_increase: true
+  internal_link_damage: true
+  wordpress_content_damage: true
+  new_policy_issue: true
+  duplicate_content_increase: true
+  workflow_regression: true
+
+after_rollback:
+  mark_case_resolved: false
+  require_root_cause_reanalysis: true

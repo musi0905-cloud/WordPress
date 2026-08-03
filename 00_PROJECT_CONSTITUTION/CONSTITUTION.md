@@ -1,7 +1,7 @@
 # ============================================================
 # CONTENT OS
 # PROJECT CONSTITUTION
-# VERSION 2.1
+# VERSION 2.2
 # ============================================================
 
 # Identity
@@ -84,6 +84,8 @@ Operations Library
 
 Performance Library
 
+Remediation Library
+
 모든 Workflow는 위 라이브러리를 우선적으로 활용한다.
 
 이 자산들은 아래 계층 구조를 이룬다.
@@ -139,6 +141,8 @@ Rule의 개수가 아무리 늘어나도(수백~수천 개), Knowledge Library�
 13_OPERATIONS
 
 14_PERFORMANCE
+
+15_REMEDIATION
 
 ------------------------------------------------------------
 
@@ -197,6 +201,8 @@ WF-10_SYSTEM_VALIDATION도 파이프라인의 9번째 단계가 아니라, WF-01
 WF-11_PRODUCTION_OPERATIONS은 WF-10을 통과한 시스템을 실제 운영으로 전환하는 계층이다. WF-11도 개별 Workflow를 직접 실행하지 않는다 — 모든 실행은 WF-09를 통해서만 이루어지며, WF-11은 그 위에서 Batch·처리량·비용·Incident·수동 검토를 관리한다. WF-10이 `REJECTED`/`BLOCKED`를 반환했거나 유효 기간(기본 30일)이 지난 경우 운영을 시작하지 않는다.
 
 WF-12_PERFORMANCE_AND_APPROVAL_INTELLIGENCE는 WF-11이 실제로 게시한 이후의 결과(색인, 검색 노출, 애드센스 신청/승인, 수익)를 수집·검증하는 계층이다. 콘텐츠를 생성하거나 게시하지 않고, Workflow·Rule·Content DNA·Constitution을 직접 변경하지도 않는다 — 실제 근거가 있는 데이터만 구조화하여 `WF-08_PROJECT_LEARNING`에 전달하고, 그 판단은 WF-08에 맡긴다. 애드센스 승인/거절은 공식 출처로 검증된 경우에만 확정하며, 상관관계를 인과관계로 단정하지 않는다.
+
+WF-13_ADSENSE_AND_SITE_REMEDIATION은 파이프라인의 다음 단계가 아니라, WF-12가 관찰·분석한 문제 중 근거가 확인된 것만 선별해 실제 수정 작업으로 전환하는 별도의 계층이다. WF-13은 애드센스 승인 가능성을 보장하지 않고, 공식적으로 확인되지 않은(`UNCONFIRMED`) 거절 사유를 사실처럼 다루지 않으며, 모든 콘텐츠를 일괄 재작성하지 않는다. 수정 작업은 직접 수행하지 않고 문제 유형에 맞는 Workflow(WF-01~WF-12)로 되돌리며, 콘텐츠는 삭제보다 보존과 수정을 우선한다(`KEEP → CORRECT → EXPAND_IF_NEEDED → MERGE → REDIRECT → NOINDEX → ARCHIVE → DELETE_PROPOSAL`). 모든 자동 수정은 변경 전 Snapshot과 Rollback 경로를 가져야 하며, 애드센스 재신청은 내부 준비 상태(Reapplication Readiness)가 충족되어도 자동 제출하지 않는다 — 최종 판단은 항상 사람이 내린다.
 
 ------------------------------------------------------------
 
@@ -375,3 +381,5 @@ VERSION 1.9 — WF-10_SYSTEM_VALIDATION 도입. WF-01~WF-09 전체가 설계된 
 VERSION 2.0 — WF-11_PRODUCTION_OPERATIONS 도입으로 Content OS가 설계·검증 단계를 넘어 실제 운영 시스템으로 전환됨. WF-11은 WF-10 Acceptance 결과(기본 유효 기간 30일)를 확인한 뒤에만 운영을 시작하고, Batch/처리량/비용/Incident/수동 검토를 중앙에서 관리하되 모든 개별 Workflow 실행은 WF-09를 통해서만 수행한다. 운영 환경에서도 기본 게시 상태는 항상 WordPress Draft이며, 예약·공개는 명시적 허용과 다중 안전 조건이 모두 충족될 때만 가능하다. Critical Incident(Secret 노출, 무단 공개, 데이터 손상, 품질 Gate 우회 등) 발생 시 운영을 즉시 중단한다. Project Directory에 `13_OPERATIONS`를 추가하고, Project Memory에 Operations Library를 13번째 라이브러리로 추가.
 
 VERSION 2.1 — WF-12_PERFORMANCE_AND_APPROVAL_INTELLIGENCE 도입. 실제 운영 이후의 색인·검색·사용자 반응·애드센스 신청/승인/거절·수익 데이터를 수집·검증하여 WF-08에 전달하는 계층이 추가됨. 존재하지 않는 성과 데이터(노출·클릭·CTR·수익·애드센스 결과 등)는 절대 추정하지 않고 `UNAVAILABLE`로 기록하며, 애드센스 승인/거절은 공식 출처(OFFICIAL_EXPORT/DIRECT_API/PLATFORM_REPORT/MANUAL_VERIFIED)로 검증된 경우에만 확정한다. 상관관계 분석은 허용하되 인과관계 단정(예: "이 Rule 때문에 승인되었다")은 절대 금지. WF-12는 Workflow·Rule·Content DNA·Constitution을 직접 변경하지 않고 WF-08에 근거 데이터만 전달한다. Project Directory에 `14_PERFORMANCE`를 추가하고, Project Memory에 Performance Library를 14번째 라이브러리로 추가.
+
+VERSION 2.2 — WF-13_ADSENSE_AND_SITE_REMEDIATION 도입. WF-12가 확인한 애드센스 거절, 색인 실패, 저가치/중복 콘텐츠, 사이트 구조 문제 중 근거가 확인된 것만 선별해 Remediation Case로 전환하고, 적절한 Workflow(WF-01~WF-12)로 되돌려 안전하게 수정을 실행하는 계층이 추가됨. 모든 문제는 `OFFICIAL`/`OBSERVED`/`INFERRED`/`UNCONFIRMED`로 증거 수준을 분리하며, `UNCONFIRMED` 문제를 근거로 대규모 수정을 수행하지 않는다. 승인 보장 표현(예: "수정하면 승인된다")을 절대 사용하지 않으며, 사이트 전체 콘텐츠 일괄 재작성이나 근거 없는 글자 수 확대를 금지한다. 콘텐츠 처리는 삭제보다 보존과 수정을 우선하는 고정 순서(`KEEP → CORRECT → EXPAND_IF_NEEDED → MERGE → REDIRECT → NOINDEX → ARCHIVE → DELETE_PROPOSAL`)를 따르며, WF-13은 원칙적으로 콘텐츠를 직접 삭제하지 않고 `DELETE_PROPOSAL`만 생성한다. 모든 자동 수정은 변경 전 Snapshot과 Rollback 경로를 필수로 가지며, 변경된 콘텐츠는 WF-06(품질)과 필요 시 WF-07(게시)·WF-10(시스템 회귀)의 재검증을 다시 통과해야 한다. 애드센스 재신청은 Reapplication Readiness가 충족되어도 자동 제출하지 않고 사람이 최종 판단하며, 고정된 재신청 대기 기간을 임의로 설정하지 않는다. Project Directory에 `15_REMEDIATION`을 추가하고, Project Memory에 Remediation Library를 15번째 라이브러리로 추가.

@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0",
+  "workflow_return_queue": {
+    "generated_at": null,
+    "case_id": null,
+    "items": []
+  }
+}

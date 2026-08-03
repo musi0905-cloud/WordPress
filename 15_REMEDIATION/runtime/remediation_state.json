@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0",
+  "status": "NOT_INITIALIZED",
+  "last_remediation_run_id": null,
+  "last_completed_at": null,
+  "open_cases": 0,
+  "active_cases": 0,
+  "blocked_cases": 0,
+  "updated_at": null
+}

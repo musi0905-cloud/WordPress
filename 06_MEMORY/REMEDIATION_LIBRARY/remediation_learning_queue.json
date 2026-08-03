@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "package_id": null,
+  "generated_at": null,
+  "case_ids": [],
+  "root_causes": [],
+  "affected_workflows": [],
+  "recurring_issues": [],
+  "successful_fixes": [],
+  "failed_fixes": [],
+  "rollback_events": [],
+  "candidate_rule_updates": [],
+  "candidate_template_updates": [],
+  "candidate_workflow_updates": [],
+  "data_confidence": null,
+  "handoff": {
+    "next_workflow": "WF-08_PROJECT_LEARNING",
+    "ready": false,
+    "blocking_issues": []
+  }
+}

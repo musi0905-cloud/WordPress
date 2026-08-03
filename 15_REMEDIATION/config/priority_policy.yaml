@@ -1,0 +1,43 @@
+# WF-13 Remediation 우선순위 정책.
+# 스키마 설명은 02_WORKFLOW/WF-13_ADSENSE_AND_SITE_REMEDIATION.md의 "7. PRIORITY POLICY" 참조.
+
+schema_version: "1.0"
+
+priority_order:
+  - SECURITY
+  - POLICY
+  - SITE_ACCESSIBILITY
+  - INDEXING_BLOCK
+  - DATA_INTEGRITY
+  - LOW_VALUE_CONTENT
+  - DUPLICATE_CONTENT
+  - CONTENT_QUALITY
+  - INTERNAL_LINK
+  - METADATA
+  - VISUAL_ASSET
+  - PERFORMANCE
+
+severity_weight:
+  CRITICAL: 100
+  MAJOR: 70
+  MODERATE: 40
+  MINOR: 15
+  INFO: 0
+
+evidence_weight:
+  OFFICIAL: 100
+  OBSERVED: 80
+  INFERRED: 50
+  UNCONFIRMED: 0
+
+scope_weight:
+  SITEWIDE: 100
+  CLUSTER: 60
+  MULTI_CONTENT: 40
+  SINGLE_CONTENT: 10
+
+actions:
+  block_unconfirmed_bulk_action: true
+  prioritize_sitewide_technical_issues: true
+  prioritize_policy_violations: true
+  prioritize_indexing_blocks_over_content_expansion: true
