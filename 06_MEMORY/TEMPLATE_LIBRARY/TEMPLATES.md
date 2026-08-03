@@ -1,0 +1,19 @@
+# TEMPLATE LIBRARY
+
+Content OS 프로젝트의 누적 템플릿 원장(Ledger).
+
+Template은 여러 Reference Site에서 반복적으로 발견된 문서 구조 골격을 정형화한 것이다. 실제 문장은 포함하지 않으며, 섹션 순서와 구성 요소만 기록한다.
+
+유형: Article | FAQ | Review | Comparison | Guide | Other
+
+이 파일은 append-only이다. Template은 절대 삭제하지 않으며, 상태(Deprecated / Merged / Replaced)로만 관리한다.
+
+각 템플릿의 형식은 `02_WORKFLOW/WF-01_REFERENCE_ANALYSIS.md`의 "Template Entry Format"을 따른다.
+
+이 라이브러리는 WF-01(구조 추출)이 채운다. `07_TEMPLATE/`은 사람이 직접 정의한 원본 템플릿을 보관하는 별도 디렉토리다.
+
+------------------------------------------------------------
+
+## 템플릿 목록
+
+(아직 등록된 템플릿 없음 — WF-01 STEP 08 실행 시 이 아래에 TEMPLATE-0001부터 순차 추가됨)
