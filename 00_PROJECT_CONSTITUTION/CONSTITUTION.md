@@ -1,7 +1,7 @@
 # ============================================================
 # CONTENT OS
 # PROJECT CONSTITUTION
-# VERSION 1.4
+# VERSION 1.5
 # ============================================================
 
 # Identity
@@ -71,6 +71,8 @@ Workflow Library
 Knowledge Library
 
 Architecture Library
+
+Draft Library
 
 모든 Workflow는 위 라이브러리를 우선적으로 활용한다.
 
@@ -331,3 +333,5 @@ VERSION 1.2 — WF-03이 Content Brief(YAML/JSON)와 같은 기계 판독용 구
 VERSION 1.3 — WF-03의 이름을 WF-03_KEYWORD_ANALYSIS에서 WF-03_KEYWORD_INTELLIGENCE로 변경. WF-03은 키워드를 단순 분석하는 단계가 아니라 Content DNA/Decision Tree/Rule Library를 이용해 키워드마다 실행 가능한 Content Brief를 만드는 단계로 확정됨.
 
 VERSION 1.4 — WF-04_CONTENT_ARCHITECTURE가 Content Brief를 Content Blueprint(제목/Slug/목차/섹션 명세/근거 계획/내부링크/시각 자료/FAQ/메타데이터/WF-05 집필 계약)로 확정하는 자산을 생성함에 따라, Project Memory에 Architecture Library를 8번째 라이브러리로 추가.
+
+VERSION 1.5 — WF-05_CONTENT_GENERATION이 프로젝트 최초로 실제 본문을 생성하는 워크플로우로 도입됨. WF-04의 Writing Contract를 잠금 상태로 실행하며 구조를 임의로 변경하지 않는다. 생성된 Draft와 그 근거 출처(Source Library)를 위해 Project Memory에 Draft Library를 9번째 라이브러리로 추가.
