@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "package_id": null,
+  "generated_at": null,
+  "analysis_period": null,
+  "content_outcomes": [],
+  "indexing_outcomes": [],
+  "query_outcomes": [],
+  "cluster_outcomes": [],
+  "template_outcomes": [],
+  "rule_outcomes": [],
+  "workflow_outcomes": [],
+  "adsense_outcomes": [],
+  "revenue_outcomes": [],
+  "anomalies": [],
+  "alerts": [],
+  "data_confidence": null,
+  "restrictions": {
+    "causal_claims_allowed": false,
+    "missing_metrics_estimated": false
+  },
+  "handoff": {
+    "next_workflow": "WF-08_PROJECT_LEARNING",
+    "ready": false,
+    "blocking_issues": []
+  }
+}

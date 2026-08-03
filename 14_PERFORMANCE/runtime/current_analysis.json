@@ -1,0 +1,5 @@
+{
+  "performance_run_id": null,
+  "status": "NONE",
+  "note": "No analysis is currently running. WF-12 populates this when a run starts."
+}

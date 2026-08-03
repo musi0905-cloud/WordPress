@@ -1,0 +1,37 @@
+# WF-12 귀속(Attribution) 정책. 상관관계 분석은 허용하되 인과 주장은 금지한다.
+# 스키마 설명은 02_WORKFLOW/WF-12_PERFORMANCE_AND_APPROVAL_INTELLIGENCE.md의 "9. ATTRIBUTION POLICY" 참조.
+
+schema_version: "1.0"
+
+attribution:
+  allow_correlation_analysis: true
+  allow_causal_claims: false
+  minimum_sample_size_for_pattern_analysis: 5
+  minimum_sample_size_for_template_comparison: 5
+  minimum_sample_size_for_rule_comparison: 10
+
+dimensions:
+  - workflow_version
+  - template_id
+  - content_dna_profile
+  - selected_rules
+  - content_type
+  - search_intent
+  - cluster
+  - publication_date
+  - content_age
+  - quality_score
+  - source_quality
+  - word_count
+  - internal_link_count
+  - visual_count
+
+confidence:
+  high_minimum_items: 30
+  medium_minimum_items: 10
+  low_minimum_items: 5
+
+restrictions:
+  no_single_content_generalization: true
+  no_single_approval_causal_attribution: true
+  no_revenue_only_quality_judgment: true

@@ -1,0 +1,43 @@
+# WF-12 알림 정책. 데이터가 부족하면 Alert를 만들지 않는다.
+# 스키마 설명은 02_WORKFLOW/WF-12_PERFORMANCE_AND_APPROVAL_INTELLIGENCE.md의 "18. ALERT POLICY" 참조.
+
+schema_version: "1.0"
+
+alerts:
+  indexing_drop:
+    enabled: true
+    severity: MAJOR
+
+  sitewide_noindex:
+    enabled: true
+    severity: CRITICAL
+
+  robots_block:
+    enabled: true
+    severity: CRITICAL
+
+  search_click_drop:
+    enabled: true
+    threshold_percent: 50
+    minimum_baseline_clicks: 20
+    severity: MAJOR
+
+  adsense_rejection:
+    enabled: true
+    severity: MAJOR
+
+  adsense_policy_warning:
+    enabled: true
+    severity: CRITICAL
+
+  adsense_disabled:
+    enabled: true
+    severity: CRITICAL
+
+  abnormal_ad_clicks:
+    enabled: true
+    severity: CRITICAL
+
+  data_source_failure:
+    enabled: true
+    severity: MODERATE

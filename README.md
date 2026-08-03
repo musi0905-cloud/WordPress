@@ -11,7 +11,7 @@
 - `03_REFERENCE/` — 참고 자료 원본 소재
 - `04_INPUT/` — Workflow별 실행 입력
 - `05_OUTPUT/` — Workflow별 산출물
-- `06_MEMORY/` — 프로젝트 영구 자산 (Rule/Pattern/Template/Reference/Keyword/Quality/Workflow/Knowledge/Architecture/Draft/Publication/Orchestration/Validation/Operations Library)
+- `06_MEMORY/` — 프로젝트 영구 자산 (Rule/Pattern/Template/Reference/Keyword/Quality/Workflow/Knowledge/Architecture/Draft/Publication/Orchestration/Validation/Operations/Performance Library)
 - `07_TEMPLATE/` — 사람이 정의한 원본 템플릿 (예약)
 - `08_LOG/` — Workflow 실행 로그
 - `09_ARCHIVE/` — Deprecated/Replaced 자산 이력, Workflow 재실행 시 이전 버전 스냅샷
@@ -19,6 +19,7 @@
 - `11_REPORTS/` — WF-09의 프로젝트 전체 실행 보고서
 - `12_TEST/` — WF-10의 테스트 전용 환경 (운영 데이터와 물리적으로 분리, Fixture/테스트 산출물/테스트 리포트)
 - `13_OPERATIONS/` — WF-11의 실제 운영 환경 (Batch/Queue/Incident/지표/운영 리포트)
+- `14_PERFORMANCE/` — WF-12의 실제 성과·애드센스 승인 분석 환경 (색인/검색/AdSense/수익 데이터, Alert, 리포트)
 
 ## 자산 계층 구조
 
@@ -30,7 +31,7 @@ Rule이 수천 개로 늘어나도 이 계층의 정점인 Content DNA는 압축
 
 ## 현재 진행 단계
 
-1. `00_PROJECT_CONSTITUTION` (v2.0) — 완료
+1. `00_PROJECT_CONSTITUTION` (v2.1) — 완료
 2. `WF-01 : REFERENCE ANALYSIS ENGINE` (v2.0) — 완료 (`02_WORKFLOW/WF-01_REFERENCE_ANALYSIS.md`)
 3. `WF-02 : KNOWLEDGE ENGINEERING ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-02_KNOWLEDGE_ENGINEERING.md`)
 4. `WF-03 : KEYWORD INTELLIGENCE ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-03_KEYWORD_INTELLIGENCE.md`)
@@ -42,8 +43,9 @@ Rule이 수천 개로 늘어나도 이 계층의 정점인 Content DNA는 압축
 10. `WF-09 : MASTER ORCHESTRATION ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-09_MASTER_ORCHESTRATION.md`)
 11. `WF-10 : SYSTEM VALIDATION AND ACCEPTANCE TEST ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-10_SYSTEM_VALIDATION.md`)
 12. `WF-11 : PRODUCTION OPERATIONS ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-11_PRODUCTION_OPERATIONS.md`)
+13. `WF-12 : PERFORMANCE AND APPROVAL INTELLIGENCE ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-12_PERFORMANCE_AND_APPROVAL_INTELLIGENCE.md`)
 
-**WF-01~WF-11, 11개 Workflow 정의가 모두 완료되었다.** WF-01~WF-08은 수집 → 압축 → 키워드 설계 → 구조 설계 → 집필 → 검수 → 배포 → 학습이 순환하는 파이프라인, WF-09는 그 8개를 하나의 명령으로 호출·재실행·복구하는 오케스트레이터, WF-10은 그 전체가 설계대로 실제로 동작하는지 `12_TEST/`의 격리된 환경에서 검증하는 품질 게이트, WF-11은 WF-10을 통과한 시스템을 실제 운영(Batch·처리량·비용·Incident·수동 검토)으로 전환하는 운영 계층이다. WF-09/WF-10/WF-11 모두 개별 워크플로우의 판단을 대체하지 않는다 — Handoff가 `ready: false`면 다음 단계로 절대 넘어가지 않는다.
+**WF-01~WF-12, 12개 Workflow 정의가 모두 완료되었다.** WF-01~WF-08은 수집 → 압축 → 키워드 설계 → 구조 설계 → 집필 → 검수 → 배포 → 학습이 순환하는 파이프라인, WF-09는 그 8개를 하나의 명령으로 호출·재실행·복구하는 오케스트레이터, WF-10은 그 전체가 설계대로 실제로 동작하는지 `12_TEST/`의 격리된 환경에서 검증하는 품질 게이트, WF-11은 WF-10을 통과한 시스템을 실제 운영(Batch·처리량·비용·Incident·수동 검토)으로 전환하는 운영 계층, WF-12는 그 운영 이후의 실제 색인·검색·애드센스·수익 결과를 수집해 WF-08에 근거 데이터로 되먹임하는 계층이다. WF-09/WF-10/WF-11/WF-12 모두 개별 워크플로우의 판단을 대체하지 않는다 — Handoff가 `ready: false`면 다음 단계로 절대 넘어가지 않는다.
 
 ## WF-01 : Reference Analysis Engine
 
@@ -249,5 +251,27 @@ WF-11은 WF-10을 통과한 Content OS를 실제 운영으로 전환한다. 새 
 - `08_LOG/WF-11/` — 검증/실행/이벤트 로그
 
 Secret 노출, 무단 자동 공개, 운영 데이터 손상, 품질 Gate 우회, 정책 차단 콘텐츠 게시, Registry 전체 손상은 모두 `CRITICAL` Incident로 분류되며 발생 즉시 운영을 중단하고 자동 복구를 금지한다 — 재개하려면 WF-10 재검증이 필요하다.
+
+## WF-12 : Performance and Approval Intelligence Engine
+
+WF-12는 콘텐츠를 만들지도 게시하지도 않는, 순수하게 "실제로 무슨 일이 일어났는가"를 확인하는 계층이다. 색인 상태, 검색 노출/클릭/CTR/순위, 사용자 참여, 애드센스 신청·승인·거절·재신청 이력, 승인 후 수익까지 실제 데이터가 있을 때만 분석한다. 존재하지 않는 지표는 절대 추정하지 않고 `data_status: UNAVAILABLE`로 기록하며, 애드센스 승인/거절은 공식 출처(대시보드 상태, 공식 통지, 검증된 내보내기)로만 확정한다 — 예측이나 정황만으로는 절대 확정하지 않는다. 상관관계 분석은 허용하지만("이 Template을 쓴 글의 색인율이 더 높다") 인과관계 단정("이 Rule *때문에* 승인되었다")은 명시적으로 금지된다.
+
+사용법 (명령은 자연어로, `02_WORKFLOW/WF-12_PERFORMANCE_AND_APPROVAL_INTELLIGENCE.md`의 "14. COMMAND BEHAVIOR" 참조):
+
+- `WF-12 전체 실행` — 사용 가능한 모든 성과·애드센스 데이터를 분석한다.
+- `WF-12 색인 분석` / `WF-12 검색 성과` / `WF-12 애드센스 분석` — 특정 영역만 분석한다.
+- `WF-12 승인 결과 반영` — `14_PERFORMANCE/intake/adsense/`와 `manual_results/`에 실제로 존재하는 결과만 반영한다.
+- `WF-12 콘텐츠 분석: KW-0001` / `WF-12 사이트 분석: SITE-0001` — 특정 범위만 분석한다.
+- `WF-12 상태` / `WF-12 Alert 목록` — 아무것도 바꾸지 않고 현재 상태·열린 Alert만 보고한다.
+
+외부 데이터는 `14_PERFORMANCE/intake/`(Search Console/Analytics/WordPress/AdSense/색인/수동 결과, CSV/JSON/XLSX/YAML/TXT/HTML/PDF 허용)에 넣으면 탐지된다. 결과는 아래에 저장된다.
+
+- `14_PERFORMANCE/normalized/` — 표준화된 콘텐츠/쿼리/페이지/색인/애드센스/수익 데이터
+- `14_PERFORMANCE/reports/` — Performance/Indexing/AdSense Approval/Content Performance/Site Health 리포트
+- `14_PERFORMANCE/alerts/` — 이상 징후 Alert (색인 급감, Robots 전역 차단, 애드센스 정책 경고 등은 `CRITICAL`)
+- `06_MEMORY/PERFORMANCE_LIBRARY/` — Performance Run 이력, 콘텐츠 성과 이력, 애드센스 신청/승인 변경 이력, 수익 이력
+- `06_MEMORY/PERFORMANCE_LIBRARY/performance_learning_queue.json` — WF-08에 전달되는 학습 패키지 (WF-12는 여기까지만 하고, Rule/Content DNA 변경 판단은 WF-08의 몫이다)
+
+WF-12는 짧은 관찰 기간의 데이터를 실패로 단정하지 않고(`INSUFFICIENT_OBSERVATION_PERIOD`), 색인 지연을 자동으로 품질 문제로 판단하지 않으며, 표본이 부족한 Rule/Template/Workflow 비교는 학습 후보로 전달하지 않는다.
 
 전체 운영 원칙은 `00_PROJECT_CONSTITUTION/CONSTITUTION.md`를 따른다.

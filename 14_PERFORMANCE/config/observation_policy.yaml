@@ -1,0 +1,31 @@
+# WF-12 관찰 기간 정책. 짧은 관찰 기간을 실패로 단정하지 않기 위한 기준.
+# 스키마 설명은 02_WORKFLOW/WF-12_PERFORMANCE_AND_APPROVAL_INTELLIGENCE.md의 "7. OBSERVATION POLICY" 참조.
+
+schema_version: "1.0"
+
+observation:
+  newly_published_days: 14
+  early_observation_days: 28
+  standard_observation_days: 90
+  mature_content_days: 180
+
+classification:
+  newly_published:
+    max_age_days: 14
+
+  early_stage:
+    min_age_days: 15
+    max_age_days: 28
+
+  standard_stage:
+    min_age_days: 29
+    max_age_days: 90
+
+  mature:
+    min_age_days: 91
+
+rules:
+  do_not_classify_failure_before_minimum_period: true
+  require_indexing_before_search_performance_judgment: true
+  separate_zero_impression_from_not_indexed: true
+  separate_low_volume_from_low_performance: true

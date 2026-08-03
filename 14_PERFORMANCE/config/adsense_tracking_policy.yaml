@@ -1,0 +1,40 @@
+# WF-12 애드센스 추적 정책. 공식 근거 없이는 승인/거절을 확정하지 않는다.
+# 스키마 설명은 02_WORKFLOW/WF-12_PERFORMANCE_AND_APPROVAL_INTELLIGENCE.md의 "8. ADSENSE TRACKING POLICY" 참조.
+
+schema_version: "1.0"
+
+application:
+  track_application_history: true
+  track_site_state: true
+  track_submission_date: true
+  track_result_date: true
+  track_review_duration: true
+  track_official_message: true
+  track_changes_between_attempts: true
+
+statuses:
+  - NOT_APPLIED
+  - PREPARING
+  - SUBMITTED
+  - UNDER_REVIEW
+  - ACTION_REQUIRED
+  - REJECTED
+  - APPROVED
+  - DISABLED
+  - UNKNOWN
+
+rejection:
+  preserve_official_reason: true
+  allow_interpretation: true
+  interpretation_must_be_labeled: true
+  require_evidence_for_root_cause: true
+
+reapplication:
+  require_previous_result: true
+  require_change_log: true
+  require_site_snapshot: true
+  do_not_recommend_fixed_wait_period_without_evidence: true
+
+revenue:
+  track_only_after_approval: true
+  do_not_estimate_missing_revenue: true

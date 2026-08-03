@@ -1,0 +1,43 @@
+# WF-12 성과 분석 설정.
+# 스키마 설명은 02_WORKFLOW/WF-12_PERFORMANCE_AND_APPROVAL_INTELLIGENCE.md의 "6. PERFORMANCE CONFIGURATION" 참조.
+
+schema_version: "1.0"
+
+analysis:
+  enabled: true
+  timezone: Asia/Seoul
+  default_period_days: 28
+  comparison_period_days: 28
+  minimum_observation_days: 14
+  minimum_index_observation_days: 7
+  minimum_impressions_for_ctr_analysis: 100
+  minimum_clicks_for_engagement_analysis: 10
+
+sources:
+  search_console_enabled: true
+  analytics_enabled: true
+  wordpress_enabled: true
+  adsense_enabled: true
+  indexing_enabled: true
+  manual_results_enabled: true
+
+refresh:
+  daily_snapshot: true
+  weekly_report: true
+  monthly_report: true
+  approval_event_snapshot: true
+
+analysis_scope:
+  content_level: true
+  keyword_level: true
+  cluster_level: true
+  template_level: true
+  rule_level: true
+  workflow_level: true
+  site_level: true
+
+safety:
+  do_not_estimate_missing_metrics: true
+  do_not_infer_approval_without_evidence: true
+  do_not_modify_content_automatically: true
+  do_not_modify_workflows_automatically: true

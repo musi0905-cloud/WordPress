@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "updated_at": null,
+  "sources": {
+    "search_console": { "available": false, "files": [], "latest_date": null },
+    "analytics": { "available": false, "files": [], "latest_date": null },
+    "wordpress": { "available": false, "files": [], "latest_date": null },
+    "indexing": { "available": false, "files": [], "latest_date": null },
+    "adsense": { "available": false, "files": [], "latest_date": null },
+    "manual_results": { "available": false, "files": [], "latest_date": null }
+  }
+}
