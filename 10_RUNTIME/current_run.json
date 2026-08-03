@@ -1,0 +1,8 @@
+{
+  "run_id": null,
+  "mode": null,
+  "started_at": null,
+  "completed_at": null,
+  "status": "NONE",
+  "note": "No run has been executed yet. WF-09 creates this on the first execution."
+}

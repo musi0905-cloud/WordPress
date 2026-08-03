@@ -1,7 +1,7 @@
 # ============================================================
 # CONTENT OS
 # PROJECT CONSTITUTION
-# VERSION 1.7
+# VERSION 1.8
 # ============================================================
 
 # Identity
@@ -76,6 +76,8 @@ Draft Library
 
 Publication Library
 
+Orchestration Library
+
 모든 Workflow는 위 라이브러리를 우선적으로 활용한다.
 
 이 자산들은 아래 계층 구조를 이룬다.
@@ -122,6 +124,10 @@ Rule의 개수가 아무리 늘어나도(수백~수천 개), Knowledge Library�
 
 09_ARCHIVE
 
+10_RUNTIME
+
+11_REPORTS
+
 ------------------------------------------------------------
 
 # Workflow Policy
@@ -164,13 +170,15 @@ WF-06_QUALITY_REVIEW (Quality AI)
 
 ↓
 
-WF-07_EXPORT (Publisher)
+WF-07_EXPORT_AND_PUBLISHING (Publisher)
 
 ↓
 
 WF-08_PROJECT_LEARNING (Learning Engine)
 
 WF-02는 Rule을 만드는 워크플로우가 아니다. WF-01이 만든 Rule/Pattern/Template을 Content DNA / Knowledge Graph / Decision Tree / Template Graph로 압축·구조화하는 워크플로우다. WF-03 이후의 모든 워크플로우는 이 압축된 자산을 기준으로 동작한다.
+
+WF-09_MASTER_ORCHESTRATION은 이 체인 위에 있는 별도의 제어 계층이다. WF-01~WF-08 중 하나가 아니라, 그 8개를 프로젝트 상태·Handoff·의존성에 따라 순서대로 호출·재실행·복구하는 오케스트레이터다. WF-09는 개별 워크플로우의 판단을 대체하지 않는다.
 
 ------------------------------------------------------------
 
@@ -341,3 +349,5 @@ VERSION 1.5 — WF-05_CONTENT_GENERATION이 프로젝트 최초로 실제 본문
 VERSION 1.6 — WF-07_EXPORT_AND_PUBLISHING이 프로젝트 최초로 외부 게시 시스템(WordPress)과 연동하는 워크플로우로 도입됨. 기본 게시 모드는 항상 DRAFT이며, 자동 공개는 프로젝트 설정에서 명시적으로 허용된 경우에만 가능하다. 인증정보(비밀번호/토큰)는 환경변수에서만 읽고 어떤 산출물에도 기록하지 않는다. 게시 패키지와 실제 배포 상태(초안/예약/게시/동기화 실패)를 위해 Project Memory에 Publication Library를 10번째 라이브러리로 추가.
 
 VERSION 1.7 — WF-08_PROJECT_LEARNING 도입으로 WF-01~WF-08 8개 핵심 Workflow 정의가 모두 완료됨. WF-08은 콘텐츠를 작성하거나 게시하지 않고, WF-01~WF-07의 실행 결과를 분석해 Rule/Pattern/Template/Content DNA/Decision Tree 성과를 평가하고 프로젝트 버전을 관리한다. 자동 반영 범위는 PATCH 수준(오탈자, 상태값, 통계, 경로)으로 제한되며, Rule 삭제·Content DNA 핵심 변경·품질/안전 기준 완화는 절대 자동 적용되지 않고 사람이 승인해야 하는 Change Proposal로만 남는다. 헌법 v1.0부터 예약되어 있던 Workflow Library를 이 워크플로우가 실제로 채운다 (신규 라이브러리 추가 없음). 이 시점부터 프로젝트는 실행 → 학습 → 개선이 순환하는 콘텐츠 운영체제로 완성된다.
+
+VERSION 1.8 — WF-09_MASTER_ORCHESTRATION 도입. WF-01~WF-08을 프로젝트 상태와 Handoff 기준으로 순서대로 호출·재실행·복구하는 통합 오케스트레이터가 추가되어, 사용자가 "Content OS 전체 실행" 한 번의 명령으로 전체 파이프라인을 운영할 수 있게 됨. WF-09는 개별 워크플로우의 판단을 대체하지 않으며, Handoff가 `ready: false`인 콘텐츠를 다음 단계로 넘기지 않는다. 실행 상태 관리를 위해 Project Directory에 `10_RUNTIME`, `11_REPORTS`를 추가하고, Project Memory에 Orchestration Library를 11번째 라이브러리로 추가. 저장소 루트에 `CLAUDE.md`를 두어 Claude Code 세션이 이 헌법과 워크플로우 체계를 자동으로 인식하도록 함.

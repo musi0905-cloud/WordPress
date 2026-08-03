@@ -4,16 +4,19 @@
 
 ## 구조
 
+- `CLAUDE.md` — Claude Code 세션 진입점 (헌법과 WF-09 실행 명령으로 안내)
 - `00_PROJECT_CONSTITUTION/` — 프로젝트 헌법 (모든 규칙의 최상위 기준)
 - `01_SYSTEM/` — 시스템 레벨 설정 (예약)
 - `02_WORKFLOW/` — 실행 가능한 Workflow 정의 문서
 - `03_REFERENCE/` — 참고 자료 원본 소재
 - `04_INPUT/` — Workflow별 실행 입력
 - `05_OUTPUT/` — Workflow별 산출물
-- `06_MEMORY/` — 프로젝트 영구 자산 (Rule/Pattern/Template/Reference/Keyword/Quality/Workflow/Knowledge Library)
+- `06_MEMORY/` — 프로젝트 영구 자산 (Rule/Pattern/Template/Reference/Keyword/Quality/Workflow/Knowledge/Architecture/Draft/Publication/Orchestration Library)
 - `07_TEMPLATE/` — 사람이 정의한 원본 템플릿 (예약)
 - `08_LOG/` — Workflow 실행 로그
-- `09_ARCHIVE/` — Deprecated/Replaced 자산 이력
+- `09_ARCHIVE/` — Deprecated/Replaced 자산 이력, Workflow 재실행 시 이전 버전 스냅샷
+- `10_RUNTIME/` — WF-09의 실행 상태 (Lock, 현재 Run, Workflow Queue, Dependency Graph)
+- `11_REPORTS/` — WF-09의 프로젝트 전체 실행 보고서
 
 ## 자산 계층 구조
 
@@ -25,7 +28,7 @@ Rule이 수천 개로 늘어나도 이 계층의 정점인 Content DNA는 압축
 
 ## 현재 진행 단계
 
-1. `00_PROJECT_CONSTITUTION` (v1.7) — 완료
+1. `00_PROJECT_CONSTITUTION` (v1.8) — 완료
 2. `WF-01 : REFERENCE ANALYSIS ENGINE` (v2.0) — 완료 (`02_WORKFLOW/WF-01_REFERENCE_ANALYSIS.md`)
 3. `WF-02 : KNOWLEDGE ENGINEERING ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-02_KNOWLEDGE_ENGINEERING.md`)
 4. `WF-03 : KEYWORD INTELLIGENCE ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-03_KEYWORD_INTELLIGENCE.md`)
@@ -34,8 +37,9 @@ Rule이 수천 개로 늘어나도 이 계층의 정점인 Content DNA는 압축
 7. `WF-06 : QUALITY REVIEW ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-06_QUALITY_REVIEW.md`)
 8. `WF-07 : EXPORT AND PUBLISHING ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-07_EXPORT_AND_PUBLISHING.md`)
 9. `WF-08 : PROJECT LEARNING ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-08_PROJECT_LEARNING.md`)
+10. `WF-09 : MASTER ORCHESTRATION ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-09_MASTER_ORCHESTRATION.md`)
 
-**WF-01~WF-08, 8개 핵심 Workflow 정의가 모두 완료되었다.** 이 시점부터 Content OS는 수집(WF-01) → 압축(WF-02) → 키워드 설계(WF-03) → 구조 설계(WF-04) → 집필(WF-05) → 검수(WF-06) → 배포(WF-07) → 학습(WF-08)이 순환하는 완결된 파이프라인이다. WF-08의 결과는 다음 WF-01/WF-03 실행부터 다시 반영된다.
+**WF-01~WF-09, 9개 Workflow 정의가 모두 완료되었다.** WF-01~WF-08은 수집 → 압축 → 키워드 설계 → 구조 설계 → 집필 → 검수 → 배포 → 학습이 순환하는 파이프라인이고, WF-09는 그 8개를 하나의 명령("Content OS 전체 실행")으로 순서대로 호출·재실행·복구하는 오케스트레이터다. WF-09는 개별 워크플로우의 판단을 대체하지 않는다 — Handoff가 `ready: false`면 다음 단계로 절대 넘어가지 않는다.
 
 ## WF-01 : Reference Analysis Engine
 
@@ -179,5 +183,27 @@ WF-08은 파이프라인의 마지막 단계이자 유일하게 "뒤를 돌아�
    - `09_ARCHIVE/WF-08/<timestamp>/` — PATCH 변경 전 스냅샷 (롤백용)
 
 WF-08 실행 후 다음 WF-01/WF-03 실행부터는 갱신된 Rule 상태·성과 데이터·Decision Tree 보완 경로가 반영된다. 이 시점부터 Content OS는 단순한 파이프라인이 아니라, 스스로의 실행 결과를 근거로 개선되는 학습 가능한 콘텐츠 운영체제가 된다.
+
+## WF-09 : Master Orchestration Engine
+
+WF-09는 WF-01~WF-08 중 어느 것도 대체하지 않는 별도의 제어 계층이다. 각 워크플로우의 선행 조건과 Handoff 상태를 읽어 "지금 실행 가능한 단계"만 순서대로 호출하고, 완료되지 않은 단계 다음으로는 절대 넘어가지 않는다. 실패를 성공으로 표시하지 않고, 품질 미달 콘텐츠를 다음 단계로 넘기지 않으며, 변경되지 않은 워크플로우는 재실행하지 않는다(`UNCHANGED`).
+
+사용법 (명령은 자연어로 내리면 된다, `02_WORKFLOW/WF-09_MASTER_ORCHESTRATION.md`의 "23. COMMAND BEHAVIOR" 참조):
+
+- `Content OS 전체 실행` — WF-01부터 WF-08까지 필요한 단계를 실행한다.
+- `Content OS 이어서 실행` / `Content OS 재개` — 마지막 완료 지점부터, 또는 비정상 종료된 Run을 복구해서 이어간다.
+- `Content OS 변경분 실행` — 바뀐 입력(키워드, 참고 사이트, 설정, Rule Library 등)이 실제로 영향을 주는 워크플로우만 계산해서 실행한다.
+- `Content OS 상태` / `Content OS 차단 목록` — 아무것도 바꾸지 않고 현재 상태·차단 원인만 보고한다.
+- `WF-05 실행`, `Content OS 키워드 실행: KW-0001` — 특정 워크플로우 또는 특정 키워드만 지정 실행한다.
+- `Content OS 전체 실행 미리보기` — Dry Run. 실행 계획만 계산하고 파일/WordPress를 전혀 건드리지 않는다.
+
+결과는 아래에 저장된다.
+
+- `10_RUNTIME/` — `lock.json`(중복 실행 방지), `workflow_state.json`(WF-01~WF-08 각각의 현재 상태), `workflow_queue.json`, `dependency_graph.json`, `recovery_plan.json`
+- `11_REPORTS/MASTER_EXECUTION_REPORT.md` / `.json` — Run 전체 요약 (Workflow별 결과, 콘텐츠 처리 현황, 프로젝트 건강도)
+- `06_MEMORY/ORCHESTRATION_LIBRARY/` — Run 이력(`orchestration_registry.json`), 실행 이벤트(`execution_history.json`), 복구 이력(`recovery_history.json`)
+- `08_LOG/WF-09/` — 검증/실행 로그, Workflow Event 로그
+
+재시도·반환 경로에는 한도가 있다 — 동일 콘텐츠가 WF-04~WF-07 사이를 무한히 오가지 않도록 워크플로우별 최대 재실행 횟수(WF-04 2회, WF-05 3회, WF-06 3회, WF-07 동기화 2회, 콘텐츠당 총 반환 5회)를 초과하면 `MANUAL_REVIEW_REQUIRED`로 넘어간다. WordPress 인증정보는 WF-09 자신도 출력하거나 저장하지 않으며, 자동 게시 권한을 임의로 확대하지 않는다.
 
 전체 운영 원칙은 `00_PROJECT_CONSTITUTION/CONSTITUTION.md`를 따른다.

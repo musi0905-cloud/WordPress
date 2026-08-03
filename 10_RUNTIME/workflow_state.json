@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "project_id": null,
+  "project_version": null,
+  "current_run_id": null,
+  "current_mode": null,
+  "overall_status": "NOT_STARTED",
+  "last_completed_workflow": null,
+  "next_ready_workflow": "WF-01",
+  "workflow_states": {
+    "WF-01": "NOT_STARTED",
+    "WF-02": "NOT_STARTED",
+    "WF-03": "NOT_STARTED",
+    "WF-04": "NOT_STARTED",
+    "WF-05": "NOT_STARTED",
+    "WF-06": "NOT_STARTED",
+    "WF-07": "NOT_STARTED",
+    "WF-08": "NOT_STARTED"
+  },
+  "content_counts": {
+    "total_keywords": 0,
+    "briefs_ready": 0,
+    "architectures_ready": 0,
+    "drafts_ready": 0,
+    "reviews_approved": 0,
+    "exports_ready": 0,
+    "wordpress_drafts": 0,
+    "blocked": 0
+  },
+  "blocking_issues": [],
+  "warnings": [],
+  "updated_at": null
+}

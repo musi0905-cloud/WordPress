@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "execution_request": {
+    "request_id": null,
+    "requested_at": null,
+    "mode": null,
+    "scope": {
+      "workflow_ids": [],
+      "keyword_ids": [],
+      "reference_ids": [],
+      "publication_ids": []
+    },
+    "options": {
+      "dry_run": false,
+      "force_rerun": false,
+      "archive_existing": true,
+      "allow_wordpress_draft": true,
+      "allow_publish": false,
+      "continue_on_nonblocking_warning": true
+    },
+    "requested_command": null
+  }
+}
