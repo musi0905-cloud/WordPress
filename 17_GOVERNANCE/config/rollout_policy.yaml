@@ -1,0 +1,42 @@
+# WF-15 제한 배포(Limited Rollout) 정책.
+# 스키마 설명은 02_WORKFLOW/WF-15_GOVERNANCE_AND_CHANGE_CONTROL.md의 "9. ROLLOUT POLICY" 참조.
+
+schema_version: "1.0"
+
+rollout:
+  patch:
+    sandbox_required: true
+    sample_size:
+    observation_runs: 1
+
+  minor:
+    sandbox_required: true
+    sample_percentage: 10
+    minimum_items: 3
+    maximum_items: 10
+    observation_runs: 2
+
+  major:
+    sandbox_required: true
+    sample_percentage: 5
+    minimum_items: 3
+    maximum_items: 5
+    observation_runs: 3
+
+stop_conditions:
+  critical_issue_count: 1
+  major_issue_count: 1
+  quality_score_drop: 2
+  workflow_failure_rate_increase_percent: 10
+  publication_failure_rate_increase_percent: 10
+  security_regression: true
+  duplicate_output_incident: true
+  policy_violation: true
+
+success_conditions:
+  no_critical_issues: true
+  no_major_issues: true
+  no_quality_regression: true
+  no_security_regression: true
+  no_schema_corruption: true
+  no_duplicate_publication: true

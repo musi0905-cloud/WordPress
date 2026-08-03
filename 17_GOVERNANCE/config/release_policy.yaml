@@ -1,0 +1,39 @@
+# WF-15 Release 정책.
+# 스키마 설명은 02_WORKFLOW/WF-15_GOVERNANCE_AND_CHANGE_CONTROL.md의 "11. RELEASE POLICY" 참조.
+
+schema_version: "1.0"
+
+versioning:
+  format: SEMVER
+  current_version_source: 06_MEMORY/WORKFLOW_LIBRARY/project_versions.json
+
+release_requirements:
+  proposal_approved: true
+  changeset_validated: true
+  wf10_passed: true
+  rollout_passed: true
+  rollback_plan_valid: true
+  release_notes_required: true
+  snapshot_required: true
+
+release_types:
+  PATCH:
+    version_increment: patch
+
+  MINOR:
+    version_increment: minor
+
+  MAJOR:
+    version_increment: major
+
+  CONSTITUTIONAL:
+    version_increment: major
+
+release_statuses:
+  - DRAFT
+  - READY
+  - DEPLOYING
+  - RELEASED
+  - FAILED
+  - ROLLED_BACK
+  - SUPERSEDED

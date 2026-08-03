@@ -1,0 +1,52 @@
+# WF-15 변경 등급 분류 정책.
+# 스키마 설명은 02_WORKFLOW/WF-15_GOVERNANCE_AND_CHANGE_CONTROL.md의 "7. CHANGE CLASSIFICATION POLICY" 참조.
+
+schema_version: "1.0"
+
+levels:
+  PATCH:
+    description: 문서, 경로, 상태값, 통계, 명백한 중복 정리
+    production_impact: LOW
+    requires_full_test: false
+    requires_limited_rollout: false
+
+  MINOR:
+    description: 제한된 Rule, Pattern, Template, Decision 조건 개선
+    production_impact: MEDIUM
+    requires_targeted_test: true
+    requires_limited_rollout: true
+
+  MAJOR:
+    description: Workflow 구조, Content DNA, Schema, 운영 정책 변경
+    production_impact: HIGH
+    requires_full_test: true
+    requires_limited_rollout: true
+    requires_manual_approval: true
+
+  CONSTITUTIONAL:
+    description: Project Constitution 또는 핵심 운영 원칙 변경
+    production_impact: CRITICAL
+    requires_full_test: true
+    requires_manual_approval: true
+    requires_constitution_amendment: true
+
+domains:
+  - DOCUMENTATION
+  - RULE
+  - PATTERN
+  - TEMPLATE
+  - CONTENT_DNA
+  - KNOWLEDGE_GRAPH
+  - DECISION_TREE
+  - WORKFLOW
+  - SCHEMA
+  - QUALITY
+  - SECURITY
+  - PUBLICATION
+  - WORDPRESS
+  - OPERATIONS
+  - PERFORMANCE
+  - REMEDIATION
+  - OPTIMIZATION
+  - CONFIGURATION
+  - CONSTITUTION

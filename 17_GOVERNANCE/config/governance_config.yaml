@@ -1,0 +1,49 @@
+# WF-15 Governance 기본 설정.
+# 스키마 설명은 02_WORKFLOW/WF-15_GOVERNANCE_AND_CHANGE_CONTROL.md의 "6. GOVERNANCE CONFIGURATION" 참조.
+
+schema_version: "1.0"
+
+governance:
+  enabled: true
+  timezone: Asia/Seoul
+  require_proposal_for_core_changes: true
+  require_snapshot_before_change: true
+  require_rollback_plan: true
+  require_wf10_validation: true
+  require_release_version: true
+  max_active_proposals: 10
+  max_active_changesets: 3
+
+automatic_approval:
+  enabled: true
+  allowed_change_levels:
+    - PATCH
+  allowed_risk_levels:
+    - LOW
+  require_high_confidence: true
+  require_full_reversibility: true
+
+manual_approval:
+  required_for:
+    - CONSTITUTION
+    - CONTENT_DNA
+    - QUALITY_GATE
+    - SECURITY_POLICY
+    - PUBLICATION_POLICY
+    - AUTO_PUBLISH_PERMISSION
+    - DELETE_PERMISSION
+    - MAJOR_WORKFLOW_CHANGE
+    - MAJOR_SCHEMA_CHANGE
+
+testing:
+  require_wf10_quick_test_for_patch: true
+  require_wf10_targeted_test_for_minor: true
+  require_wf10_full_test_for_major: true
+  require_security_test_for_permission_change: true
+  require_wordpress_test_for_publication_change: true
+
+release:
+  allow_direct_production_release: false
+  require_limited_rollout_for_minor: true
+  require_limited_rollout_for_major: true
+  require_monitoring_after_release: true

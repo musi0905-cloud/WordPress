@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0",
+  "status": "NOT_INITIALIZED",
+  "last_governance_run_id": null,
+  "last_completed_at": null,
+  "change_freeze_active": false,
+  "open_proposals": 0,
+  "active_changesets": 0,
+  "updated_at": null
+}

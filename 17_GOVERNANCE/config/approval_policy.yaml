@@ -1,0 +1,38 @@
+# WF-15 승인 정책.
+# 스키마 설명은 02_WORKFLOW/WF-15_GOVERNANCE_AND_CHANGE_CONTROL.md의 "8. APPROVAL POLICY" 참조.
+
+schema_version: "1.0"
+
+approval:
+  evidence_required: true
+  impact_analysis_required: true
+  rollback_plan_required: true
+  test_plan_required: true
+  constitution_review_required: true
+
+thresholds:
+  automatic_patch:
+    minimum_confidence: HIGH
+    maximum_risk: LOW
+    minimum_reversibility: HIGH
+    constitution_conflict: false
+
+  minor_change:
+    minimum_confidence: HIGH
+    maximum_risk: MEDIUM
+    targeted_test_required: true
+    limited_rollout_required: true
+
+  major_change:
+    minimum_confidence: HIGH
+    manual_approval_required: true
+    full_test_required: true
+    limited_rollout_required: true
+
+rejection:
+  reject_quality_reduction: true
+  reject_security_reduction: true
+  reject_unbounded_automation: true
+  reject_unverified_rule_activation: true
+  reject_missing_rollback: true
+  reject_single_case_generalization: true

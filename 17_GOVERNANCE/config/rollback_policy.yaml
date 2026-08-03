@@ -1,0 +1,27 @@
+# WF-15 Rollback 정책.
+# 스키마 설명은 02_WORKFLOW/WF-15_GOVERNANCE_AND_CHANGE_CONTROL.md의 "10. ROLLBACK POLICY" (3.6, STEP 26, "21. CHANGE FREEZE POLICY" 참조).
+
+schema_version: "1.0"
+
+rollback:
+  require_snapshot_before_change: true
+  require_rollback_plan_for_every_changeset: true
+  require_wf10_regression_after_rollback: true
+  automatic_rollback: false
+
+triggers:
+  critical_security_issue: true
+  policy_gate_bypass: true
+  clear_quality_score_decline: true
+  workflow_failure_rate_increase: true
+  registry_corruption: true
+  schema_compatibility_failure: true
+  wordpress_duplicate_publication: true
+  auto_publish_permission_error: true
+  data_corruption: true
+  rollout_stop_condition_met: true
+
+after_rollback:
+  mark_release_resolved: false
+  require_root_cause_reanalysis: true
+  require_wf10_regression_test: true

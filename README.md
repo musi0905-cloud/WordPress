@@ -11,7 +11,7 @@
 - `03_REFERENCE/` — 참고 자료 원본 소재
 - `04_INPUT/` — Workflow별 실행 입력
 - `05_OUTPUT/` — Workflow별 산출물
-- `06_MEMORY/` — 프로젝트 영구 자산 (Rule/Pattern/Template/Reference/Keyword/Quality/Workflow/Knowledge/Architecture/Draft/Publication/Orchestration/Validation/Operations/Performance/Remediation/Optimization Library)
+- `06_MEMORY/` — 프로젝트 영구 자산 (Rule/Pattern/Template/Reference/Keyword/Quality/Workflow/Knowledge/Architecture/Draft/Publication/Orchestration/Validation/Operations/Performance/Remediation/Optimization/Governance Library)
 - `07_TEMPLATE/` — 사람이 정의한 원본 템플릿 (예약)
 - `08_LOG/` — Workflow 실행 로그
 - `09_ARCHIVE/` — Deprecated/Replaced 자산 이력, Workflow 재실행 시 이전 버전 스냅샷
@@ -22,6 +22,7 @@
 - `14_PERFORMANCE/` — WF-12의 실제 성과·애드센스 승인 분석 환경 (색인/검색/AdSense/수익 데이터, Alert, 리포트)
 - `15_REMEDIATION/` — WF-13의 애드센스·사이트·콘텐츠 문제 수정 환경 (Case/Snapshot/Rollback, Site·Reapplication Readiness 리포트)
 - `16_OPTIMIZATION/` — WF-14의 게시 콘텐츠 성과 최적화 환경 (Candidate/Experiment/Snapshot/Rollback, Optimization·Experiment Result 리포트)
+- `17_GOVERNANCE/` — WF-15의 변경 통제 환경 (Proposal/Change Set/Sandbox/Release/Rollback, Governance·Release Report)
 
 ## 자산 계층 구조
 
@@ -33,7 +34,7 @@ Rule이 수천 개로 늘어나도 이 계층의 정점인 Content DNA는 압축
 
 ## 현재 진행 단계
 
-1. `00_PROJECT_CONSTITUTION` (v2.3) — 완료
+1. `00_PROJECT_CONSTITUTION` (v2.4) — 완료
 2. `WF-01 : REFERENCE ANALYSIS ENGINE` (v2.0) — 완료 (`02_WORKFLOW/WF-01_REFERENCE_ANALYSIS.md`)
 3. `WF-02 : KNOWLEDGE ENGINEERING ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-02_KNOWLEDGE_ENGINEERING.md`)
 4. `WF-03 : KEYWORD INTELLIGENCE ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-03_KEYWORD_INTELLIGENCE.md`)
@@ -48,8 +49,9 @@ Rule이 수천 개로 늘어나도 이 계층의 정점인 Content DNA는 압축
 13. `WF-12 : PERFORMANCE AND APPROVAL INTELLIGENCE ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-12_PERFORMANCE_AND_APPROVAL_INTELLIGENCE.md`)
 14. `WF-13 : ADSENSE AND SITE REMEDIATION ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-13_ADSENSE_AND_SITE_REMEDIATION.md`)
 15. `WF-14 : CONTENT OPTIMIZATION ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-14_CONTENT_OPTIMIZATION.md`)
+16. `WF-15 : GOVERNANCE AND CHANGE CONTROL ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-15_GOVERNANCE_AND_CHANGE_CONTROL.md`)
 
-**WF-01~WF-14, 14개 Workflow 정의가 모두 완료되었다.** WF-01~WF-08은 수집 → 압축 → 키워드 설계 → 구조 설계 → 집필 → 검수 → 배포 → 학습이 순환하는 파이프라인, WF-09는 그 8개를 하나의 명령으로 호출·재실행·복구하는 오케스트레이터, WF-10은 그 전체가 설계대로 실제로 동작하는지 `12_TEST/`의 격리된 환경에서 검증하는 품질 게이트, WF-11은 WF-10을 통과한 시스템을 실제 운영(Batch·처리량·비용·Incident·수동 검토)으로 전환하는 운영 계층, WF-12는 그 운영 이후의 실제 색인·검색·애드센스·수익 결과를 수집해 WF-08에 근거 데이터로 되먹임하는 계층, WF-13은 WF-12가 확인한 문제 중 근거가 확인된 것만 골라 실제 수정 작업(Remediation Case)으로 전환하고 재검증까지 관리하는 복구 계층, WF-14는 이미 정상 게시·색인된 콘텐츠의 검색 성과·CTR·최신성·내부링크를 근거 기반 실험(Optimization Experiment)으로 개선하는 운영 최적화 계층이다. WF-09/WF-10/WF-11/WF-12/WF-13/WF-14 모두 개별 워크플로우의 판단을 대체하지 않는다 — Handoff가 `ready: false`면 다음 단계로 절대 넘어가지 않는다.
+**WF-01~WF-15, 15개 Workflow 정의가 모두 완료되었다.** WF-01~WF-08은 수집 → 압축 → 키워드 설계 → 구조 설계 → 집필 → 검수 → 배포 → 학습이 순환하는 파이프라인, WF-09는 그 8개를 하나의 명령으로 호출·재실행·복구하는 오케스트레이터, WF-10은 그 전체가 설계대로 실제로 동작하는지 `12_TEST/`의 격리된 환경에서 검증하는 품질 게이트, WF-11은 WF-10을 통과한 시스템을 실제 운영(Batch·처리량·비용·Incident·수동 검토)으로 전환하는 운영 계층, WF-12는 그 운영 이후의 실제 색인·검색·애드센스·수익 결과를 수집해 WF-08에 근거 데이터로 되먹임하는 계층, WF-13은 WF-12가 확인한 문제 중 근거가 확인된 것만 골라 실제 수정 작업(Remediation Case)으로 전환하고 재검증까지 관리하는 복구 계층, WF-14는 이미 정상 게시·색인된 콘텐츠의 검색 성과·CTR·최신성·내부링크를 근거 기반 실험(Optimization Experiment)으로 개선하는 운영 최적화 계층, WF-15는 WF-08/WF-10/WF-11/WF-12/WF-13/WF-14가 만들어내는 모든 변경 후보를 접수해 근거·영향도·위험도·Constitution 충돌을 심사하고 Sandbox·테스트·제한 배포를 거친 변경만 정식 Release로 반영하는 중앙 변경 통제 계층이다. WF-09/WF-10/WF-11/WF-12/WF-13/WF-14/WF-15 모두 개별 워크플로우의 판단을 대체하지 않는다 — Handoff가 `ready: false`면 다음 단계로 절대 넘어가지 않는다.
 
 ## WF-01 : Reference Analysis Engine
 
@@ -327,5 +329,31 @@ WF-14는 WF-13과 대상이 다른 별도의 계층이다. WF-13이 승인 거�
 - `08_LOG/WF-14/` — 검증/실행/이벤트 로그
 
 변경된 콘텐츠는 WF-06 품질 재검증을 다시 통과해야 하며, WF-07을 통해 기존 WordPress Post ID와 Slug를 유지한 채 업데이트된다. 변경 후 최소 28일(최대 90일)의 관찰 기간 동안 동일 콘텐츠를 반복 수정하지 않으며, Slug 자동 변경과 콘텐츠 자동 삭제는 절대 수행하지 않는다 — 필요하면 WF-13에 Proposal만 전달한다. Experiment 결과는 검색 수요 변화나 계절성 같은 교란 요인을 함께 기록하며, 단일 결과를 전체 프로젝트 규칙으로 일반화하지 않는다.
+
+## WF-15 : Governance and Change Control Engine
+
+WF-08, WF-12, WF-13, WF-14에서 개선 후보가 계속 생성되더라도, 검증되지 않은 변경이 곧바로 운영에 반영되면 프로젝트가 흔들릴 수 있다. WF-15는 이 모든 변경 제안을 중앙에서 접수하고, 근거·영향 범위·위험도·회귀 가능성·Project Constitution 충돌 여부를 검토하여 변경의 승인, 보류, 거절, 시험 적용, 정식 반영, 롤백을 통제하는 프로젝트의 변경 통제 책임자다. Project Constitution, Content DNA, Rule/Template/Workflow 정의, Quality Gate, Security/Publication Policy, WordPress 권한 같은 핵심 자산은 명백한 PATCH 수준(오탈자·경로·통계값)을 제외하면 정식 Change Proposal 없이 변경되지 않으며, 승인(`APPROVED_FOR_ROLLOUT`)과 실제 배포(`RELEASED`)는 항상 분리되어 있다. 모든 변경은 운영 파일을 직접 건드리지 않는 Sandbox에서 먼저 적용되어 변경 등급(PATCH/MINOR/MAJOR/CONSTITUTIONAL)에 맞는 WF-10 테스트를 통과해야 하며, MINOR 이상은 제한된 범위의 Limited Rollout을 거친 뒤에만 정식 Release로 반영된다.
+
+사용법 (명령은 자연어로, `02_WORKFLOW/WF-15_GOVERNANCE_AND_CHANGE_CONTROL.md`의 "18. COMMAND BEHAVIOR" 참조):
+
+- `WF-15 전체 실행` — 모든 미처리 Change Proposal을 수집하고 검토한다.
+- `WF-15 Proposal 수집` — 변경하지 않고 신규 Proposal만 정규화한다.
+- `WF-15 Proposal 검토: CP-0001` / `WF-15 Change Set 생성: CP-0001` — 특정 Proposal을 심사하고 승인 가능하면 Change Set을 만든다.
+- `WF-15 Sandbox 적용: CHG-20260803-0001` / `WF-15 테스트: CHG-20260803-0001` — 운영 파일을 건드리지 않고 Sandbox에 적용한 뒤 변경 수준에 맞는 WF-10 테스트를 실행한다.
+- `WF-15 제한 배포: CHG-20260803-0001` — 검증된 제한 범위에만 적용한다.
+- `WF-15 Release 생성: CHG-20260803-0001` / `WF-15 Release 적용: REL-20260803-0001` — 정식 Release Package를 만들고, 모든 Gate를 통과한 Release만 반영한다.
+- `WF-15 Rollback: REL-20260803-0001` — 검증된 Snapshot을 기준으로 이전 버전을 복원한다.
+- `WF-15 버전 상태` / `WF-15 수동 승인 목록` / `WF-15 거절 목록` / `WF-15 상태` — 아무것도 바꾸지 않고 현재 버전, 수동 승인 대기, 거절 이력, Governance 상태만 출력한다.
+
+결과는 아래에 저장된다.
+
+- `17_GOVERNANCE/config/` — Governance/변경 등급 분류/승인/제한 배포/Rollback/Release 정책 6종 (모두 안전 기본값으로 시딩됨)
+- `17_GOVERNANCE/proposals/`, `17_GOVERNANCE/changesets/`, `17_GOVERNANCE/queue/`, `17_GOVERNANCE/runtime/` — Proposal·Change Set 상태별 저장소, 6종 대기열, 현재 실행 상태
+- `17_GOVERNANCE/snapshots/`, `17_GOVERNANCE/releases/` — 변경 전/후/Release/Rollback Snapshot, Release 상태별 저장소와 Release Registry
+- `17_GOVERNANCE/reports/` — Governance/Change Control/Release/Rollback 리포트
+- `06_MEMORY/GOVERNANCE_LIBRARY/` — Proposal 누적 인덱스, Change Control·Release·Rollback 이력, 승인/거절 변경 레지스트리
+- `08_LOG/WF-15/` — 검증/실행/이벤트 로그
+
+품질·보안 기준을 낮추는 변경, 근거가 부족한 변경, 단일 사례를 근거로 한 전체 Rule 일반화, Rollback 경로가 없는 변경은 기본적으로 거절된다. Constitution·Content DNA 핵심 정의·보안/게시 정책·자동 게시 및 Delete 권한·Workflow Major 변경은 수동 승인 없이 자동 Release되지 않으며(`MANUAL_APPROVAL_REQUIRED`), WF-15 자신도 Project Constitution을 우회할 수 없다 — 충돌 시 `REJECTED_CONSTITUTION_CONFLICT` 또는 `CONSTITUTION_AMENDMENT_REQUIRED`로 처리하고 Amendment는 항상 사람이 수행한다. Critical Incident나 WF-10 REJECTED 같은 상황에서는 PATCH 수준 보안 수정을 제외한 신규 Release를 중단하는 Change Freeze가 발동한다.
 
 전체 운영 원칙은 `00_PROJECT_CONSTITUTION/CONSTITUTION.md`를 따른다.
