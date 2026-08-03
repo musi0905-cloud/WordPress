@@ -10,6 +10,8 @@ Pattern은 Rule보다 큰 상위 개념이다. 서로 연관된 여러 Rule을 �
 
 각 패턴의 형식은 `02_WORKFLOW/WF-01_REFERENCE_ANALYSIS.md`의 "Pattern Entry Format"을 따른다.
 
+`02_WORKFLOW/WF-02_KNOWLEDGE_ENGINEERING.md`(Knowledge Compression)는 중복/병합된 Pattern의 **Status 필드만** 변경할 수 있다. 다른 필드는 수정하지 않으며, 삭제도 하지 않는다.
+
 ------------------------------------------------------------
 
 ## 패턴 목록

@@ -15,11 +15,20 @@
 - `08_LOG/` — Workflow 실행 로그
 - `09_ARCHIVE/` — Deprecated/Replaced 자산 이력
 
+## 자산 계층 구조
+
+```
+Reference → Pattern → Rule → DNA → Workflow → Template → Content
+```
+
+Rule이 수천 개로 늘어나도 이 계층의 정점인 Content DNA는 압축된 상태로 안정적인 크기를 유지한다. WF-03 이후의 워크플로우는 Rule Library 전체가 아니라 Content DNA와 Decision Tree를 우선 조회한다.
+
 ## 현재 진행 단계
 
-1. `00_PROJECT_CONSTITUTION` — 완료
+1. `00_PROJECT_CONSTITUTION` (v1.1) — 완료
 2. `WF-01 : REFERENCE ANALYSIS ENGINE` (v2.0) — 완료 (`02_WORKFLOW/WF-01_REFERENCE_ANALYSIS.md`)
-3. `WF-02_RULE_EXTRACTION` (Rule Engineering → Content DNA) 이후 — 예정
+3. `WF-02 : KNOWLEDGE ENGINEERING ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-02_KNOWLEDGE_ENGINEERING.md`)
+4. `WF-03_KEYWORD_ANALYSIS` (Keyword Intelligence) 이후 — 예정
 
 ## WF-01 : Reference Analysis Engine
 
@@ -37,6 +46,23 @@ WF-01은 **Reference Intelligence Engine**이다. 벤치마킹 사이트를 절�
    - `05_OUTPUT/WF-01/{YYYY-MM-DD}_REFERENCE_REPORT.md` — 실행 1회분 종합 리포트
    - `08_LOG/WF-01/{YYYY-MM-DD}.log.md` — 실행 로그
 
-다음 단계(WF-02_RULE_EXTRACTION)는 이 Rule/Pattern/Template Library를 입력으로 받아 "Content DNA"로 정제한다.
+## WF-02 : Knowledge Engineering Engine
+
+WF-02는 Rule을 만들지 않는다. WF-01이 만든 Rule/Pattern/Template을 **Content DNA**(프로젝트의 글쓰기 철학), Knowledge/Pattern Graph, Decision Tree, Template Graph로 압축·구조화한다. Rule이 수천 개가 되어도 사람이 직접 관리하지 않아도 되게 만드는 단계다.
+
+사용법:
+
+1. WF-01이 최소 1개 이상의 Active Rule을 만든 상태여야 한다.
+2. (선택) `04_INPUT/WF-02/config.md`로 대상 콘텐츠 유형/압축 강도를 조정한다.
+3. `02_WORKFLOW/WF-02_KNOWLEDGE_ENGINEERING.md`를 실행한다.
+4. 결과는 아래에 저장된다.
+   - `06_MEMORY/KNOWLEDGE_LIBRARY/CONTENT_DNA.md` — 압축된 글쓰기 철학 (핵심 산출물)
+   - `06_MEMORY/KNOWLEDGE_LIBRARY/DECISION_TREE.md` — 상황별 Rule/Pattern 자동 선택
+   - `06_MEMORY/KNOWLEDGE_LIBRARY/TEMPLATE_GRAPH.md` — 콘텐츠 유형별 완성 Template (CTPL-ID)
+   - `06_MEMORY/KNOWLEDGE_LIBRARY/KNOWLEDGE_GRAPH.md`, `PATTERN_GRAPH.md`, `CLASSIFICATION.md`, `VALIDATION_LOG.md`
+   - `05_OUTPUT/WF-02/{YYYY-MM-DD}_KNOWLEDGE_REPORT.md` — 실행 1회분 종합 리포트
+   - `08_LOG/WF-02/{YYYY-MM-DD}.log.md` — 실행 로그
+
+다음 단계(WF-03_KEYWORD_ANALYSIS)부터는 Rule Library 전체가 아니라 Content DNA와 Decision Tree를 기준으로 동작한다.
 
 전체 운영 원칙은 `00_PROJECT_CONSTITUTION/CONSTITUTION.md`를 따른다.

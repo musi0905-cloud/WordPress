@@ -8,6 +8,8 @@ Rule은 개별 구조 규칙이다. 여러 Rule이 상위 개념으로 묶이면
 
 각 규칙의 형식(Title/Category/Description/Reason/Applicability/Exception/Priority/Evidence Count/Status/Created/Source Workflow)은 `02_WORKFLOW/WF-01_REFERENCE_ANALYSIS.md`의 "Rule Entry Format"을 따른다.
 
+`02_WORKFLOW/WF-02_KNOWLEDGE_ENGINEERING.md`(Knowledge Compression)는 중복/병합된 Rule의 **Status 필드만** 변경할 수 있다. 다른 필드는 수정하지 않으며, 삭제도 하지 않는다.
+
 ------------------------------------------------------------
 
 ## 규칙 목록

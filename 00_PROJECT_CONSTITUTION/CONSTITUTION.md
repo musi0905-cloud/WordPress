@@ -1,7 +1,7 @@
 # ============================================================
 # CONTENT OS
 # PROJECT CONSTITUTION
-# VERSION 1.0
+# VERSION 1.1
 # ============================================================
 
 # Identity
@@ -72,6 +72,26 @@ Knowledge Library
 
 모든 Workflow는 위 라이브러리를 우선적으로 활용한다.
 
+이 자산들은 아래 계층 구조를 이룬다.
+
+```
+Reference
+   ↓
+Pattern
+   ↓
+Rule
+   ↓
+DNA
+   ↓
+Workflow
+   ↓
+Template
+   ↓
+Content
+```
+
+Rule의 개수가 아무리 늘어나도(수백~수천 개), Knowledge Library의 정점인 Content DNA는 압축된 상태로 안정적인 크기를 유지한다. WF-02 이후의 워크플로우는 원칙적으로 Rule Library 전체가 아니라 Content DNA와 Decision Tree를 우선 조회한다. 이것이 프로젝트 규모가 커져도 품질과 일관성이 무너지지 않는 이유다.
+
 ------------------------------------------------------------
 
 # Project Directory
@@ -114,35 +134,37 @@ Workflow는 결과를 Memory에 저장해야 한다.
 
 # Workflow Order
 
-WF-01_REFERENCE_ANALYSIS
+WF-01_REFERENCE_ANALYSIS (Reference Intelligence Engine)
 
 ↓
 
-WF-02_RULE_EXTRACTION
+WF-02_KNOWLEDGE_ENGINEERING (Knowledge Engineering Engine → Content DNA)
 
 ↓
 
-WF-03_KEYWORD_ANALYSIS
+WF-03_KEYWORD_ANALYSIS (Keyword Intelligence)
 
 ↓
 
-WF-04_CONTENT_ARCHITECTURE
+WF-04_CONTENT_ARCHITECTURE (Content Architect)
 
 ↓
 
-WF-05_CONTENT_GENERATION
+WF-05_CONTENT_GENERATION (Writer)
 
 ↓
 
-WF-06_QUALITY_REVIEW
+WF-06_QUALITY_REVIEW (Quality AI)
 
 ↓
 
-WF-07_EXPORT
+WF-07_EXPORT (Publisher)
 
 ↓
 
-WF-08_PROJECT_LEARNING
+WF-08_PROJECT_LEARNING (Learning Engine)
+
+WF-02는 Rule을 만드는 워크플로우가 아니다. WF-01이 만든 Rule/Pattern/Template을 Content DNA / Knowledge Graph / Decision Tree / Template Graph로 압축·구조화하는 워크플로우다. WF-03 이후의 모든 워크플로우는 이 압축된 자산을 기준으로 동작한다.
 
 ------------------------------------------------------------
 
@@ -293,3 +315,9 @@ Optimization
 를 구축하는 것이다.
 
 모든 하위 Workflow와 Template는 이 헌법을 최우선으로 따른다.
+
+------------------------------------------------------------
+
+# Amendment Log
+
+VERSION 1.1 — WF-02의 이름과 역할을 WF-02_RULE_EXTRACTION에서 WF-02_KNOWLEDGE_ENGINEERING으로 변경. Rule Library 위에 Content DNA(Knowledge Library의 정점)라는 상위 압축 계층을 도입하고, Workflow Order 각 단계에 확정된 역할명을 병기. 기존 Rule System, Memory Policy 등 다른 조항과 충돌하지 않음을 확인 후 반영.
