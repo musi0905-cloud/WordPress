@@ -1,7 +1,7 @@
 # ============================================================
 # CONTENT OS
 # PROJECT CONSTITUTION
-# VERSION 1.6
+# VERSION 1.7
 # ============================================================
 
 # Identity
@@ -339,3 +339,5 @@ VERSION 1.4 — WF-04_CONTENT_ARCHITECTURE가 Content Brief를 Content Blueprint
 VERSION 1.5 — WF-05_CONTENT_GENERATION이 프로젝트 최초로 실제 본문을 생성하는 워크플로우로 도입됨. WF-04의 Writing Contract를 잠금 상태로 실행하며 구조를 임의로 변경하지 않는다. 생성된 Draft와 그 근거 출처(Source Library)를 위해 Project Memory에 Draft Library를 9번째 라이브러리로 추가.
 
 VERSION 1.6 — WF-07_EXPORT_AND_PUBLISHING이 프로젝트 최초로 외부 게시 시스템(WordPress)과 연동하는 워크플로우로 도입됨. 기본 게시 모드는 항상 DRAFT이며, 자동 공개는 프로젝트 설정에서 명시적으로 허용된 경우에만 가능하다. 인증정보(비밀번호/토큰)는 환경변수에서만 읽고 어떤 산출물에도 기록하지 않는다. 게시 패키지와 실제 배포 상태(초안/예약/게시/동기화 실패)를 위해 Project Memory에 Publication Library를 10번째 라이브러리로 추가.
+
+VERSION 1.7 — WF-08_PROJECT_LEARNING 도입으로 WF-01~WF-08 8개 핵심 Workflow 정의가 모두 완료됨. WF-08은 콘텐츠를 작성하거나 게시하지 않고, WF-01~WF-07의 실행 결과를 분석해 Rule/Pattern/Template/Content DNA/Decision Tree 성과를 평가하고 프로젝트 버전을 관리한다. 자동 반영 범위는 PATCH 수준(오탈자, 상태값, 통계, 경로)으로 제한되며, Rule 삭제·Content DNA 핵심 변경·품질/안전 기준 완화는 절대 자동 적용되지 않고 사람이 승인해야 하는 Change Proposal로만 남는다. 헌법 v1.0부터 예약되어 있던 Workflow Library를 이 워크플로우가 실제로 채운다 (신규 라이브러리 추가 없음). 이 시점부터 프로젝트는 실행 → 학습 → 개선이 순환하는 콘텐츠 운영체제로 완성된다.

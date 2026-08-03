@@ -25,7 +25,7 @@ Rule이 수천 개로 늘어나도 이 계층의 정점인 Content DNA는 압축
 
 ## 현재 진행 단계
 
-1. `00_PROJECT_CONSTITUTION` (v1.6) — 완료
+1. `00_PROJECT_CONSTITUTION` (v1.7) — 완료
 2. `WF-01 : REFERENCE ANALYSIS ENGINE` (v2.0) — 완료 (`02_WORKFLOW/WF-01_REFERENCE_ANALYSIS.md`)
 3. `WF-02 : KNOWLEDGE ENGINEERING ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-02_KNOWLEDGE_ENGINEERING.md`)
 4. `WF-03 : KEYWORD INTELLIGENCE ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-03_KEYWORD_INTELLIGENCE.md`)
@@ -33,7 +33,9 @@ Rule이 수천 개로 늘어나도 이 계층의 정점인 Content DNA는 압축
 6. `WF-05 : CONTENT GENERATION ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-05_CONTENT_GENERATION.md`)
 7. `WF-06 : QUALITY REVIEW ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-06_QUALITY_REVIEW.md`)
 8. `WF-07 : EXPORT AND PUBLISHING ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-07_EXPORT_AND_PUBLISHING.md`)
-9. `WF-08_PROJECT_LEARNING` (Learning Engine) — 예정
+9. `WF-08 : PROJECT LEARNING ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-08_PROJECT_LEARNING.md`)
+
+**WF-01~WF-08, 8개 핵심 Workflow 정의가 모두 완료되었다.** 이 시점부터 Content OS는 수집(WF-01) → 압축(WF-02) → 키워드 설계(WF-03) → 구조 설계(WF-04) → 집필(WF-05) → 검수(WF-06) → 배포(WF-07) → 학습(WF-08)이 순환하는 완결된 파이프라인이다. WF-08의 결과는 다음 WF-01/WF-03 실행부터 다시 반영된다.
 
 ## WF-01 : Reference Analysis Engine
 
@@ -159,5 +161,23 @@ WF-07은 게시 자동화보다 **안전한 배포 상태 관리**가 핵심이�
    - `05_OUTPUT/WF-07_EXPORT_AND_PUBLISHING_REPORT.md` — 실행 1회분 종합 리포트
 
 최종 Publication Mode는 `EXPORT_ONLY` / `WORDPRESS_DRAFT` / `SCHEDULE_READY` / `PUBLISH_READY` / `BLOCKED` 중 하나로 결정되며, WordPress가 비활성이거나 인증정보가 없으면 항상 `EXPORT_ONLY`로 떨어진다. 기존 WordPress Draft가 있으면 새 Post를 만들지 않고 업데이트한다.
+
+## WF-08 : Project Learning Engine
+
+WF-08은 파이프라인의 마지막 단계이자 유일하게 "뒤를 돌아보는" 워크플로우다. 콘텐츠를 새로 쓰거나 게시하지 않고, WF-01~WF-07의 실행 로그·품질 리포트·게시 결과를 분석해 Rule/Pattern/Template/Content DNA/Decision Tree의 실제 성과를 평가한다. 반복 오류를 `ISOLATED`/`REPEATED`/`SYSTEMIC`으로 구분하고, 직접 원인과 상위 원인(예: "WF-06에서 발견된 출처 누락의 진짜 원인은 WF-04의 Evidence Plan 누락")을 추적한다.
+
+자동으로 반영하는 범위는 철저히 좁다 — 오탈자, 상태값, 통계, 경로 같은 PATCH 수준만 자동 적용되며, `risk_level = LOW`이고 데이터 신뢰도가 `HIGH` 이상일 때만 허용된다. Rule 삭제, Content DNA 핵심 철학 변경, 품질/안전 기준 완화, 자동 게시 권한 확대는 **절대 자동 적용되지 않고** `Change Proposal`로만 기록되어 사람의 승인을 기다린다. 모든 자동 변경은 적용 전 스냅샷을 남겨 되돌릴 수 있다. 외부 성과 데이터(검색 노출, 클릭, 수익 등)는 실제로 존재할 때만 분석하며, 없는 데이터를 추정해서 채우지 않는다.
+
+사용법:
+
+1. WF-01~WF-07이 최소 1회 이상 실행되어 로그와 산출물이 존재해야 한다.
+2. `02_WORKFLOW/WF-08_PROJECT_LEARNING.md`를 실행한다.
+3. 결과는 아래에 저장된다.
+   - `06_MEMORY/WORKFLOW_LIBRARY/` — `learning_registry.json`, `rule_performance.json`, `template_performance.json`, `workflow_performance.json`, `content_dna_history.json`, `decision_tree_history.json`, `change_proposals.json`, `project_health.json`, `project_versions.json` (누적 자산 — 헌법 v1.0부터 예약되어 있던 라이브러리를 실제로 채움)
+   - `05_OUTPUT/learning/` — `WF-08_LEARNING_REPORT.md`/`.json`, `learning_package.json` 등 실행 1회분 산출물
+   - `08_LOG/WF-08/environment_validation.json`, `run_<timestamp>.json` — 검증/실행 로그
+   - `09_ARCHIVE/WF-08/<timestamp>/` — PATCH 변경 전 스냅샷 (롤백용)
+
+WF-08 실행 후 다음 WF-01/WF-03 실행부터는 갱신된 Rule 상태·성과 데이터·Decision Tree 보완 경로가 반영된다. 이 시점부터 Content OS는 단순한 파이프라인이 아니라, 스스로의 실행 결과를 근거로 개선되는 학습 가능한 콘텐츠 운영체제가 된다.
 
 전체 운영 원칙은 `00_PROJECT_CONSTITUTION/CONSTITUTION.md`를 따른다.
