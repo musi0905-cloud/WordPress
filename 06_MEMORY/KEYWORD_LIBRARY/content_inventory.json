@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-08-03T15:30:00+09:00",
+  "updated_at": "2026-08-03T18:27:46+09:00",
   "items": [
     {
       "keyword_id": "KW-0001",
@@ -15,6 +15,1006 @@
       "quality_grade": "A-",
       "created_at": "2026-08-03T13:45:52+09:00",
       "updated_at": "2026-08-03T15:30:00+09:00"
+    },
+    {
+      "keyword_id": "KW-0002",
+      "keyword": "모텔임대",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0003",
+      "keyword": "방광염치료",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-3",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0004",
+      "keyword": "헬로우드림",
+      "status": "HOLD_NEEDS_CLARIFICATION",
+      "execution_batch": "HOLD",
+      "priority": "HOLD",
+      "risk_level": "UNCONFIRMED",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0005",
+      "keyword": "바나듐",
+      "status": "HOLD_NEEDS_CLARIFICATION",
+      "execution_batch": "HOLD",
+      "priority": "HOLD",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0006",
+      "keyword": "오늘상한가종목",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-4",
+      "priority": "P3",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0007",
+      "keyword": "안양공유오피스",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-1",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0008",
+      "keyword": "유치원문방구",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-1",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0009",
+      "keyword": "줄기세포치료",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-3",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0010",
+      "keyword": "일요일진료안과",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0011",
+      "keyword": "소방설비기사응시자격",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-0-VALIDATION",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0012",
+      "keyword": "모텔매매",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0013",
+      "keyword": "초등수학문제집",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-1",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0014",
+      "keyword": "간병인보험료",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0015",
+      "keyword": "초음파마사지기",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0016",
+      "keyword": "천재교육교과서",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-1",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0017",
+      "keyword": "구직활동",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0018",
+      "keyword": "다음부동산",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0019",
+      "keyword": "L아르기닌효능",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-3",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0020",
+      "keyword": "토론회",
+      "status": "HOLD_NEEDS_CLARIFICATION",
+      "execution_batch": "HOLD",
+      "priority": "HOLD",
+      "risk_level": "UNCONFIRMED",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0021",
+      "keyword": "미용실인테리어",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-1",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0022",
+      "keyword": "창업지원센터",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-1",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0023",
+      "keyword": "구인구직사이트순위",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-0-VALIDATION",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0024",
+      "keyword": "일상생활배상책임보험",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0025",
+      "keyword": "개인사업자세금",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-3",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0026",
+      "keyword": "더경기패스신청",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0027",
+      "keyword": "네이버쇼핑구매내역",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-0-VALIDATION",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0028",
+      "keyword": "우울증치료",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-4",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0029",
+      "keyword": "소상공인스마트상점",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0030",
+      "keyword": "수영대회",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0031",
+      "keyword": "류마티스관절염치료",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-3",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0032",
+      "keyword": "주택담보대출갈아타기",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-4",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0033",
+      "keyword": "지급명령이의신청",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-4",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0034",
+      "keyword": "학생부종합전형",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0035",
+      "keyword": "노안수술비용",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-3",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0036",
+      "keyword": "엑스골프",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0037",
+      "keyword": "교사자람",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0038",
+      "keyword": "노인인권교육",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0039",
+      "keyword": "경찰출신변호사",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-4",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0040",
+      "keyword": "롱패딩",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-1",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0041",
+      "keyword": "골절진단비",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0042",
+      "keyword": "따뜻한",
+      "status": "HOLD_NEEDS_CLARIFICATION",
+      "execution_batch": "HOLD",
+      "priority": "HOLD",
+      "risk_level": "UNCONFIRMED",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0043",
+      "keyword": "민물장어효능",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-3",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0044",
+      "keyword": "전세임대주택",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0045",
+      "keyword": "대상포진가려움",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-3",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0046",
+      "keyword": "엘지헬로비전고객센터",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-1",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0047",
+      "keyword": "김소형알부민",
+      "status": "HOLD_NEEDS_CLARIFICATION",
+      "execution_batch": "HOLD",
+      "priority": "P4",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0048",
+      "keyword": "유방암종류",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-4",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0049",
+      "keyword": "그림책",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-1",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0050",
+      "keyword": "넷플릭스싸게보는법",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0051",
+      "keyword": "전립선검사",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-3",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0052",
+      "keyword": "당좌거래정지",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-4",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0053",
+      "keyword": "경기도어린이청소년교통비",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0054",
+      "keyword": "자궁탈출증",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-4",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0055",
+      "keyword": "자동차보험비교견적",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0056",
+      "keyword": "학원인테리어",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-1",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0057",
+      "keyword": "성남시대형폐기물",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-1",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0058",
+      "keyword": "제2금융권",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-3",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0059",
+      "keyword": "정리정돈",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-1",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0060",
+      "keyword": "눈건강",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0061",
+      "keyword": "홍보영상제작",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-1",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0062",
+      "keyword": "법정의무교육",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0063",
+      "keyword": "갱년기검사",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-3",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0064",
+      "keyword": "금융투자",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-4",
+      "priority": "P3",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0065",
+      "keyword": "톤업선크림추천",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-1",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0066",
+      "keyword": "뷰티디바이스순위",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0067",
+      "keyword": "눈가주름",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0068",
+      "keyword": "커피쿠폰",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-1",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0069",
+      "keyword": "사회복지사2급자격증",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-1",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0070",
+      "keyword": "보험비교사이트",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0071",
+      "keyword": "꿀파일무료쿠폰",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-3",
+      "priority": "P3",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0072",
+      "keyword": "암보험비교",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-3",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0073",
+      "keyword": "천안아이파크시티",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-3",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0074",
+      "keyword": "부산임플란트잘하는곳",
+      "status": "HOLD_NEEDS_CLARIFICATION",
+      "execution_batch": "HOLD",
+      "priority": "P4",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0075",
+      "keyword": "이사짐센터비용",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-0-VALIDATION",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0076",
+      "keyword": "보약",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-4",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0077",
+      "keyword": "인천중고폰",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-1",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0078",
+      "keyword": "고용노동부내일배움카드",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0079",
+      "keyword": "인천누수탐지",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-1",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0080",
+      "keyword": "인천운전면허학원",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-1",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0081",
+      "keyword": "하나은행환율조회",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-4",
+      "priority": "P3",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0082",
+      "keyword": "아동학대예방교육",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0083",
+      "keyword": "원상복구",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-3",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0084",
+      "keyword": "수술비보험",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0085",
+      "keyword": "치질수술비용",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-3",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0086",
+      "keyword": "유방혹",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-4",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0087",
+      "keyword": "사이트",
+      "status": "HOLD_NEEDS_CLARIFICATION",
+      "execution_batch": "HOLD",
+      "priority": "HOLD",
+      "risk_level": "UNCONFIRMED",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0088",
+      "keyword": "살빼는방법",
+      "status": "HOLD_NEEDS_CLARIFICATION",
+      "execution_batch": "HOLD",
+      "priority": "P4",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0089",
+      "keyword": "토트넘경기일정",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-4",
+      "priority": "P3",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0090",
+      "keyword": "스탠포드호텔",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0091",
+      "keyword": "가처분신청",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-4",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0092",
+      "keyword": "대구도시가스고객센터",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-1",
+      "priority": "P1",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0093",
+      "keyword": "수소에너지관련주",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-4",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0094",
+      "keyword": "5월공모주청약일정",
+      "status": "HOLD_NEEDS_CLARIFICATION",
+      "execution_batch": "HOLD",
+      "priority": "P4",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0095",
+      "keyword": "개인회생신용회복",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-4",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0096",
+      "keyword": "필러가격",
+      "status": "HOLD_NEEDS_CLARIFICATION",
+      "execution_batch": "HOLD",
+      "priority": "P4",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0097",
+      "keyword": "이혼시재산분할",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-4",
+      "priority": "P3",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0098",
+      "keyword": "병원동행매니저취업",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-2",
+      "priority": "P2",
+      "risk_level": "LOW",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0099",
+      "keyword": "반려견장례",
+      "status": "PORTFOLIO_ANALYZED",
+      "execution_batch": "BATCH-0-VALIDATION",
+      "priority": "P2",
+      "risk_level": "MEDIUM",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0100",
+      "keyword": "마산치과",
+      "status": "HOLD_NEEDS_CLARIFICATION",
+      "execution_batch": "HOLD",
+      "priority": "P4",
+      "risk_level": "HIGH",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
+    },
+    {
+      "keyword_id": "KW-0101",
+      "keyword": "터마신",
+      "status": "HOLD_NEEDS_CLARIFICATION",
+      "execution_batch": "HOLD",
+      "priority": "HOLD",
+      "risk_level": "UNCONFIRMED",
+      "created_at": "2026-08-03T18:27:46+09:00",
+      "updated_at": "2026-08-03T18:27:46+09:00"
     }
   ]
 }

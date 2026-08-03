@@ -19,12 +19,20 @@ id는 비워두면 WF-01 실행 시 자동으로 다음 번호가 부여된다.
 
 ## 목록
 
-<!-- 아래에 참고 사이트를 추가하세요. 예시: -->
-<!--
-- id: REF-001
-  source: https://example.com/blog/sample-post
-  topic: 예시 주제
-- id: REF-002
-  source: https://example.com/blog/another-post
-  topic: 예시 주제
--->
+- id: REF-0001
+  source: https://m.blog.naver.com/ve1357243
+  topic: 일상 생각 (거북이상무의 정보바다)
+- id: REF-0002
+  source: https://m.blog.naver.com/loveus98
+  topic: 비즈니스 경제 (이과장의 경제금융이야기)
+- id: REF-0003
+  source: https://m.blog.naver.com/infotock
+  topic: 비즈니스 경제 (GovinfoTree)
+- id: REF-0004
+  source: https://m.blog.naver.com/trendmoney_
+  topic: 비즈니스 경제 (trendmoney)
+- id: REF-0005
+  source: https://m.blog.naver.com/lsjis123
+  topic: 비즈니스 경제 (오히든의 1인 비즈니스)
+
+<!-- 출처: 사용자 제공 "0730 무료특강 벤치마킹 블로그 리스트 5개.xlsx" -->

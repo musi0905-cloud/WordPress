@@ -1,0 +1,19 @@
+{
+  "workflow": "WF-01",
+  "checked_at": "2026-08-03T16:00:00+09:00",
+  "status": "BLOCKED",
+  "reference_sites_checked": 5,
+  "reference_sites_accessible": 0,
+  "reference_sites_failed": 5,
+  "blocking_issues": [
+    "All 5 reference sites (REF-0001~REF-0005) are on naver.com, which this session's outbound network policy explicitly denies (proxy-level 403 policy denial, confirmed via agent proxy status log). Not a site outage or auth requirement."
+  ],
+  "warnings": [],
+  "failed_urls": [
+    "https://m.blog.naver.com/ve1357243",
+    "https://m.blog.naver.com/loveus98",
+    "https://m.blog.naver.com/infotock",
+    "https://m.blog.naver.com/trendmoney_",
+    "https://m.blog.naver.com/lsjis123"
+  ]
+}
