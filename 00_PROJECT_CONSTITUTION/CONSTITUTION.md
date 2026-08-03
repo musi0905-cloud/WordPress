@@ -1,7 +1,7 @@
 # ============================================================
 # CONTENT OS
 # PROJECT CONSTITUTION
-# VERSION 1.1
+# VERSION 1.3
 # ============================================================
 
 # Identity
@@ -142,7 +142,7 @@ WF-02_KNOWLEDGE_ENGINEERING (Knowledge Engineering Engine → Content DNA)
 
 ↓
 
-WF-03_KEYWORD_ANALYSIS (Keyword Intelligence)
+WF-03_KEYWORD_INTELLIGENCE
 
 ↓
 
@@ -252,6 +252,8 @@ Markdown을 기본으로 한다.
 
 필요 시 HTML을 함께 생성한다.
 
+사람이 읽는 리포트/요약은 Markdown을 기본으로 하되, 워크플로우 간에 기계가 읽어야 하는 구조화 데이터(예: Content Brief, Keyword Library, Content Inventory)는 YAML 또는 JSON으로 병행 생성할 수 있다. 이 경우에도 사람이 읽는 Markdown 요약을 함께 생성하여 재사용성과 가독성을 모두 만족해야 한다.
+
 ------------------------------------------------------------
 
 # Error Policy
@@ -321,3 +323,7 @@ Optimization
 # Amendment Log
 
 VERSION 1.1 — WF-02의 이름과 역할을 WF-02_RULE_EXTRACTION에서 WF-02_KNOWLEDGE_ENGINEERING으로 변경. Rule Library 위에 Content DNA(Knowledge Library의 정점)라는 상위 압축 계층을 도입하고, Workflow Order 각 단계에 확정된 역할명을 병기. 기존 Rule System, Memory Policy 등 다른 조항과 충돌하지 않음을 확인 후 반영.
+
+VERSION 1.2 — WF-03이 Content Brief(YAML/JSON)와 같은 기계 판독용 구조화 데이터를 생성해야 하는 요구가 생김에 따라 Output Policy에 "Markdown 기본 + 필요 시 YAML/JSON 병행" 원칙을 명시. 기존 "Markdown을 기본으로 한다" 원칙과 충돌하지 않도록, 사람이 읽는 요약은 항상 Markdown으로 병행 생성하도록 제한을 추가.
+
+VERSION 1.3 — WF-03의 이름을 WF-03_KEYWORD_ANALYSIS에서 WF-03_KEYWORD_INTELLIGENCE로 변경. WF-03은 키워드를 단순 분석하는 단계가 아니라 Content DNA/Decision Tree/Rule Library를 이용해 키워드마다 실행 가능한 Content Brief를 만드는 단계로 확정됨.

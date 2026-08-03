@@ -25,10 +25,11 @@ Rule이 수천 개로 늘어나도 이 계층의 정점인 Content DNA는 압축
 
 ## 현재 진행 단계
 
-1. `00_PROJECT_CONSTITUTION` (v1.1) — 완료
+1. `00_PROJECT_CONSTITUTION` (v1.3) — 완료
 2. `WF-01 : REFERENCE ANALYSIS ENGINE` (v2.0) — 완료 (`02_WORKFLOW/WF-01_REFERENCE_ANALYSIS.md`)
 3. `WF-02 : KNOWLEDGE ENGINEERING ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-02_KNOWLEDGE_ENGINEERING.md`)
-4. `WF-03_KEYWORD_ANALYSIS` (Keyword Intelligence) 이후 — 예정
+4. `WF-03 : KEYWORD INTELLIGENCE ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-03_KEYWORD_INTELLIGENCE.md`)
+5. `WF-04_CONTENT_ARCHITECTURE` (Content Architect) 이후 — 예정
 
 ## WF-01 : Reference Analysis Engine
 
@@ -63,6 +64,24 @@ WF-02는 Rule을 만들지 않는다. WF-01이 만든 Rule/Pattern/Template을 *
    - `05_OUTPUT/WF-02/{YYYY-MM-DD}_KNOWLEDGE_REPORT.md` — 실행 1회분 종합 리포트
    - `08_LOG/WF-02/{YYYY-MM-DD}.log.md` — 실행 로그
 
-다음 단계(WF-03_KEYWORD_ANALYSIS)부터는 Rule Library 전체가 아니라 Content DNA와 Decision Tree를 기준으로 동작한다.
+## WF-03 : Keyword Intelligence Engine
+
+WF-03은 키워드를 분류/설명하는 단계가 아니다. Content DNA / Decision Tree / Rule Library / Pattern Library / Template Graph / 기존 콘텐츠 목록을 이용해 키워드마다 `WF-04_CONTENT_ARCHITECTURE`가 추가 질문 없이 바로 쓸 수 있는 **Content Brief**를 만든다. 최종 본문은 작성하지 않고, 사용자에게 선택지를 제시하거나 되묻지도 않는다 — 프로젝트 자산을 기준으로 스스로 판단한다.
+
+사용법:
+
+1. WF-01, WF-02가 완료되어 Rule Library와 Content DNA가 존재해야 한다.
+2. `04_INPUT/keywords.csv`(또는 `.xlsx`)에 처리할 키워드를 채운다 (열 형식은 `04_INPUT/WF-03_KEYWORDS_README.md` 참조). 키워드의 추가/삭제/교체는 WF-03의 역할이 아니다 — 입력된 키워드만 그대로 처리한다.
+3. `02_WORKFLOW/WF-03_KEYWORD_INTELLIGENCE.md`를 실행한다.
+4. 결과는 아래에 저장된다.
+   - `05_OUTPUT/briefs/KW-XXXX_*.yaml` / `.md` — 키워드별 Content Brief (운영용 YAML + 사람이 읽는 요약)
+   - `04_INPUT/processed_keywords/KW-XXXX_*.yaml` — Brief 운영 사본
+   - `06_MEMORY/KEYWORD_LIBRARY/keyword_library.json`, `content_inventory.json` — 누적 인덱스
+   - `08_LOG/WF-03/environment_validation.json`, `run_<timestamp>.json` — 검증/실행 로그
+   - `05_OUTPUT/WF-03_KEYWORD_INTELLIGENCE_REPORT.md` — 실행 1회분 종합 리포트
+
+위험도가 `BLOCKED`이거나 품질 검증(`score < 90`, 3회 재수정 후에도 미통과)을 통과하지 못한 브리프는 `handoff.ready: false`로 표시되며 WF-04로 자동 전달되지 않는다.
+
+다음 단계(WF-04_CONTENT_ARCHITECTURE)부터는 Rule Library 전체가 아니라 Content DNA, Decision Tree, 그리고 이 Content Brief를 기준으로 동작한다.
 
 전체 운영 원칙은 `00_PROJECT_CONSTITUTION/CONSTITUTION.md`를 따른다.
