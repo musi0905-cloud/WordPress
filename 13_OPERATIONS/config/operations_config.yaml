@@ -1,0 +1,45 @@
+# WF-11 운영 설정. 안전 기본값으로 시딩됨 (자동 예약/공개 비활성).
+# 스키마 설명은 02_WORKFLOW/WF-11_PRODUCTION_OPERATIONS.md의 "6. OPERATIONS CONFIGURATION" 참조.
+
+schema_version: "1.0"
+
+environment: production
+
+operations:
+  enabled: true
+  default_mode: CONTINUE
+  max_keywords_per_batch: 5
+  max_concurrent_items: 1
+  max_daily_drafts: 10
+  max_daily_wordpress_sync: 10
+  max_retry_per_item: 2
+  pause_on_critical_incident: true
+  pause_on_cost_limit: true
+  pause_on_quality_regression: true
+
+workflow:
+  start_workflow: WF-03
+  end_workflow: WF-08
+  require_wf06_pass: true
+  require_wf07_export: true
+  run_wf08_after_batch: true
+
+publication:
+  default_action: WORDPRESS_DRAFT
+  allow_schedule: false
+  allow_publish: false
+  require_manual_review_for_ymyl: true
+
+safety:
+  require_recent_wf10_acceptance: true
+  wf10_validity_days: 30
+  block_on_test_regression: true
+  block_on_missing_source_package: true
+  block_on_policy_issue: true
+  block_on_secret_exposure: true
+
+reporting:
+  daily_report: true
+  batch_report: true
+  incident_report: true
+  cost_report: true

@@ -1,7 +1,7 @@
 # ============================================================
 # CONTENT OS
 # PROJECT CONSTITUTION
-# VERSION 1.9
+# VERSION 2.0
 # ============================================================
 
 # Identity
@@ -80,6 +80,8 @@ Orchestration Library
 
 Validation Library
 
+Operations Library
+
 모든 Workflow는 위 라이브러리를 우선적으로 활용한다.
 
 이 자산들은 아래 계층 구조를 이룬다.
@@ -131,6 +133,8 @@ Rule의 개수가 아무리 늘어나도(수백~수천 개), Knowledge Library�
 11_REPORTS
 
 12_TEST
+
+13_OPERATIONS
 
 ------------------------------------------------------------
 
@@ -185,6 +189,8 @@ WF-02는 Rule을 만드는 워크플로우가 아니다. WF-01이 만든 Rule/Pa
 WF-09_MASTER_ORCHESTRATION은 이 체인 위에 있는 별도의 제어 계층이다. WF-01~WF-08 중 하나가 아니라, 그 8개를 프로젝트 상태·Handoff·의존성에 따라 순서대로 호출·재실행·복구하는 오케스트레이터다. WF-09는 개별 워크플로우의 판단을 대체하지 않는다.
 
 WF-10_SYSTEM_VALIDATION도 파이프라인의 9번째 단계가 아니라, WF-01~WF-09 전체가 설계대로 연결되고 동작하는지 검증하는 별도의 품질 게이트다. 운영 데이터와 물리적으로 분리된 `12_TEST/`에서만 동작하며, 실제 콘텐츠 대량 생성이나 실제 게시를 수행하지 않는다.
+
+WF-11_PRODUCTION_OPERATIONS은 WF-10을 통과한 시스템을 실제 운영으로 전환하는 계층이다. WF-11도 개별 Workflow를 직접 실행하지 않는다 — 모든 실행은 WF-09를 통해서만 이루어지며, WF-11은 그 위에서 Batch·처리량·비용·Incident·수동 검토를 관리한다. WF-10이 `REJECTED`/`BLOCKED`를 반환했거나 유효 기간(기본 30일)이 지난 경우 운영을 시작하지 않는다.
 
 ------------------------------------------------------------
 
@@ -359,3 +365,5 @@ VERSION 1.7 — WF-08_PROJECT_LEARNING 도입으로 WF-01~WF-08 8개 핵심 Work
 VERSION 1.8 — WF-09_MASTER_ORCHESTRATION 도입. WF-01~WF-08을 프로젝트 상태와 Handoff 기준으로 순서대로 호출·재실행·복구하는 통합 오케스트레이터가 추가되어, 사용자가 "Content OS 전체 실행" 한 번의 명령으로 전체 파이프라인을 운영할 수 있게 됨. WF-09는 개별 워크플로우의 판단을 대체하지 않으며, Handoff가 `ready: false`인 콘텐츠를 다음 단계로 넘기지 않는다. 실행 상태 관리를 위해 Project Directory에 `10_RUNTIME`, `11_REPORTS`를 추가하고, Project Memory에 Orchestration Library를 11번째 라이브러리로 추가. 저장소 루트에 `CLAUDE.md`를 두어 Claude Code 세션이 이 헌법과 워크플로우 체계를 자동으로 인식하도록 함.
 
 VERSION 1.9 — WF-10_SYSTEM_VALIDATION 도입. WF-01~WF-09 전체가 설계된 의존성·상태 전환·Handoff·보안 정책대로 실제로 동작하는지 검증하는 System Validation and Acceptance Test Engine이 추가됨. 운영 데이터와 물리적으로 분리된 `12_TEST/`에서만 동작하며, 운영 콘텐츠를 대량 생성하거나 실제 WordPress 공개/삭제를 수행하지 않는다(WordPress 테스트는 MOCK/SANDBOX/DRAFT_ONLY로 제한). 테스트 통과율을 높이기 위해 품질·보안·Handoff·Retry·Loop 기준을 낮추는 것을 명시적으로 금지. Project Directory에 `12_TEST`를 추가하고, Project Memory에 Validation Library를 12번째 라이브러리로 추가.
+
+VERSION 2.0 — WF-11_PRODUCTION_OPERATIONS 도입으로 Content OS가 설계·검증 단계를 넘어 실제 운영 시스템으로 전환됨. WF-11은 WF-10 Acceptance 결과(기본 유효 기간 30일)를 확인한 뒤에만 운영을 시작하고, Batch/처리량/비용/Incident/수동 검토를 중앙에서 관리하되 모든 개별 Workflow 실행은 WF-09를 통해서만 수행한다. 운영 환경에서도 기본 게시 상태는 항상 WordPress Draft이며, 예약·공개는 명시적 허용과 다중 안전 조건이 모두 충족될 때만 가능하다. Critical Incident(Secret 노출, 무단 공개, 데이터 손상, 품질 Gate 우회 등) 발생 시 운영을 즉시 중단한다. Project Directory에 `13_OPERATIONS`를 추가하고, Project Memory에 Operations Library를 13번째 라이브러리로 추가.

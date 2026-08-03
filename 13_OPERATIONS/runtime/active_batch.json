@@ -1,0 +1,5 @@
+{
+  "batch_id": null,
+  "status": "NONE",
+  "note": "No batch is currently active. WF-11 populates this when a batch starts."
+}

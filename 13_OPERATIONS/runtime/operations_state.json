@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "operations": {
+    "operations_run_id": null,
+    "environment": "production",
+    "status": "NOT_INITIALIZED",
+    "project_version": null,
+    "acceptance_test_run_id": null,
+    "acceptance_status": null,
+    "active_batch": null,
+    "current_item": null,
+    "current_workflow": null,
+    "today": {
+      "batches": 0,
+      "keywords_processed": 0,
+      "drafts": 0,
+      "reviews_approved": 0,
+      "exports": 0,
+      "wordpress_drafts": 0,
+      "blocked": 0,
+      "failed": 0
+    },
+    "limits": {
+      "max_daily_drafts": 10,
+      "max_daily_wordpress_sync": 10,
+      "max_concurrent_items": 1,
+      "cost_limit": null
+    },
+    "incidents": {
+      "critical": 0,
+      "major": 0,
+      "moderate": 0
+    },
+    "queues": {
+      "production": 0,
+      "manual_review": 0,
+      "wordpress_sync": 0,
+      "learning": 0
+    },
+    "last_heartbeat": null,
+    "started_at": null,
+    "updated_at": null
+  }
+}

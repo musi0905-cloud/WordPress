@@ -11,13 +11,14 @@
 - `03_REFERENCE/` — 참고 자료 원본 소재
 - `04_INPUT/` — Workflow별 실행 입력
 - `05_OUTPUT/` — Workflow별 산출물
-- `06_MEMORY/` — 프로젝트 영구 자산 (Rule/Pattern/Template/Reference/Keyword/Quality/Workflow/Knowledge/Architecture/Draft/Publication/Orchestration/Validation Library)
+- `06_MEMORY/` — 프로젝트 영구 자산 (Rule/Pattern/Template/Reference/Keyword/Quality/Workflow/Knowledge/Architecture/Draft/Publication/Orchestration/Validation/Operations Library)
 - `07_TEMPLATE/` — 사람이 정의한 원본 템플릿 (예약)
 - `08_LOG/` — Workflow 실행 로그
 - `09_ARCHIVE/` — Deprecated/Replaced 자산 이력, Workflow 재실행 시 이전 버전 스냅샷
 - `10_RUNTIME/` — WF-09의 실행 상태 (Lock, 현재 Run, Workflow Queue, Dependency Graph)
 - `11_REPORTS/` — WF-09의 프로젝트 전체 실행 보고서
 - `12_TEST/` — WF-10의 테스트 전용 환경 (운영 데이터와 물리적으로 분리, Fixture/테스트 산출물/테스트 리포트)
+- `13_OPERATIONS/` — WF-11의 실제 운영 환경 (Batch/Queue/Incident/지표/운영 리포트)
 
 ## 자산 계층 구조
 
@@ -29,7 +30,7 @@ Rule이 수천 개로 늘어나도 이 계층의 정점인 Content DNA는 압축
 
 ## 현재 진행 단계
 
-1. `00_PROJECT_CONSTITUTION` (v1.9) — 완료
+1. `00_PROJECT_CONSTITUTION` (v2.0) — 완료
 2. `WF-01 : REFERENCE ANALYSIS ENGINE` (v2.0) — 완료 (`02_WORKFLOW/WF-01_REFERENCE_ANALYSIS.md`)
 3. `WF-02 : KNOWLEDGE ENGINEERING ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-02_KNOWLEDGE_ENGINEERING.md`)
 4. `WF-03 : KEYWORD INTELLIGENCE ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-03_KEYWORD_INTELLIGENCE.md`)
@@ -40,8 +41,9 @@ Rule이 수천 개로 늘어나도 이 계층의 정점인 Content DNA는 압축
 9. `WF-08 : PROJECT LEARNING ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-08_PROJECT_LEARNING.md`)
 10. `WF-09 : MASTER ORCHESTRATION ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-09_MASTER_ORCHESTRATION.md`)
 11. `WF-10 : SYSTEM VALIDATION AND ACCEPTANCE TEST ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-10_SYSTEM_VALIDATION.md`)
+12. `WF-11 : PRODUCTION OPERATIONS ENGINE` (v1.0) — 완료 (`02_WORKFLOW/WF-11_PRODUCTION_OPERATIONS.md`)
 
-**WF-01~WF-10, 10개 Workflow 정의가 모두 완료되었다.** WF-01~WF-08은 수집 → 압축 → 키워드 설계 → 구조 설계 → 집필 → 검수 → 배포 → 학습이 순환하는 파이프라인, WF-09는 그 8개를 하나의 명령("Content OS 전체 실행")으로 호출·재실행·복구하는 오케스트레이터, WF-10은 그 전체가 설계대로 실제로 동작하는지 `12_TEST/`의 격리된 환경에서 검증하는 품질 게이트다. WF-09/WF-10 모두 개별 워크플로우의 판단을 대체하지 않는다 — Handoff가 `ready: false`면 다음 단계로 절대 넘어가지 않는다.
+**WF-01~WF-11, 11개 Workflow 정의가 모두 완료되었다.** WF-01~WF-08은 수집 → 압축 → 키워드 설계 → 구조 설계 → 집필 → 검수 → 배포 → 학습이 순환하는 파이프라인, WF-09는 그 8개를 하나의 명령으로 호출·재실행·복구하는 오케스트레이터, WF-10은 그 전체가 설계대로 실제로 동작하는지 `12_TEST/`의 격리된 환경에서 검증하는 품질 게이트, WF-11은 WF-10을 통과한 시스템을 실제 운영(Batch·처리량·비용·Incident·수동 검토)으로 전환하는 운영 계층이다. WF-09/WF-10/WF-11 모두 개별 워크플로우의 판단을 대체하지 않는다 — Handoff가 `ready: false`면 다음 단계로 절대 넘어가지 않는다.
 
 ## WF-01 : Reference Analysis Engine
 
@@ -223,5 +225,29 @@ WF-10은 운영 콘텐츠를 대량 생성하지 않는다. 대신 `12_TEST/`라
    - `08_LOG/WF-10/environment_validation.json`, `run_<timestamp>.json` — 검증/실행 로그
 
 최종 판정은 `ACCEPTED` / `ACCEPTED_WITH_WARNINGS` / `CONDITIONALLY_ACCEPTED`(예: WordPress 연동은 실패해도 Export는 정상이면 그 범위만 운영 가능) / `REJECTED` / `BLOCKED` 중 하나다. Critical 또는 Major 실패가 하나라도 있으면 `ACCEPTED`가 될 수 없으며, WF-10은 통과율을 높이기 위해 품질·보안·Handoff·Retry·Loop 기준 자체를 낮추지 않는다 — 테스트가 실패하면 프로젝트를 고치는 것이지, 테스트 기준을 고치는 것이 아니다.
+
+## WF-11 : Production Operations Engine
+
+WF-11은 WF-10을 통과한 Content OS를 실제 운영으로 전환한다. 새 콘텐츠 전략을 만들지 않고, Workflow 정의를 바꾸지 않고, 품질 기준을 낮추지 않는다 — 대신 **얼마나, 언제, 어떤 순서로** 처리할지를 관리한다. 모든 개별 Workflow 실행은 WF-09를 거치며, WF-11 자신은 Batch 편성, 처리량/비용 상한, 실패·재시도, Incident 대응, 수동 검토 대기열, WordPress 초안 동기화, 운영 지표만 관장한다.
+
+운영은 WF-10 최근 결과가 `ACCEPTED` / `ACCEPTED_WITH_WARNINGS` / `CONDITIONALLY_ACCEPTED`(허용된 기능만) 중 하나이고 기본 30일 이내일 때만 시작된다. `REJECTED`/`BLOCKED`이거나 만료되었으면 절대 시작하지 않는다. 처리량에는 항상 상한이 있다(기본: Batch당 키워드 5개, 동시 처리 1건, 일일 초안 10건/WordPress 동기화 10건, 항목당 재시도 2회) — 무제한 확장은 금지 항목이다. 게시 기본값은 운영 환경에서도 항상 `WORDPRESS_DRAFT`이며, 예약/공개는 정책 명시적 허용 + WF-06 승인 + WF-07 패키지 검증 + WF-10 WordPress Safety 통과 + 자산 해결 + 수동 검토 충족 + 게시 일정 규칙 존재까지 모두 갖춰야 가능하다.
+
+사용법 (명령은 자연어로, `02_WORKFLOW/WF-11_PRODUCTION_OPERATIONS.md`의 "18. COMMAND BEHAVIOR" 참조):
+
+- `Content OS 운영 초기화` — 운영 폴더·설정·Registry만 구성한다 (실행은 시작하지 않음).
+- `Content OS 운영 시작` / `Content OS 다음 Batch` — 신규 입력을 탐지해 Batch를 만들고 WF-09를 통해 실행한다.
+- `Content OS 운영 상태` / `Content OS 수동 검토 목록` — 아무것도 바꾸지 않고 현재 상태·대기열만 보고한다.
+- `Content OS 운영 일시 중단` / `Content OS 운영 재개` / `Content OS 운영 복구` — 안전 정지, 재개, 비정상 종료 복구.
+- `Content OS 유지보수 모드` — 신규 Batch 생성만 중단하고 현재 상태를 보존한다.
+
+결과는 아래에 저장된다.
+
+- `13_OPERATIONS/config/` — 운영 정책 6종 (Batch/비용/모니터링/Incident/보존 — 모두 안전 기본값으로 시딩됨)
+- `13_OPERATIONS/runtime/`, `13_OPERATIONS/queue/` — 현재 운영 상태, Production Lock, 4종 대기열(Production/Manual Review/WordPress Sync/Learning)
+- `13_OPERATIONS/incidents/`, `13_OPERATIONS/metrics/`, `13_OPERATIONS/reports/` — Incident 기록, 지표, Batch/Daily 운영 리포트
+- `06_MEMORY/OPERATIONS_LIBRARY/` — Operations Run 누적 인덱스, Batch 이력, 운영 건강도, 수동 검토 이력
+- `08_LOG/WF-11/` — 검증/실행/이벤트 로그
+
+Secret 노출, 무단 자동 공개, 운영 데이터 손상, 품질 Gate 우회, 정책 차단 콘텐츠 게시, Registry 전체 손상은 모두 `CRITICAL` Incident로 분류되며 발생 즉시 운영을 중단하고 자동 복구를 금지한다 — 재개하려면 WF-10 재검증이 필요하다.
 
 전체 운영 원칙은 `00_PROJECT_CONSTITUTION/CONSTITUTION.md`를 따른다.

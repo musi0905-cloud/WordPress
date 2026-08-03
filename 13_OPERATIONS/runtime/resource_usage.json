@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0",
+  "updated_at": null,
+  "cost_status": "unavailable",
+  "token_usage": null,
+  "api_calls": null,
+  "source_requests": null,
+  "image_requests": null,
+  "wordpress_requests": null
+}

@@ -1,0 +1,42 @@
+# WF-11 Batch 편성 정책.
+# 스키마 설명은 02_WORKFLOW/WF-11_PRODUCTION_OPERATIONS.md의 "7. BATCH POLICY" 참조.
+
+schema_version: "1.0"
+
+batch:
+  default_size: 5
+  minimum_size: 1
+  maximum_size: 20
+
+selection:
+  allowed_priorities:
+    - P0
+    - P1
+    - P2
+    - P3
+
+  excluded_statuses:
+    - BLOCKED
+    - MANUAL_REVIEW_REQUIRED
+    - POLICY_BLOCKED
+    - PUBLISHED
+    - MERGED
+    - SKIPPED
+
+  ordering:
+    - priority
+    - adsense_suitability
+    - benchmark_fit
+    - informational_value
+    - internal_link_value
+
+separation:
+  max_ymyl_per_batch: 1
+  max_same_template_ratio: 0.5
+  max_same_cluster_ratio: 0.6
+  prevent_duplicate_intent: true
+  prevent_cannibalization: true
+
+completion:
+  require_all_items_terminal: true
+  allow_partial_batch_completion: true

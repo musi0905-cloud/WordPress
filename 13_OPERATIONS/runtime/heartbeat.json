@@ -1,0 +1,6 @@
+{
+  "enabled": true,
+  "interval_seconds": 60,
+  "stale_after_seconds": 300,
+  "last_heartbeat_at": null
+}

@@ -1,0 +1,31 @@
+# WF-11 모니터링 정책.
+# 스키마 설명은 02_WORKFLOW/WF-11_PRODUCTION_OPERATIONS.md의 "9. MONITORING POLICY" 참조.
+
+schema_version: "1.0"
+
+heartbeat:
+  enabled: true
+  interval_seconds: 60
+  stale_after_seconds: 300
+
+thresholds:
+  workflow_failure_rate_percent: 20
+  quality_failure_rate_percent: 20
+  source_failure_rate_percent: 15
+  wordpress_sync_failure_rate_percent: 20
+  unresolved_link_rate_percent: 20
+  blocked_content_rate_percent: 30
+
+alerts:
+  critical_on_secret_exposure: true
+  critical_on_unauthorized_publish: true
+  critical_on_duplicate_post: true
+  critical_on_data_corruption: true
+  major_on_quality_regression: true
+  major_on_workflow_loop: true
+  major_on_cost_overrun: true
+
+actions:
+  pause_on_critical: true
+  create_incident_on_major: true
+  continue_on_moderate: true

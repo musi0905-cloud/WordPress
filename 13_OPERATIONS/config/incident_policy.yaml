@@ -1,0 +1,34 @@
+# WF-11 Incident 대응 정책.
+# 스키마 설명은 02_WORKFLOW/WF-11_PRODUCTION_OPERATIONS.md의 "10. INCIDENT POLICY" 참조.
+
+schema_version: "1.0"
+
+severity:
+  CRITICAL:
+    pause_operations: true
+    require_recovery_validation: true
+
+  MAJOR:
+    pause_affected_batch: true
+    allow_other_batches: false
+
+  MODERATE:
+    pause_affected_item: true
+    allow_batch_continue: true
+
+  MINOR:
+    log_only: true
+
+categories:
+  - SECURITY
+  - DATA_INTEGRITY
+  - WORKFLOW
+  - QUALITY
+  - SOURCE
+  - POLICY
+  - COST
+  - WORDPRESS
+  - MEDIA
+  - LINK
+  - CONFIGURATION
+  - FILESYSTEM

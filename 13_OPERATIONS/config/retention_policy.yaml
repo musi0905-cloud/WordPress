@@ -1,0 +1,26 @@
+# WF-11 데이터 보존 정책. 자동 삭제는 기본적으로 비활성이다 (cleanup.enabled: false).
+# 스키마 설명은 02_WORKFLOW/WF-11_PRODUCTION_OPERATIONS.md의 "11. RETENTION POLICY" 참조.
+
+schema_version: "1.0"
+
+retention_days:
+  runtime_logs: 30
+  workflow_logs: 90
+  batch_reports: 365
+  quality_reports: 365
+  publication_reports: 365
+  incident_reports: 730
+  archived_versions: 365
+
+preserve_forever:
+  - Project Constitution
+  - Rule Library versions
+  - Content DNA versions
+  - Publication Registry
+  - Project Version History
+  - Critical Incident Reports
+
+cleanup:
+  enabled: false
+  dry_run_required: true
+  delete_only_after_archive: true

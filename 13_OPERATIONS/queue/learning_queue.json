@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "learning_queue": {
+    "learning_request_id": null,
+    "batch_ids": [],
+    "workflow_runs": [],
+    "incident_ids": [],
+    "manual_review_results": [],
+    "performance_data": [],
+    "ready": false
+  }
+}

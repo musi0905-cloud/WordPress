@@ -1,0 +1,31 @@
+# WF-11 비용 정책. 한도(limits)는 비워둔다 — 실제 비용 데이터가 없으면
+# WF-11은 임의 값을 만들지 않고 cost_status: unavailable로 기록한다.
+# 스키마 설명은 02_WORKFLOW/WF-11_PRODUCTION_OPERATIONS.md의 "8. COST POLICY" 참조.
+
+schema_version: "1.0"
+
+currency: KRW
+
+limits:
+  daily_total:
+  batch_total:
+  per_content:
+  source_research:
+  image_generation:
+  wordpress_sync:
+
+tracking:
+  token_usage: true
+  api_calls: true
+  source_requests: true
+  image_requests: true
+  wordpress_requests: true
+
+actions:
+  warning_threshold_percent: 70
+  pause_threshold_percent: 90
+  block_threshold_percent: 100
+
+fallback:
+  on_missing_cost_data: ESTIMATE_UNAVAILABLE
+  allow_continue_without_cost_data: true
