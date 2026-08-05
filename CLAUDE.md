@@ -167,4 +167,6 @@ Further reading:
 
 **자동화 허용 범위** (Section 7 Default Publishing Safety와 일치, 추가 확장 없음): Browser Agent, Reference Analysis, Keyword Analysis, Content Generation, Quality Review, Export, WordPress Draft — 허용. Auto Publish, Delete, Schedule Publish, AdSense 자동 신청, Search Console 자동 수정, Theme/Plugin 변경 — 금지.
 
-**알려진 제약**: Browser Agent(자동 레퍼런스 수집)는 이 클라우드 세션(Claude Code on the web)에서 실행 불가 — 세션 네트워크 정책이 임의 외부 사이트 접근을 차단하며(naver.com, wordpress.org, wikipedia.org 등에서 curl/WebFetch/사내 Chromium 모두로 확인됨), 이는 우회 대상이 아닌 조직 정책 거부다. Browser Agent 구현·실행·테스트는 사용자 로컬 PC의 Claude Code + Claude in Chrome 세션에서 진행하며, 산출물(Rule/Pattern/Template/Memory 갱신)은 동일 GitHub 저장소를 통해 이 세션과 공유된다.
+**알려진 제약**: Browser Agent(자동 레퍼런스 수집)는 이 클라우드 세션(Claude Code on the web)에서 실행 불가 — 세션 네트워크 정책이 임의 외부 사이트 접근을 차단하며(naver.com, wordpress.org, wikipedia.org 등에서 curl/WebFetch/사내 Chromium 모두로 확인됨), 이는 우회 대상이 아닌 조직 정책 거부다. Browser Agent 구현·실행·테스트는 사용자 로컬 PC의 Claude Code + Claude in Chrome 세션에서 진행하며, 산출물(Rule/Pattern/Template/Memory 갱신)은 동일 GitHub 저장소를 통해 이 세션과 공유된다. 로컬 환경 구축 가이드는 `18_SETUP/`(`LOCAL_DEVELOPMENT.md`, `WINDOWS_SETUP.md`, `CHROME_SETUP.md`, `GITHUB_WORKFLOW.md`, `TROUBLESHOOTING.md`) 참조.
+
+**Sprint 로드맵 (2026-08-03 확정, 실행 환경 우선순위 재정의)**: Sprint 1 Local Development Environment(`18_SETUP/`, 이 세션이 문서만 작성 — 실행/검증은 로컬에서) → Sprint 2 Browser Agent → Sprint 3 Reference Collector → Sprint 4 Keyword Intelligence(100개) → Sprint 5 Validation Batch(5개). Browser Agent를 로컬 환경 검증 전에 구현하지 않는다 — 실행·테스트 불가능한 코드가 쌓이는 것을 방지하기 위함(Product Owner 판단, 2026-08-03).
