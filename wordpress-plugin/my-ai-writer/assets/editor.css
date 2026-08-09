@@ -1,0 +1,187 @@
+/**
+ * AI 글쓰기 도우미 사이드바 패널 스타일.
+ * 팔레트: 잉크 #1e1e1e, 보조텍스트 #646970, 경계선 #dcdcde, 포인트 #3858e9, 워드프레스 블루 #2271b1.
+ */
+
+.maiw-panel {
+	padding: 16px;
+	color: #1e1e1e;
+}
+
+.maiw-panel-title {
+	font-size: 15px;
+	font-weight: 600;
+	margin-bottom: 12px;
+}
+
+.maiw-tabs {
+	display: flex;
+	gap: 6px;
+	background: #f0f0f1;
+	border-radius: 999px;
+	padding: 4px;
+	margin-bottom: 16px;
+}
+
+.maiw-tab {
+	flex: 1;
+	border: none;
+	background: transparent;
+	border-radius: 999px;
+	padding: 8px 10px;
+	font-size: 13px;
+	cursor: pointer;
+	color: #646970;
+	transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.maiw-tab.is-active {
+	background: #ffffff;
+	color: #1e1e1e;
+	box-shadow: 0 1px 2px rgba( 0, 0, 0, 0.12 );
+	font-weight: 600;
+}
+
+.maiw-tab:focus-visible,
+.maiw-chip:focus-visible,
+.maiw-run-button:focus-visible {
+	outline: 2px solid #3858e9;
+	outline-offset: 2px;
+}
+
+.maiw-tab-panel {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.maiw-field-label {
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: #646970;
+	margin-top: 12px;
+	margin-bottom: 6px;
+}
+
+.maiw-chip-group {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin-bottom: 8px;
+}
+
+.maiw-chip {
+	border: 1px solid #dcdcde;
+	background: #ffffff;
+	border-radius: 999px;
+	padding: 6px 12px;
+	font-size: 12px;
+	cursor: pointer;
+	color: #1e1e1e;
+	transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.maiw-chip:hover {
+	border-color: #2271b1;
+}
+
+.maiw-chip.is-active {
+	background: #eaf0ff;
+	border-color: #3858e9;
+	color: #3858e9;
+	font-weight: 600;
+}
+
+.maiw-theme-chip {
+	color: #ffffff;
+	border-color: transparent;
+	font-weight: 600;
+	text-shadow: 0 1px 2px rgba( 0, 0, 0, 0.35 );
+}
+
+.maiw-theme-chip.is-active {
+	outline: 2px solid #1e1e1e;
+	outline-offset: 1px;
+}
+
+.maiw-run-button {
+	width: 100%;
+	justify-content: center;
+	margin-top: 14px;
+	background: linear-gradient( 135deg, #3858e9, #2271b1 );
+	border: none;
+	box-shadow: 0 2px 6px rgba( 56, 88, 233, 0.35 );
+}
+
+.maiw-run-button:hover:not( :disabled ) {
+	background: linear-gradient( 135deg, #2f4dd0, #1c5f8f );
+}
+
+.maiw-result {
+	margin-top: 18px;
+	border-top: 1px solid #dcdcde;
+	padding-top: 14px;
+}
+
+.maiw-result-title {
+	font-weight: 600;
+	font-size: 14px;
+	margin-bottom: 8px;
+}
+
+.maiw-result-preview {
+	max-height: 260px;
+	overflow-y: auto;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+	padding: 10px;
+	font-size: 13px;
+	line-height: 1.6;
+	background: #fafafa;
+}
+
+.maiw-result-actions {
+	display: flex;
+	gap: 8px;
+	margin-top: 12px;
+}
+
+.maiw-result-actions .components-button {
+	flex: 1;
+	justify-content: center;
+}
+
+.maiw-canvas-wrap {
+	margin-top: 14px;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+	overflow: hidden;
+	background: #f0f0f1;
+}
+
+.maiw-canvas {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+@media ( max-width: 380px ) {
+	.maiw-tabs {
+		flex-direction: column;
+		border-radius: 8px;
+	}
+
+	.maiw-tab {
+		border-radius: 6px;
+	}
+}
+
+@media ( prefers-reduced-motion: reduce ) {
+	.maiw-tab,
+	.maiw-chip,
+	.maiw-run-button {
+		transition: none;
+	}
+}
