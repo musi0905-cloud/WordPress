@@ -14,6 +14,18 @@
 	margin-bottom: 12px;
 }
 
+.maiw-panel-subtitle {
+	font-size: 13px;
+	font-weight: 600;
+	margin-bottom: 4px;
+}
+
+.maiw-divider {
+	border: none;
+	border-top: 1px solid #dcdcde;
+	margin: 22px 0 14px;
+}
+
 .maiw-tabs {
 	display: flex;
 	gap: 6px;

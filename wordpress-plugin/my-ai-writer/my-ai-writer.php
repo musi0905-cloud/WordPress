@@ -62,11 +62,31 @@ function maiw_register_rest_routes() {
 				return current_user_can( 'edit_posts' );
 			},
 			'args'                => array(
-				'topic'    => array( 'type' => 'string', 'required' => true ),
-				'keywords' => array( 'type' => 'string', 'required' => false ),
-				'tone'     => array( 'type' => 'string', 'required' => false ),
-				'words'    => array( 'type' => 'integer', 'required' => false ),
-				'provider' => array( 'type' => 'string', 'required' => false ),
+				'topic'       => array( 'type' => 'string', 'required' => true ),
+				'keywords'    => array( 'type' => 'string', 'required' => false ),
+				'tone'        => array( 'type' => 'string', 'required' => false ),
+				'words'       => array( 'type' => 'integer', 'required' => false ),
+				'provider'    => array( 'type' => 'string', 'required' => false ),
+				'contentType' => array( 'type' => 'string', 'required' => false ),
+				'language'    => array( 'type' => 'string', 'required' => false ),
+			),
+		)
+	);
+
+	register_rest_route(
+		'maiw/v1',
+		'/generate-schema',
+		array(
+			'methods'             => 'POST',
+			'callback'            => 'maiw_handle_generate_schema_request',
+			'permission_callback' => function ( $request ) {
+				$post_id = (int) $request->get_param( 'postId' );
+				return $post_id ? current_user_can( 'edit_post', $post_id ) : current_user_can( 'edit_posts' );
+			},
+			'args'                => array(
+				'postId'       => array( 'type' => 'integer', 'required' => true ),
+				'schemaType'   => array( 'type' => 'string', 'required' => true ),
+				'focusKeyword' => array( 'type' => 'string', 'required' => false ),
 			),
 		)
 	);
@@ -108,10 +128,12 @@ function maiw_error_response( $message, $status = 400 ) {
  * @return WP_REST_Response
  */
 function maiw_handle_generate_request( WP_REST_Request $request ) {
-	$topic    = sanitize_text_field( (string) $request->get_param( 'topic' ) );
-	$keywords = sanitize_text_field( (string) $request->get_param( 'keywords' ) );
-	$tone     = sanitize_text_field( (string) $request->get_param( 'tone' ) );
-	$words    = absint( $request->get_param( 'words' ) );
+	$topic        = sanitize_text_field( (string) $request->get_param( 'topic' ) );
+	$keywords     = sanitize_text_field( (string) $request->get_param( 'keywords' ) );
+	$tone         = sanitize_text_field( (string) $request->get_param( 'tone' ) );
+	$words        = absint( $request->get_param( 'words' ) );
+	$content_type = sanitize_text_field( (string) $request->get_param( 'contentType' ) );
+	$language     = sanitize_text_field( (string) $request->get_param( 'language' ) );
 
 	if ( '' === $topic ) {
 		return maiw_error_response( '주제를 입력해 주세요.', 400 );
@@ -155,7 +177,7 @@ function maiw_handle_generate_request( WP_REST_Request $request ) {
 		);
 	}
 
-	$system_prompt = maiw_build_system_prompt( $tone, $words );
+	$system_prompt = maiw_build_system_prompt( $tone, $words, $content_type, $language );
 	$user_prompt   = maiw_build_user_prompt( $topic, $keywords, $tone, $words );
 
 	switch ( $provider ) {
@@ -189,14 +211,70 @@ function maiw_handle_generate_request( WP_REST_Request $request ) {
 }
 
 /**
+ * "글 유형" 선택지와 각 유형의 글 구조 가이드.
+ */
+function maiw_get_content_types() {
+	return array(
+		'info_guide' => array(
+			'label'    => '정보/가이드',
+			'guidance' => '개념을 먼저 설명하고 실용적인 정보를 단계적으로 안내하는 가이드 형식',
+		),
+		'utility'    => array(
+			'label'    => '유틸리티',
+			'guidance' => '실생활에 바로 쓸 수 있는 방법이나 도구·서비스 활용법을 안내하는 유틸리티 형식',
+		),
+		'policy'     => array(
+			'label'    => '정책/안내',
+			'guidance' => '제도나 정책, 신청 절차를 대상·조건·절차 중심으로 안내하는 공지형 형식',
+		),
+		'review'     => array(
+			'label'    => '리뷰',
+			'guidance' => '장단점을 비교하며 실사용 관점에서 설명하는 리뷰 형식',
+		),
+		'list'       => array(
+			'label'    => '목록형',
+			'guidance' => '번호를 매긴 항목을 나열하며 각 항목을 짧게 설명하는 리스트형 형식',
+		),
+		'news'       => array(
+			'label'    => '뉴스/트렌드',
+			'guidance' => '최신 동향이나 이슈를 배경과 핵심 포인트 중심으로 정리하는 뉴스형 형식',
+		),
+	);
+}
+
+/**
+ * "언어 선택" 선택지.
+ */
+function maiw_get_languages() {
+	return array(
+		'ko' => '한국어',
+		'en' => 'English',
+		'ja' => '日本語',
+		'zh' => '中文',
+	);
+}
+
+/**
  * AI에게 보낼 시스템 프롬프트를 구성한다.
  */
-function maiw_build_system_prompt( $tone, $words ) {
-	return "당신은 한국어 SEO 블로그 작가입니다. 사용자가 준 주제로 정확하고 독창적인 글을 작성합니다. "
-		. "말투는 '{$tone}'으로, 분량은 약 {$words}자로 작성합니다. "
-		. "본문은 h2, h3, p, ul, li, table 태그만 사용한 HTML로 작성하고, 확인되지 않은 사실이나 가짜 후기/경험/통계는 만들지 않습니다. "
+function maiw_build_system_prompt( $tone, $words, $content_type = '', $language = '' ) {
+	$languages     = maiw_get_languages();
+	$lang_label    = isset( $languages[ $language ] ) ? $languages[ $language ] : $languages['ko'];
+	$content_types = maiw_get_content_types();
+
+	$prompt = "당신은 SEO 블로그 작가입니다. 사용자가 준 주제로 정확하고 독창적인 글을 {$lang_label}로 작성합니다. "
+		. "말투는 '{$tone}'으로, 분량은 약 {$words}자로 작성합니다. ";
+
+	if ( isset( $content_types[ $content_type ] ) ) {
+		$type = $content_types[ $content_type ];
+		$prompt .= "글 유형은 '{$type['label']}'이며, {$type['guidance']}으로 작성합니다. ";
+	}
+
+	$prompt .= "본문은 h2, h3, p, ul, li, table 태그만 사용한 HTML로 작성하고, 확인되지 않은 사실이나 가짜 후기/경험/통계는 만들지 않습니다. "
 		. '반드시 다음 JSON 형식으로만 응답하십시오. 다른 설명이나 코드블록 표시 없이 순수 JSON 객체 하나만 출력하십시오: '
 		. '{"title":"<50자 이내 제목>","html":"<본문 HTML>"}';
+
+	return $prompt;
 }
 
 /**
@@ -361,23 +439,33 @@ function maiw_call_gemini( $api_key, $model, $system_prompt, $user_prompt ) {
  *
  * @return array|WP_REST_Response
  */
-function maiw_parse_ai_json( $raw_text ) {
+/**
+ * AI 응답 텍스트에서 JSON 객체를 방어적으로 추출한다. 코드블록 표시나
+ * 앞뒤 잡텍스트가 섞여 와도 처리한다. 실패하면 null을 반환한다.
+ */
+function maiw_extract_json_object( $raw_text ) {
 	$text = trim( (string) $raw_text );
 
 	$decoded = json_decode( $text, true );
 
-	if ( ! is_array( $decoded ) || ! isset( $decoded['title'], $decoded['html'] ) ) {
+	if ( ! is_array( $decoded ) ) {
 		// 코드블록 표시를 제거해 본다.
 		$stripped = preg_replace( '/^```(?:json)?\s*|\s*```$/m', '', $text );
 		$decoded  = json_decode( trim( $stripped ), true );
 	}
 
-	if ( ! is_array( $decoded ) || ! isset( $decoded['title'], $decoded['html'] ) ) {
+	if ( ! is_array( $decoded ) ) {
 		// 텍스트 중간에 섞인 JSON 객체만 추출해 본다.
 		if ( preg_match( '/\{.*\}/s', $text, $matches ) ) {
 			$decoded = json_decode( $matches[0], true );
 		}
 	}
+
+	return is_array( $decoded ) ? $decoded : null;
+}
+
+function maiw_parse_ai_json( $raw_text ) {
+	$decoded = maiw_extract_json_object( $raw_text );
 
 	if ( ! is_array( $decoded ) || ! isset( $decoded['title'], $decoded['html'] ) ) {
 		return maiw_error_response(
@@ -591,3 +679,180 @@ function maiw_call_gemini_image( $api_key, $model, $prompt ) {
 
 	return maiw_error_response( 'Gemini 이미지 생성 응답이 비어 있습니다.', 502 );
 }
+
+/**
+ * provider 이름에 맞는 (API 키, 모델명) 쌍을 돌려준다. 이미지가 아닌 텍스트 생성용 모델이다.
+ */
+function maiw_resolve_text_credentials( $provider, $settings ) {
+	switch ( $provider ) {
+		case 'claude':
+			return array( $settings['claude_api_key'], $settings['claude_model'] );
+		case 'openai':
+			return array( $settings['openai_api_key'], $settings['openai_model'] );
+		case 'gemini':
+			return array( $settings['gemini_api_key'], $settings['gemini_model'] );
+	}
+	return array( '', '' );
+}
+
+/**
+ * "AI 스키마 마크업" 타입별 schema.org @type 매핑.
+ */
+function maiw_get_schema_type_map() {
+	return array(
+		'article'        => 'Article',
+		'product_review' => 'Review',
+		'faq'            => 'FAQPage',
+	);
+}
+
+/**
+ * 본문 내용으로 schema.org JSON-LD를 만들도록 AI에게 보낼 프롬프트를 구성한다.
+ * 본문에 없는 사실(평점, 질문 등)은 지어내지 말라고 명시한다.
+ */
+function maiw_build_schema_prompt( $schema_type, $title, $content_text, $focus_keyword ) {
+	$type_map        = maiw_get_schema_type_map();
+	$schema_org_type = isset( $type_map[ $schema_type ] ) ? $type_map[ $schema_type ] : 'Article';
+
+	$prompt = "다음은 블로그 글의 제목과 본문입니다.\n제목: {$title}\n";
+	if ( '' !== $focus_keyword ) {
+		$prompt .= "포커스 키워드: {$focus_keyword}\n";
+	}
+	$prompt .= "본문:\n{$content_text}\n\n";
+	$prompt .= "위 글 내용을 바탕으로 schema.org의 \"{$schema_org_type}\" 타입 JSON-LD를 만드세요. "
+		. '@context는 "https://schema.org", @type은 "' . $schema_org_type . '"로 설정합니다. ';
+
+	switch ( $schema_type ) {
+		case 'article':
+			$prompt .= 'headline(60자 이내), description(150자 이내 요약), keywords 필드를 포함하세요.';
+			break;
+		case 'product_review':
+			$prompt .= 'itemReviewed(name 포함), reviewBody(요약), author(name) 필드를 포함하세요. '
+				. '본문에 실제 평점 정보가 없다면 reviewRating은 만들어내지 말고 아예 생략하세요.';
+			break;
+		case 'faq':
+			$prompt .= '본문에서 실제로 다루는 질문과 답변만 3~6개 뽑아 mainEntity 배열에 '
+				. '{"@type":"Question","name":"...","acceptedAnswer":{"@type":"Answer","text":"..."}} 형태로 담으세요. '
+				. '본문에 없는 질문을 지어내지 마세요.';
+			break;
+	}
+
+	$prompt .= ' 반드시 순수 JSON 객체 하나만 출력하고, 다른 설명이나 코드블록 표시는 쓰지 마세요.';
+
+	return $prompt;
+}
+
+/**
+ * /maiw/v1/generate-schema 요청을 처리한다. 현재 글의 본문을 읽어 AI로 JSON-LD를 만들고
+ * 포스트 메타에 저장한다. 실제 출력은 maiw_output_schema_markup()이 wp_head에서 담당한다.
+ *
+ * @return WP_REST_Response
+ */
+function maiw_handle_generate_schema_request( WP_REST_Request $request ) {
+	$post_id       = absint( $request->get_param( 'postId' ) );
+	$schema_type   = sanitize_text_field( (string) $request->get_param( 'schemaType' ) );
+	$focus_keyword = sanitize_text_field( (string) $request->get_param( 'focusKeyword' ) );
+
+	$type_map = maiw_get_schema_type_map();
+	if ( ! isset( $type_map[ $schema_type ] ) ) {
+		return maiw_error_response( '알 수 없는 스키마 타입입니다.', 400 );
+	}
+
+	$post = get_post( $post_id );
+	if ( ! $post ) {
+		return maiw_error_response( '글을 찾을 수 없습니다. 먼저 임시저장 후 다시 시도하세요.', 404 );
+	}
+
+	$content_text = wp_strip_all_tags( $post->post_content );
+	if ( '' === trim( $content_text ) ) {
+		return maiw_error_response( '본문 내용이 비어 있습니다. 먼저 글을 작성하세요.', 400 );
+	}
+	if ( mb_strlen( $content_text ) > 6000 ) {
+		$content_text = mb_substr( $content_text, 0, 6000 );
+	}
+
+	$settings = maiw_get_settings();
+	$provider = $settings['default_engine'];
+	list( $api_key, $model ) = maiw_resolve_text_credentials( $provider, $settings );
+
+	if ( '' === $api_key || '' === $model ) {
+		return maiw_error_response( 'API 키를 설정에서 먼저 입력하세요. (설정 > AI 글쓰기 패널)', 400 );
+	}
+
+	$title  = $post->post_title ? $post->post_title : '(제목 없음)';
+	$prompt = maiw_build_schema_prompt( $schema_type, $title, $content_text, $focus_keyword );
+	$system = '당신은 schema.org JSON-LD를 정확하게 작성하는 SEO 전문가입니다. 본문에 없는 사실을 지어내지 않습니다.';
+
+	switch ( $provider ) {
+		case 'claude':
+			$raw_text = maiw_call_claude( $api_key, $model, $system, $prompt );
+			break;
+		case 'openai':
+			$raw_text = maiw_call_openai( $api_key, $model, $system, $prompt );
+			break;
+		case 'gemini':
+			$raw_text = maiw_call_gemini( $api_key, $model, $system, $prompt );
+			break;
+		default:
+			return maiw_error_response( '알 수 없는 AI 엔진입니다.', 400 );
+	}
+
+	if ( $raw_text instanceof WP_REST_Response ) {
+		return $raw_text;
+	}
+
+	$decoded = maiw_extract_json_object( $raw_text );
+	if ( ! is_array( $decoded ) ) {
+		return maiw_error_response( 'AI 응답을 해석할 수 없습니다. 잠시 후 다시 시도해 주세요.', 502 );
+	}
+
+	// 신뢰할 수 있는 필드는 AI 대신 실제 글 데이터로 채운다.
+	$decoded['@context']         = 'https://schema.org';
+	$decoded['@type']            = $type_map[ $schema_type ];
+	$decoded['mainEntityOfPage'] = array(
+		'@type' => 'WebPage',
+		'@id'   => get_permalink( $post_id ),
+	);
+
+	if ( in_array( $schema_type, array( 'article', 'product_review' ), true ) ) {
+		$decoded['datePublished'] = get_the_date( 'c', $post_id );
+		$decoded['dateModified']  = get_the_modified_date( 'c', $post_id );
+		$decoded['author']        = array(
+			'@type' => 'Person',
+			'name'  => get_the_author_meta( 'display_name', $post->post_author ),
+		);
+		if ( has_post_thumbnail( $post_id ) ) {
+			$decoded['image'] = get_the_post_thumbnail_url( $post_id, 'full' );
+		}
+	}
+
+	$json = wp_json_encode( $decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
+	if ( false === $json ) {
+		return maiw_error_response( '스키마 데이터를 JSON으로 변환하지 못했습니다.', 500 );
+	}
+
+	update_post_meta( $post_id, '_maiw_schema_json', $json );
+	update_post_meta( $post_id, '_maiw_schema_type', $schema_type );
+
+	return new WP_REST_Response( array( 'schema' => $decoded ), 200 );
+}
+
+/**
+ * 저장된 스키마 마크업을 실제 글 페이지 <head>에 출력한다 (Rank Math/Yoast와 동일한 방식).
+ * 편집기 본문에는 삽입하지 않는다 — 사용자가 설정에서 이 방식을 선택했다.
+ */
+function maiw_output_schema_markup() {
+	if ( ! is_singular() ) {
+		return;
+	}
+	$post_id = get_queried_object_id();
+	if ( ! $post_id ) {
+		return;
+	}
+	$json = get_post_meta( $post_id, '_maiw_schema_json', true );
+	if ( '' === $json ) {
+		return;
+	}
+	echo '<script type="application/ld+json">' . str_replace( '</script>', '<\/script>', $json ) . '</script>' . "\n";
+}
+add_action( 'wp_head', 'maiw_output_schema_markup' );

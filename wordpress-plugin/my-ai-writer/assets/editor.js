@@ -40,10 +40,33 @@
 		{ key: 'branding', label: '브랜딩' },
 	];
 
-	// Claude는 이미지 생성 API가 없어 썸네일 생성 엔진에서 제외한다.
+	// Claude는 이미지 생성 API가 없어 썸네일 생성 방식에서 제외한다. Gamma 등 외부 서비스는
+	// 이 플러그인이 연동하는 대상이 아니다(OpenAI/Gemini만 지원).
 	var IMAGE_ENGINE_OPTIONS = [
 		{ label: 'OpenAI', value: 'openai' },
 		{ label: 'Gemini', value: 'gemini' },
+	];
+
+	var CONTENT_TYPE_OPTIONS = [
+		{ label: '정보/가이드', value: 'info_guide' },
+		{ label: '유틸리티', value: 'utility' },
+		{ label: '정책/안내', value: 'policy' },
+		{ label: '리뷰', value: 'review' },
+		{ label: '목록형', value: 'list' },
+		{ label: '뉴스/트렌드', value: 'news' },
+	];
+
+	var LANGUAGE_OPTIONS = [
+		{ label: '한국어', value: 'ko' },
+		{ label: 'English', value: 'en' },
+		{ label: '日本語', value: 'ja' },
+		{ label: '中文', value: 'zh' },
+	];
+
+	var SCHEMA_TYPE_OPTIONS = [
+		{ key: 'article', label: '기사' },
+		{ key: 'product_review', label: '상품리뷰' },
+		{ key: 'faq', label: '자주 묻는 질문' },
 	];
 
 	function errorMessage( err ) {
@@ -91,16 +114,21 @@
 	}
 
 	/**
-	 * ✍️ 글쓰기 탭.
+	 * ✍️ AI 글쓰기 탭. 생성 버튼을 누르면 미리보기 없이 바로 편집기에 삽입된다
+	 * (다시 생성하면 편집기 내용을 새 결과로 덮어쓴다).
 	 */
-	function WriteTab() {
+	function WriteTab( props ) {
 		var topicState = useState( '' );
 		var topic = topicState[ 0 ];
 		var setTopic = topicState[ 1 ];
 
-		var keywordsState = useState( '' );
-		var keywords = keywordsState[ 0 ];
-		var setKeywords = keywordsState[ 1 ];
+		var contentTypeState = useState( CONTENT_TYPE_OPTIONS[ 0 ].value );
+		var contentType = contentTypeState[ 0 ];
+		var setContentType = contentTypeState[ 1 ];
+
+		var languageState = useState( LANGUAGE_OPTIONS[ 0 ].value );
+		var language = languageState[ 0 ];
+		var setLanguage = languageState[ 1 ];
 
 		var toneState = useState( TONE_OPTIONS[ 0 ] );
 		var tone = toneState[ 0 ];
@@ -118,13 +146,14 @@
 		var error = errorState[ 0 ];
 		var setError = errorState[ 1 ];
 
-		var resultState = useState( null );
-		var result = resultState[ 0 ];
-		var setResult = resultState[ 1 ];
+		var insertedTitleState = useState( '' );
+		var insertedTitle = insertedTitleState[ 0 ];
+		var setInsertedTitle = insertedTitleState[ 1 ];
 
 		function generate() {
-			if ( ! topic.trim() ) {
-				setError( '주제를 입력해 주세요.' );
+			var subject = topic.trim() || props.focusKeyword.trim();
+			if ( ! subject ) {
+				setError( '주제 키워드나 포커스 키워드를 입력해 주세요.' );
 				return;
 			}
 			setError( '' );
@@ -132,10 +161,21 @@
 			apiFetch( {
 				path: '/maiw/v1/generate',
 				method: 'POST',
-				data: { topic: topic, keywords: keywords, tone: tone, words: words },
+				data: {
+					topic: subject,
+					keywords: props.focusKeyword,
+					tone: tone,
+					words: words,
+					contentType: contentType,
+					language: language,
+				},
 			} )
 				.then( function ( res ) {
-					setResult( res );
+					// 미리보기 없이 바로 편집기에 반영한다 — 다시 생성하면 기존 블록을 새 결과로 덮어쓴다.
+					dispatch( 'core/editor' ).editPost( { title: res.title } );
+					var blocks = wp.blocks.rawHandler( { HTML: res.html } );
+					dispatch( 'core/block-editor' ).resetBlocks( blocks );
+					setInsertedTitle( res.title );
 					setLoading( false );
 				} )
 				.catch( function ( err ) {
@@ -144,29 +184,26 @@
 				} );
 		}
 
-		function insertIntoEditor() {
-			if ( ! result ) {
-				return;
-			}
-			dispatch( 'core/editor' ).editPost( { title: result.title } );
-			var blocks = wp.blocks.rawHandler( { HTML: result.html } );
-			dispatch( 'core/block-editor' ).insertBlocks( blocks );
-		}
-
 		return el(
 			'div',
 			{ className: 'maiw-tab-panel' },
 			el( TextControl, {
-				label: '주제',
+				label: '주제 키워드',
 				value: topic,
 				onChange: setTopic,
-				placeholder: '예: 여름철 냉방비 절약 방법',
+				placeholder: props.focusKeyword || '예: 여름철 냉방비 절약 방법',
 			} ),
-			el( TextControl, {
-				label: '키워드 (선택)',
-				value: keywords,
-				onChange: setKeywords,
-				placeholder: '쉼표로 구분',
+			el( SelectControl, {
+				label: '글 유형',
+				value: contentType,
+				options: CONTENT_TYPE_OPTIONS,
+				onChange: setContentType,
+			} ),
+			el( SelectControl, {
+				label: '언어 선택',
+				value: language,
+				options: LANGUAGE_OPTIONS,
+				onChange: setLanguage,
 			} ),
 			el( 'div', { className: 'maiw-field-label' }, '말투' ),
 			el( ChipGroup, { options: TONE_OPTIONS, value: tone, onChange: setTone } ),
@@ -180,27 +217,23 @@
 					onClick: generate,
 					disabled: loading,
 				},
-				loading ? el( Spinner, null ) : '✍️ 글 생성하기'
+				loading ? el( Spinner, null ) : '✍️ AI 콘텐츠 생성'
 			),
 			error &&
 				el( Notice, { status: 'error', isDismissible: false }, error ),
-			result &&
+			insertedTitle &&
+				! loading &&
 				el(
 					'div',
 					{ className: 'maiw-result' },
-					el( 'div', { className: 'maiw-result-title' }, result.title ),
-					el( 'div', {
-						className: 'maiw-result-preview',
-						dangerouslySetInnerHTML: { __html: result.html },
-					} ),
+					el(
+						Notice,
+						{ status: 'success', isDismissible: false },
+						'편집기에 삽입되었습니다: ' + insertedTitle
+					),
 					el(
 						'div',
 						{ className: 'maiw-result-actions' },
-						el(
-							Button,
-							{ variant: 'primary', onClick: insertIntoEditor },
-							'본문에 삽입'
-						),
 						el(
 							Button,
 							{ variant: 'secondary', onClick: generate, disabled: loading },
@@ -480,14 +513,15 @@
 	}
 
 	/**
-	 * 🖼️ 썸네일 탭. 실제 AI 이미지 생성(OpenAI/Gemini) 배경 + 캔버스 한글 텍스트 오버레이.
+	 * 🖼️ AI 썸네일 탭. 실제 AI 이미지 생성(OpenAI/Gemini) 배경 + 캔버스 한글 텍스트 오버레이.
+	 * 하단에 AI 스키마 마크업(JSON-LD) 생성 섹션을 포함한다.
 	 */
-	function ThumbnailTab() {
+	function ThumbnailTab( props ) {
 		var canvasRef = useRef( null );
 
-		var bannerState = useState( '' );
-		var bannerText = bannerState[ 0 ];
-		var setBannerText = bannerState[ 1 ];
+		var topicState = useState( '' );
+		var topic = topicState[ 0 ];
+		var setTopic = topicState[ 1 ];
 
 		var styleState = useState( THUMBNAIL_STYLES[ 0 ].key );
 		var styleKey = styleState[ 0 ];
@@ -517,17 +551,33 @@
 		var error = errorState[ 0 ];
 		var setError = errorState[ 1 ];
 
+		var schemaTypeState = useState( SCHEMA_TYPE_OPTIONS[ 0 ].key );
+		var schemaType = schemaTypeState[ 0 ];
+		var setSchemaType = schemaTypeState[ 1 ];
+
+		var schemaLoadingState = useState( false );
+		var schemaLoading = schemaLoadingState[ 0 ];
+		var setSchemaLoading = schemaLoadingState[ 1 ];
+
+		var schemaErrorState = useState( '' );
+		var schemaError = schemaErrorState[ 0 ];
+		var setSchemaError = schemaErrorState[ 1 ];
+
+		var schemaSuccessState = useState( '' );
+		var schemaSuccess = schemaSuccessState[ 0 ];
+		var setSchemaSuccess = schemaSuccessState[ 1 ];
+
 		function resolveSubject() {
 			var editor = select( 'core/editor' );
 			var titleValue = editor ? editor.getEditedPostAttribute( 'title' ) : '';
-			return bannerText.trim() || titleValue || '';
+			return topic.trim() || props.focusKeyword.trim() || titleValue || '';
 		}
 
 		function generate() {
 			setError( '' );
 			var subject = resolveSubject();
 			if ( ! subject ) {
-				setError( '배너 문구나 글 제목을 입력해 주세요.' );
+				setError( '주제 키워드나 포커스 키워드, 글 제목 중 하나는 입력해 주세요.' );
 				return;
 			}
 
@@ -544,7 +594,7 @@
 			apiFetch( {
 				path: '/maiw/v1/generate-thumbnail',
 				method: 'POST',
-				data: { topic: subject, bannerText: bannerText.trim(), style: styleKey, provider: engine },
+				data: { topic: subject, bannerText: topic.trim(), style: styleKey, provider: engine },
 			} )
 				.then( function ( res ) {
 					return loadImage( res.image );
@@ -626,14 +676,46 @@
 			}, 'image/png' );
 		}
 
+		function generateSchema() {
+			setSchemaError( '' );
+			setSchemaSuccess( '' );
+			var editor = select( 'core/editor' );
+			var postId = editor ? editor.getCurrentPostId() : null;
+			if ( ! postId ) {
+				setSchemaError( '먼저 글을 저장(임시 저장)한 뒤 다시 시도하세요.' );
+				return;
+			}
+			setSchemaLoading( true );
+			apiFetch( {
+				path: '/maiw/v1/generate-schema',
+				method: 'POST',
+				data: { postId: postId, schemaType: schemaType, focusKeyword: props.focusKeyword },
+			} )
+				.then( function () {
+					setSchemaLoading( false );
+					setSchemaSuccess( '스키마 마크업이 저장되었습니다. 게시된 페이지의 <head>에 자동으로 출력됩니다.' );
+				} )
+				.catch( function ( err ) {
+					setSchemaLoading( false );
+					setSchemaError( errorMessage( err ) );
+				} );
+		}
+
 		return el(
 			'div',
 			{ className: 'maiw-tab-panel' },
 			el( TextControl, {
-				label: '배너 문구',
-				value: bannerText,
-				onChange: setBannerText,
-				placeholder: '비어 있으면 글 제목을 사용합니다',
+				label: '주제 키워드',
+				value: topic,
+				onChange: setTopic,
+				placeholder: props.focusKeyword || '비어 있으면 글 제목을 사용합니다',
+			} ),
+			el( SelectControl, {
+				label: '생성 방식',
+				value: engine,
+				options: IMAGE_ENGINE_OPTIONS,
+				onChange: setEngine,
+				help: 'Claude는 이미지 생성을 지원하지 않아 목록에서 제외됩니다.',
 			} ),
 			el( 'div', { className: 'maiw-field-label' }, '썸네일 스타일' ),
 			el(
@@ -654,13 +736,6 @@
 					);
 				} )
 			),
-			el( SelectControl, {
-				label: '생성 엔진',
-				value: engine,
-				options: IMAGE_ENGINE_OPTIONS,
-				onChange: setEngine,
-				help: 'Claude는 이미지 생성을 지원하지 않아 목록에서 제외됩니다.',
-			} ),
 			el(
 				Button,
 				{
@@ -669,7 +744,7 @@
 					onClick: generate,
 					disabled: loading,
 				},
-				loading ? el( Spinner, null ) : '🖼️ 썸네일 만들기'
+				loading ? el( Spinner, null ) : '🖼️ 썸네일 생성'
 			),
 			loading &&
 				el(
@@ -699,7 +774,40 @@
 						{ variant: 'primary', onClick: insertIntoEditor, disabled: uploading },
 						uploading ? el( Spinner, null ) : '본문에 삽입'
 					)
-				)
+				),
+			el( 'hr', { className: 'maiw-divider' } ),
+			el( 'div', { className: 'maiw-panel-subtitle' }, 'AI 스키마 마크업' ),
+			el( 'div', { className: 'maiw-field-label' }, '스키마 타입 선택' ),
+			el(
+				'div',
+				{ className: 'maiw-chip-group' },
+				SCHEMA_TYPE_OPTIONS.map( function ( s ) {
+					return el(
+						'button',
+						{
+							type: 'button',
+							key: s.key,
+							className: 'maiw-chip' + ( s.key === schemaType ? ' is-active' : '' ),
+							onClick: function () {
+								setSchemaType( s.key );
+							},
+						},
+						s.label
+					);
+				} )
+			),
+			el(
+				Button,
+				{
+					variant: 'secondary',
+					className: 'maiw-run-button',
+					onClick: generateSchema,
+					disabled: schemaLoading,
+				},
+				schemaLoading ? el( Spinner, null ) : '본문 내용으로 생성하기'
+			),
+			schemaError && el( Notice, { status: 'error', isDismissible: false }, schemaError ),
+			schemaSuccess && el( Notice, { status: 'success', isDismissible: false }, schemaSuccess )
 		);
 	}
 
@@ -708,10 +816,20 @@
 		var tab = tabState[ 0 ];
 		var setTab = tabState[ 1 ];
 
+		var focusKeywordState = useState( '' );
+		var focusKeyword = focusKeywordState[ 0 ];
+		var setFocusKeyword = focusKeywordState[ 1 ];
+
 		return el(
 			'div',
 			{ className: 'maiw-panel' },
 			el( 'div', { className: 'maiw-panel-title' }, 'AI 글쓰기 도우미' ),
+			el( TextControl, {
+				label: '포커스 키워드',
+				value: focusKeyword,
+				onChange: setFocusKeyword,
+				placeholder: 'SEO 대상 키워드 (예: 여름철 냉방비 절약)',
+			} ),
 			el(
 				'div',
 				{ className: 'maiw-tabs' },
@@ -724,7 +842,7 @@
 							setTab( 'write' );
 						},
 					},
-					'✍️ 글쓰기'
+					'✍️ AI 글쓰기'
 				),
 				el(
 					'button',
@@ -735,10 +853,12 @@
 							setTab( 'thumbnail' );
 						},
 					},
-					'🖼️ 썸네일'
+					'🖼️ AI 썸네일'
 				)
 			),
-			tab === 'write' ? el( WriteTab, null ) : el( ThumbnailTab, null )
+			tab === 'write'
+				? el( WriteTab, { focusKeyword: focusKeyword } )
+				: el( ThumbnailTab, { focusKeyword: focusKeyword } )
 		);
 	}
 
