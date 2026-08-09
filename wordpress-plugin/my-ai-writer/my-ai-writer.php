@@ -70,6 +70,24 @@ function maiw_register_rest_routes() {
 			),
 		)
 	);
+
+	register_rest_route(
+		'maiw/v1',
+		'/generate-thumbnail',
+		array(
+			'methods'             => 'POST',
+			'callback'            => 'maiw_handle_generate_thumbnail_request',
+			'permission_callback' => function () {
+				return current_user_can( 'edit_posts' );
+			},
+			'args'                => array(
+				'topic'      => array( 'type' => 'string', 'required' => true ),
+				'bannerText' => array( 'type' => 'string', 'required' => false ),
+				'style'      => array( 'type' => 'string', 'required' => true ),
+				'provider'   => array( 'type' => 'string', 'required' => true ),
+			),
+		)
+	);
 }
 add_action( 'rest_api_init', 'maiw_register_rest_routes' );
 
@@ -372,4 +390,204 @@ function maiw_parse_ai_json( $raw_text ) {
 		'title' => (string) $decoded['title'],
 		'html'  => (string) $decoded['html'],
 	);
+}
+
+/**
+ * 썸네일 스타일별 이미지 생성 프롬프트 문구. 실제 문구는 한글 렌더링 대신
+ * "텍스트 없는 배경"을 만들도록 지시하고, 한글 제목은 클라이언트 캔버스에서
+ * 오버레이한다(하이브리드 방식 유지 — AI가 한글을 직접 그리게 하지 않는다).
+ */
+function maiw_get_thumbnail_styles() {
+	return array(
+		'poster'       => 'a bold dramatic movie-poster style illustration, high contrast lighting, cinematic composition',
+		'magazine'     => 'a clean editorial magazine cover style background, soft studio lighting, minimal elegant composition',
+		'infographic'  => 'a flat infographic style background with simple geometric icons and shapes, pastel color palette',
+		'illustration' => 'a friendly flat vector illustration background with simple characters and objects, warm color palette',
+		'typography'   => 'a minimal abstract background with soft color blocks and large empty negative space',
+		'gradient'     => 'a smooth abstract gradient background with soft blurred organic shapes, vibrant modern colors',
+		'branding'     => 'a clean corporate brand style background with a bold color block on one side and subtle geometric shapes',
+	);
+}
+
+/**
+ * AI 이미지 생성 프롬프트를 구성한다. 텍스트를 그리지 말라고 명시해 한글 깨짐을 방지한다.
+ */
+function maiw_build_image_prompt( $style, $topic, $banner_text ) {
+	$styles      = maiw_get_thumbnail_styles();
+	$style_desc  = isset( $styles[ $style ] ) ? $styles[ $style ] : $styles['gradient'];
+	$subject     = '' !== $banner_text ? $banner_text : $topic;
+
+	return "Create a wide 1200x630 blog thumbnail background image about: {$subject}. "
+		. "Visual style: {$style_desc}. "
+		. 'IMPORTANT: Do not render any text, letters, numbers, or words anywhere in the image — '
+		. 'leave clean open space for a title to be overlaid afterwards. No watermark, no logo, no borders.';
+}
+
+/**
+ * /maiw/v1/generate-thumbnail 요청을 처리한다. Claude는 이미지 생성 API가 없어 지원하지 않는다.
+ *
+ * @return WP_REST_Response
+ */
+function maiw_handle_generate_thumbnail_request( WP_REST_Request $request ) {
+	$topic       = sanitize_text_field( (string) $request->get_param( 'topic' ) );
+	$banner_text = sanitize_text_field( (string) $request->get_param( 'bannerText' ) );
+	$style       = sanitize_text_field( (string) $request->get_param( 'style' ) );
+	$provider    = sanitize_text_field( (string) $request->get_param( 'provider' ) );
+
+	if ( '' === $topic ) {
+		return maiw_error_response( '주제를 입력해 주세요.', 400 );
+	}
+
+	$allowed_styles = array_keys( maiw_get_thumbnail_styles() );
+	if ( ! in_array( $style, $allowed_styles, true ) ) {
+		return maiw_error_response( '알 수 없는 썸네일 스타일입니다.', 400 );
+	}
+
+	if ( ! in_array( $provider, array( 'openai', 'gemini' ), true ) ) {
+		return maiw_error_response( 'Claude는 이미지 생성을 지원하지 않습니다. OpenAI 또는 Gemini를 선택하세요.', 400 );
+	}
+
+	$settings = maiw_get_settings();
+	$prompt   = maiw_build_image_prompt( $style, $topic, $banner_text );
+
+	if ( 'openai' === $provider ) {
+		$api_key = $settings['openai_api_key'];
+		$model   = $settings['openai_image_model'];
+		if ( '' === $api_key || '' === $model ) {
+			return maiw_error_response( 'OpenAI API 키를 설정에서 먼저 입력하세요. (설정 > AI 글쓰기 패널)', 400 );
+		}
+		$image = maiw_call_openai_image( $api_key, $model, $prompt );
+	} else {
+		$api_key = $settings['gemini_api_key'];
+		$model   = $settings['gemini_image_model'];
+		if ( '' === $api_key || '' === $model ) {
+			return maiw_error_response( 'Gemini API 키를 설정에서 먼저 입력하세요. (설정 > AI 글쓰기 패널)', 400 );
+		}
+		$image = maiw_call_gemini_image( $api_key, $model, $prompt );
+	}
+
+	if ( $image instanceof WP_REST_Response ) {
+		return $image;
+	}
+
+	return new WP_REST_Response( array( 'image' => $image ), 200 );
+}
+
+/**
+ * OpenAI 이미지 생성 API(Images API)를 호출하고 data: URI를 반환한다.
+ * 캔버스에서 바로 그리고 toDataURL/toBlob으로 내보낼 수 있도록 항상 base64 data URI로 반환한다
+ * (원격 URL을 그대로 넘기면 캔버스가 cross-origin으로 오염되어 내보내기가 막힌다).
+ *
+ * @return string|WP_REST_Response
+ */
+function maiw_call_openai_image( $api_key, $model, $prompt ) {
+	$is_dalle = false !== stripos( $model, 'dall-e' );
+
+	$body = array(
+		'model'  => $model,
+		'prompt' => $prompt,
+		'n'      => 1,
+		'size'   => $is_dalle ? '1792x1024' : '1536x1024',
+	);
+	if ( $is_dalle ) {
+		$body['response_format'] = 'b64_json';
+	}
+
+	$response = wp_remote_post(
+		'https://api.openai.com/v1/images/generations',
+		array(
+			'timeout' => 90,
+			'headers' => array(
+				'Authorization' => 'Bearer ' . $api_key,
+				'Content-Type'  => 'application/json',
+			),
+			'body'    => wp_json_encode( $body ),
+		)
+	);
+
+	if ( is_wp_error( $response ) ) {
+		return maiw_error_response( 'OpenAI 이미지 생성 요청에 실패했습니다: ' . $response->get_error_message(), 502 );
+	}
+
+	$decoded = json_decode( wp_remote_retrieve_body( $response ), true );
+	$code    = wp_remote_retrieve_response_code( $response );
+
+	if ( isset( $decoded['error'] ) ) {
+		$message = isset( $decoded['error']['message'] ) ? $decoded['error']['message'] : '알 수 없는 오류';
+		return maiw_error_response( 'OpenAI 이미지 생성 오류: ' . $message, $code ? $code : 502 );
+	}
+
+	if ( ! empty( $decoded['data'][0]['b64_json'] ) ) {
+		return 'data:image/png;base64,' . $decoded['data'][0]['b64_json'];
+	}
+
+	// b64_json이 없으면 url로 온 것 — 서버에서 다시 받아와 base64로 변환한다.
+	if ( ! empty( $decoded['data'][0]['url'] ) ) {
+		$image_response = wp_remote_get( $decoded['data'][0]['url'], array( 'timeout' => 90 ) );
+		if ( is_wp_error( $image_response ) ) {
+			return maiw_error_response( '생성된 이미지를 가져오지 못했습니다: ' . $image_response->get_error_message(), 502 );
+		}
+		$bytes = wp_remote_retrieve_body( $image_response );
+		if ( '' === $bytes ) {
+			return maiw_error_response( '생성된 이미지가 비어 있습니다.', 502 );
+		}
+		return 'data:image/png;base64,' . base64_encode( $bytes );
+	}
+
+	return maiw_error_response( 'OpenAI 이미지 생성 응답이 비어 있습니다.', 502 );
+}
+
+/**
+ * Gemini 이미지 생성 모델(generateContent, 이미지 출력 모델)을 호출하고 data: URI를 반환한다.
+ *
+ * @return string|WP_REST_Response
+ */
+function maiw_call_gemini_image( $api_key, $model, $prompt ) {
+	$url = sprintf(
+		'https://generativelanguage.googleapis.com/v1beta/models/%s:generateContent?key=%s',
+		rawurlencode( $model ),
+		rawurlencode( $api_key )
+	);
+
+	$response = wp_remote_post(
+		$url,
+		array(
+			'timeout' => 90,
+			'headers' => array(
+				'Content-Type' => 'application/json',
+			),
+			'body'    => wp_json_encode(
+				array(
+					'contents'         => array(
+						array( 'parts' => array( array( 'text' => $prompt ) ) ),
+					),
+					'generationConfig' => array(
+						'responseModalities' => array( 'IMAGE' ),
+					),
+				)
+			),
+		)
+	);
+
+	if ( is_wp_error( $response ) ) {
+		return maiw_error_response( 'Gemini 이미지 생성 요청에 실패했습니다: ' . $response->get_error_message(), 502 );
+	}
+
+	$decoded = json_decode( wp_remote_retrieve_body( $response ), true );
+	$code    = wp_remote_retrieve_response_code( $response );
+
+	if ( isset( $decoded['error'] ) ) {
+		$message = isset( $decoded['error']['message'] ) ? $decoded['error']['message'] : '알 수 없는 오류';
+		return maiw_error_response( 'Gemini 이미지 생성 오류: ' . $message, $code ? $code : 502 );
+	}
+
+	$parts = isset( $decoded['candidates'][0]['content']['parts'] ) ? $decoded['candidates'][0]['content']['parts'] : array();
+	foreach ( $parts as $part ) {
+		if ( ! empty( $part['inlineData']['data'] ) ) {
+			$mime = ! empty( $part['inlineData']['mimeType'] ) ? $part['inlineData']['mimeType'] : 'image/png';
+			return 'data:' . $mime . ';base64,' . $part['inlineData']['data'];
+		}
+	}
+
+	return maiw_error_response( 'Gemini 이미지 생성 응답이 비어 있습니다.', 502 );
 }

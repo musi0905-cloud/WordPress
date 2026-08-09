@@ -13,10 +13,12 @@
 	var PluginSidebarMoreMenuItem = wp.editPost.PluginSidebarMoreMenuItem;
 	var Button = wp.components.Button;
 	var TextControl = wp.components.TextControl;
+	var SelectControl = wp.components.SelectControl;
 	var Spinner = wp.components.Spinner;
 	var Notice = wp.components.Notice;
 	var apiFetch = wp.apiFetch;
 	var dispatch = wp.data.dispatch;
+	var select = wp.data.select;
 
 	var TONE_OPTIONS = [ '친근하게', '전문적으로', '간결하게' ];
 	var WORDS_OPTIONS = [
@@ -24,11 +26,24 @@
 		{ label: '보통', value: 900 },
 		{ label: '길게', value: 1500 },
 	];
-	var COLOR_THEMES = [
-		{ key: 'blue', label: '블루', from: '#2271b1', to: '#3858e9' },
-		{ key: 'orange', label: '오렌지', from: '#e8590c', to: '#f2c94c' },
-		{ key: 'green', label: '그린', from: '#0b7a5b', to: '#38ef7d' },
-		{ key: 'purple', label: '퍼플', from: '#5b21b6', to: '#a855f7' },
+
+	// 썸네일 이미지는 실제 AI 이미지 생성(OpenAI/Gemini)으로 배경을 만들고,
+	// 그 위에 한글 제목을 캔버스로 오버레이한다(한글이 깨지지 않도록 AI에게는
+	// "텍스트를 그리지 말라"고 지시한다 — 서버의 maiw_build_image_prompt 참고).
+	var THUMBNAIL_STYLES = [
+		{ key: 'poster', label: '포스터' },
+		{ key: 'magazine', label: '매거진' },
+		{ key: 'infographic', label: '인포그래픽' },
+		{ key: 'illustration', label: '일러스트' },
+		{ key: 'typography', label: '타이포그래피' },
+		{ key: 'gradient', label: '그라데이션' },
+		{ key: 'branding', label: '브랜딩' },
+	];
+
+	// Claude는 이미지 생성 API가 없어 썸네일 생성 엔진에서 제외한다.
+	var IMAGE_ENGINE_OPTIONS = [
+		{ label: 'OpenAI', value: 'openai' },
+		{ label: 'Gemini', value: 'gemini' },
 	];
 
 	function errorMessage( err ) {
@@ -217,64 +232,255 @@
 		return lines;
 	}
 
-	function drawThumbnail( canvas, text, theme ) {
-		var ctx = canvas.getContext( '2d' );
-		var w = canvas.width;
-		var h = canvas.height;
+	/**
+	 * data: URI 이미지를 로드한다 (AI가 생성한 배경 이미지를 캔버스에 그리기 전에 필요).
+	 */
+	function loadImage( src ) {
+		return new Promise( function ( resolve, reject ) {
+			var img = new Image();
+			img.onload = function () {
+				resolve( img );
+			};
+			img.onerror = function () {
+				reject( new Error( '생성된 이미지를 불러오지 못했습니다.' ) );
+			};
+			img.src = src;
+		} );
+	}
 
-		var gradient = ctx.createLinearGradient( 0, 0, w, h );
-		gradient.addColorStop( 0, theme.from );
-		gradient.addColorStop( 1, theme.to );
-		ctx.fillStyle = gradient;
+	/**
+	 * 캔버스를 이미지로 꽉 채운다 (object-fit: cover와 동일하게 중앙 크롭).
+	 */
+	function drawImageCover( ctx, img, w, h ) {
+		var scale = Math.max( w / img.width, h / img.height );
+		var dw = img.width * scale;
+		var dh = img.height * scale;
+		var dx = ( w - dw ) / 2;
+		var dy = ( h - dh ) / 2;
+		ctx.drawImage( img, dx, dy, dw, dh );
+	}
+
+	function roundRect( ctx, x, y, w, h, r ) {
+		ctx.beginPath();
+		ctx.moveTo( x + r, y );
+		ctx.arcTo( x + w, y, x + w, y + h, r );
+		ctx.arcTo( x + w, y + h, x, y + h, r );
+		ctx.arcTo( x, y + h, x, y, r );
+		ctx.arcTo( x, y, x + w, y, r );
+		ctx.closePath();
+	}
+
+	function drawBadge( ctx, x, y, text, bg, fg ) {
+		ctx.font = 'bold 20px sans-serif';
+		var padding = 14;
+		var boxW = ctx.measureText( text ).width + padding * 2;
+		var boxH = 40;
+		ctx.fillStyle = bg;
+		ctx.fillRect( x, y, boxW, boxH );
+		ctx.fillStyle = fg;
+		ctx.textBaseline = 'middle';
+		ctx.fillText( text, x + padding, y + boxH / 2 + 1 );
+		ctx.textBaseline = 'alphabetic';
+	}
+
+	/* ---- 썸네일 스타일별 레이아웃. 배경은 AI 생성 이미지, 텍스트는 캔버스 오버레이. ---- */
+
+	function drawPoster( ctx, w, h, text ) {
+		var scrim = ctx.createLinearGradient( 0, h * 0.35, 0, h );
+		scrim.addColorStop( 0, 'rgba(0,0,0,0)' );
+		scrim.addColorStop( 1, 'rgba(0,0,0,0.75)' );
+		ctx.fillStyle = scrim;
 		ctx.fillRect( 0, 0, w, h );
 
-		// 반투명 장식 도형.
-		ctx.save();
-		ctx.globalAlpha = 0.15;
-		ctx.fillStyle = '#ffffff';
-		ctx.beginPath();
-		ctx.arc( w * 0.85, h * 0.15, 160, 0, Math.PI * 2 );
-		ctx.fill();
-		ctx.beginPath();
-		ctx.arc( w * 0.1, h * 0.9, 120, 0, Math.PI * 2 );
-		ctx.fill();
-		ctx.restore();
+		drawBadge( ctx, 60, 60, 'GUIDE', '#e63946', '#ffffff' );
 
-		// 상단 배지.
-		ctx.fillStyle = 'rgba(255,255,255,0.9)';
-		ctx.fillRect( 60, 60, 120, 40 );
-		ctx.fillStyle = theme.to;
-		ctx.font = 'bold 20px sans-serif';
-		ctx.textBaseline = 'middle';
-		ctx.fillText( 'GUIDE', 84, 81 );
-
-		// 제목.
+		ctx.font = 'bold 60px sans-serif';
+		var lines = wrapText( ctx, text, w - 160 );
+		var lineHeight = 70;
+		var titleTopY = h - 110 - ( lines.length - 1 ) * lineHeight;
 		ctx.fillStyle = '#ffffff';
-		ctx.font = 'bold 64px sans-serif';
-		ctx.textBaseline = 'alphabetic';
-		ctx.shadowColor = 'rgba(0,0,0,0.35)';
-		ctx.shadowBlur = 12;
+		ctx.shadowColor = 'rgba(0,0,0,0.5)';
+		ctx.shadowBlur = 14;
 		ctx.shadowOffsetY = 4;
-
-		var lines = wrapText( ctx, text || '제목을 입력하세요', w - 160 );
-		var lineHeight = 76;
-		var startY = h / 2 - ( ( lines.length - 1 ) * lineHeight ) / 2;
 		lines.forEach( function ( line, idx ) {
-			ctx.fillText( line, 80, startY + idx * lineHeight );
+			ctx.fillText( line, 80, titleTopY + idx * lineHeight );
 		} );
-
 		ctx.shadowColor = 'transparent';
 		ctx.shadowBlur = 0;
 		ctx.shadowOffsetY = 0;
 
-		// 하단 CTA.
-		ctx.fillStyle = 'rgba(255,255,255,0.85)';
 		ctx.font = '28px sans-serif';
-		ctx.fillText( '클릭해서 자세히 보기 →', 80, h - 60 );
+		ctx.fillStyle = 'rgba(255,255,255,0.85)';
+		ctx.fillText( '클릭해서 자세히 보기 →', 80, h - 50 );
+	}
+
+	function drawMagazine( ctx, w, h, text ) {
+		var bandH = h * 0.36;
+		ctx.fillStyle = '#1e1e1e';
+		ctx.fillRect( 0, h - bandH, w, bandH );
+
+		ctx.font = 'bold 16px sans-serif';
+		ctx.fillStyle = '#f2c94c';
+		ctx.fillText( 'ISSUE', 80, h - bandH + 40 );
+
+		ctx.font = 'bold 46px sans-serif';
+		var lines = wrapText( ctx, text, w - 160 );
+		var lineHeight = 56;
+		var startY = h - bandH + 90;
+		ctx.fillStyle = '#ffffff';
+		lines.forEach( function ( line, idx ) {
+			ctx.fillText( line, 80, startY + idx * lineHeight );
+		} );
+	}
+
+	function drawInfographic( ctx, w, h, text ) {
+		var panelW = w * 0.42;
+		ctx.fillStyle = '#0b7a5b';
+		ctx.fillRect( 0, 0, panelW, h );
+
+		drawBadge( ctx, 50, 50, 'GUIDE', 'rgba(255,255,255,0.18)', '#ffffff' );
+
+		ctx.font = 'bold 40px sans-serif';
+		var lines = wrapText( ctx, text, panelW - 100 );
+		var lineHeight = 52;
+		var startY = h / 2 - ( ( lines.length - 1 ) * lineHeight ) / 2;
+		ctx.fillStyle = '#ffffff';
+		lines.forEach( function ( line, idx ) {
+			ctx.fillText( line, 50, startY + idx * lineHeight );
+		} );
+
+		ctx.font = '22px sans-serif';
+		ctx.fillStyle = 'rgba(255,255,255,0.8)';
+		ctx.fillText( '클릭해서 자세히 보기 →', 50, h - 50 );
+	}
+
+	function drawIllustration( ctx, w, h, text ) {
+		ctx.beginPath();
+		ctx.fillStyle = '#ff7a59';
+		ctx.arc( w - 110, 110, 60, 0, Math.PI * 2 );
+		ctx.fill();
+		ctx.fillStyle = '#ffffff';
+		ctx.font = 'bold 18px sans-serif';
+		ctx.textAlign = 'center';
+		ctx.textBaseline = 'middle';
+		ctx.fillText( 'GUIDE', w - 110, 110 );
+
+		var ribbonH = 170;
+		var ribbonY = h - ribbonH - 50;
+		var ribbonX = 60;
+		var ribbonW = w - 120;
+		ctx.fillStyle = 'rgba(255,255,255,0.92)';
+		roundRect( ctx, ribbonX, ribbonY, ribbonW, ribbonH, 20 );
+		ctx.fill();
+
+		ctx.font = 'bold 42px sans-serif';
+		ctx.fillStyle = '#1e1e1e';
+		ctx.textBaseline = 'alphabetic';
+		var lines = wrapText( ctx, text, ribbonW - 80 );
+		var lineHeight = 50;
+		var startY = ribbonY + ribbonH / 2 - ( ( lines.length - 1 ) * lineHeight ) / 2 + 14;
+		lines.forEach( function ( line, idx ) {
+			ctx.fillText( line, w / 2, startY + idx * lineHeight );
+		} );
+		ctx.textAlign = 'left';
+	}
+
+	function drawTypography( ctx, w, h, text ) {
+		ctx.fillStyle = 'rgba(0,0,0,0.55)';
+		ctx.fillRect( 0, 0, w, h );
+
+		ctx.font = 'bold 68px sans-serif';
+		ctx.textAlign = 'center';
+		var lines = wrapText( ctx, text, w - 200 );
+		var lineHeight = 82;
+		var startY = h / 2 - ( ( lines.length - 1 ) * lineHeight ) / 2;
+		ctx.fillStyle = '#ffffff';
+		lines.forEach( function ( line, idx ) {
+			ctx.fillText( line, w / 2, startY + idx * lineHeight );
+		} );
+
+		var ruleY = startY + lines.length * lineHeight - 10;
+		ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+		ctx.lineWidth = 3;
+		ctx.beginPath();
+		ctx.moveTo( w / 2 - 80, ruleY );
+		ctx.lineTo( w / 2 + 80, ruleY );
+		ctx.stroke();
+		ctx.textAlign = 'left';
+	}
+
+	function drawGradientStyle( ctx, w, h, text ) {
+		var tint = ctx.createLinearGradient( 0, 0, w, h );
+		tint.addColorStop( 0, 'rgba(56,88,233,0.35)' );
+		tint.addColorStop( 1, 'rgba(34,113,177,0.55)' );
+		ctx.fillStyle = tint;
+		ctx.fillRect( 0, 0, w, h );
+
+		drawBadge( ctx, 60, 60, 'GUIDE', 'rgba(255,255,255,0.92)', '#3858e9' );
+
+		ctx.font = 'bold 58px sans-serif';
+		var lines = wrapText( ctx, text, w - 160 );
+		var lineHeight = 68;
+		var titleTopY = h - 110 - ( lines.length - 1 ) * lineHeight;
+		ctx.fillStyle = '#ffffff';
+		ctx.shadowColor = 'rgba(0,0,0,0.35)';
+		ctx.shadowBlur = 12;
+		ctx.shadowOffsetY = 4;
+		lines.forEach( function ( line, idx ) {
+			ctx.fillText( line, 80, titleTopY + idx * lineHeight );
+		} );
+		ctx.shadowColor = 'transparent';
+		ctx.shadowBlur = 0;
+		ctx.shadowOffsetY = 0;
+
+		ctx.font = '26px sans-serif';
+		ctx.fillStyle = 'rgba(255,255,255,0.85)';
+		ctx.fillText( '클릭해서 자세히 보기 →', 80, h - 50 );
+	}
+
+	function drawBranding( ctx, w, h, text ) {
+		var bandH = h * 0.28;
+		ctx.fillStyle = '#12294f';
+		ctx.fillRect( 0, h - bandH, w, bandH );
+
+		ctx.fillStyle = '#f2c94c';
+		ctx.fillRect( 60, h - bandH + ( bandH / 2 - 30 ), 60, 60 );
+
+		ctx.font = 'bold 42px sans-serif';
+		ctx.fillStyle = '#ffffff';
+		var lines = wrapText( ctx, text, w - 260 );
+		var lineHeight = 50;
+		var startY = h - bandH + bandH / 2 - ( ( lines.length - 1 ) * lineHeight ) / 2 + 14;
+		lines.forEach( function ( line, idx ) {
+			ctx.fillText( line, 150, startY + idx * lineHeight );
+		} );
+	}
+
+	var STYLE_RENDERERS = {
+		poster: drawPoster,
+		magazine: drawMagazine,
+		infographic: drawInfographic,
+		illustration: drawIllustration,
+		typography: drawTypography,
+		gradient: drawGradientStyle,
+		branding: drawBranding,
+	};
+
+	/**
+	 * AI가 생성한 배경 이미지를 캔버스에 채운 뒤, 선택한 스타일의 텍스트 레이아웃을 오버레이한다.
+	 */
+	function renderThumbnail( canvas, img, text, styleKey ) {
+		var ctx = canvas.getContext( '2d' );
+		var w = canvas.width;
+		var h = canvas.height;
+		ctx.clearRect( 0, 0, w, h );
+		drawImageCover( ctx, img, w, h );
+		var renderer = STYLE_RENDERERS[ styleKey ] || drawGradientStyle;
+		renderer( ctx, w, h, text || '제목을 입력하세요' );
 	}
 
 	/**
-	 * 🖼️ 썸네일 탭.
+	 * 🖼️ 썸네일 탭. 실제 AI 이미지 생성(OpenAI/Gemini) 배경 + 캔버스 한글 텍스트 오버레이.
 	 */
 	function ThumbnailTab() {
 		var canvasRef = useRef( null );
@@ -283,9 +489,21 @@
 		var bannerText = bannerState[ 0 ];
 		var setBannerText = bannerState[ 1 ];
 
-		var themeState = useState( COLOR_THEMES[ 0 ].key );
-		var themeKey = themeState[ 0 ];
-		var setThemeKey = themeState[ 1 ];
+		var styleState = useState( THUMBNAIL_STYLES[ 0 ].key );
+		var styleKey = styleState[ 0 ];
+		var setStyleKey = styleState[ 1 ];
+
+		var engineState = useState( IMAGE_ENGINE_OPTIONS[ 0 ].value );
+		var engine = engineState[ 0 ];
+		var setEngine = engineState[ 1 ];
+
+		var loadingState = useState( false );
+		var loading = loadingState[ 0 ];
+		var setLoading = loadingState[ 1 ];
+
+		var progressState = useState( 0 );
+		var progress = progressState[ 0 ];
+		var setProgress = progressState[ 1 ];
 
 		var hasImageState = useState( false );
 		var hasImage = hasImageState[ 0 ];
@@ -299,28 +517,57 @@
 		var error = errorState[ 0 ];
 		var setError = errorState[ 1 ];
 
-		function getTheme() {
-			var found = null;
-			COLOR_THEMES.forEach( function ( t ) {
-				if ( t.key === themeKey ) {
-					found = t;
-				}
-			} );
-			return found || COLOR_THEMES[ 0 ];
+		function resolveSubject() {
+			var editor = select( 'core/editor' );
+			var titleValue = editor ? editor.getEditedPostAttribute( 'title' ) : '';
+			return bannerText.trim() || titleValue || '';
 		}
 
 		function generate() {
 			setError( '' );
-			var canvas = canvasRef.current;
-			if ( ! canvas ) {
+			var subject = resolveSubject();
+			if ( ! subject ) {
+				setError( '배너 문구나 글 제목을 입력해 주세요.' );
 				return;
 			}
-			var titleValue = wp.data.select( 'core/editor' )
-				? wp.data.select( 'core/editor' ).getEditedPostAttribute( 'title' )
-				: '';
-			var text = bannerText.trim() || titleValue || '제목을 입력하세요';
-			drawThumbnail( canvas, text, getTheme() );
-			setHasImage( true );
+
+			setLoading( true );
+			setProgress( 8 );
+			// 실제 생성 진행률은 서버가 알려주지 않으므로(단일 요청-응답), 대기 중임을 보여주는
+			// 시각적 진행 표시만 흉내낸다. 응답이 오면 즉시 100%로 맞추고 캔버스를 그린다.
+			var progressTimer = setInterval( function () {
+				setProgress( function ( p ) {
+					return p < 90 ? p + Math.random() * 10 : p;
+				} );
+			}, 400 );
+
+			apiFetch( {
+				path: '/maiw/v1/generate-thumbnail',
+				method: 'POST',
+				data: { topic: subject, bannerText: bannerText.trim(), style: styleKey, provider: engine },
+			} )
+				.then( function ( res ) {
+					return loadImage( res.image );
+				} )
+				.then( function ( img ) {
+					clearInterval( progressTimer );
+					setProgress( 100 );
+					var canvas = canvasRef.current;
+					if ( canvas ) {
+						renderThumbnail( canvas, img, subject, styleKey );
+						setHasImage( true );
+					}
+					setTimeout( function () {
+						setLoading( false );
+						setProgress( 0 );
+					}, 400 );
+				} )
+				.catch( function ( err ) {
+					clearInterval( progressTimer );
+					setLoading( false );
+					setProgress( 0 );
+					setError( errorMessage( err ) );
+				} );
 		}
 
 		function download() {
@@ -388,35 +635,56 @@
 				onChange: setBannerText,
 				placeholder: '비어 있으면 글 제목을 사용합니다',
 			} ),
-			el( 'div', { className: 'maiw-field-label' }, '색상 테마' ),
+			el( 'div', { className: 'maiw-field-label' }, '썸네일 스타일' ),
 			el(
 				'div',
 				{ className: 'maiw-chip-group' },
-				COLOR_THEMES.map( function ( t ) {
+				THUMBNAIL_STYLES.map( function ( s ) {
 					return el(
 						'button',
 						{
 							type: 'button',
-							key: t.key,
-							className:
-								'maiw-chip maiw-theme-chip' +
-								( t.key === themeKey ? ' is-active' : '' ),
-							style: {
-								background: 'linear-gradient(135deg,' + t.from + ',' + t.to + ')',
-							},
+							key: s.key,
+							className: 'maiw-chip' + ( s.key === styleKey ? ' is-active' : '' ),
 							onClick: function () {
-								setThemeKey( t.key );
+								setStyleKey( s.key );
 							},
 						},
-						t.label
+						s.label
 					);
 				} )
 			),
+			el( SelectControl, {
+				label: '생성 엔진',
+				value: engine,
+				options: IMAGE_ENGINE_OPTIONS,
+				onChange: setEngine,
+				help: 'Claude는 이미지 생성을 지원하지 않아 목록에서 제외됩니다.',
+			} ),
 			el(
 				Button,
-				{ variant: 'primary', className: 'maiw-run-button', onClick: generate },
-				'🖼️ 썸네일 만들기'
+				{
+					variant: 'primary',
+					className: 'maiw-run-button',
+					onClick: generate,
+					disabled: loading,
+				},
+				loading ? el( Spinner, null ) : '🖼️ 썸네일 만들기'
 			),
+			loading &&
+				el(
+					'div',
+					{ className: 'maiw-progress' },
+					el(
+						'div',
+						{ className: 'maiw-progress-track' },
+						el( 'div', {
+							className: 'maiw-progress-bar',
+							style: { width: Math.min( progress, 100 ) + '%' },
+						} )
+					),
+					el( 'div', { className: 'maiw-progress-label' }, '이미지 생성 중… ' + Math.round( Math.min( progress, 100 ) ) + '%' )
+				),
 			error && el( Notice, { status: 'error', isDismissible: false }, error ),
 			el( 'div', { className: 'maiw-canvas-wrap' },
 				el( 'canvas', { ref: canvasRef, width: 1200, height: 630, className: 'maiw-canvas' } )

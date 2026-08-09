@@ -16,15 +16,17 @@ define( 'MAIW_OPTION_KEY', 'maiw_settings' );
  */
 function maiw_get_settings() {
 	$defaults = array(
-		'default_engine' => 'claude',
-		'claude_api_key' => '',
-		'claude_model'   => 'claude-sonnet-5',
-		'openai_api_key' => '',
-		'openai_model'   => 'gpt-4o',
-		'gemini_api_key' => '',
-		'gemini_model'   => 'gemini-1.5-pro',
-		'default_tone'   => '친근하게',
-		'default_words'  => 900,
+		'default_engine'    => 'claude',
+		'claude_api_key'    => '',
+		'claude_model'      => 'claude-sonnet-5',
+		'openai_api_key'    => '',
+		'openai_model'      => 'gpt-4o',
+		'openai_image_model' => 'gpt-image-1',
+		'gemini_api_key'    => '',
+		'gemini_model'      => 'gemini-1.5-pro',
+		'gemini_image_model' => 'gemini-2.5-flash-image',
+		'default_tone'      => '친근하게',
+		'default_words'     => 900,
 	);
 
 	$saved = get_option( MAIW_OPTION_KEY, array() );
@@ -66,15 +68,21 @@ function maiw_sanitize_settings( $input ) {
 		? sanitize_text_field( $input['claude_model'] )
 		: $defaults['claude_model'];
 
-	$output['openai_api_key'] = isset( $input['openai_api_key'] ) ? sanitize_text_field( $input['openai_api_key'] ) : '';
-	$output['openai_model']   = isset( $input['openai_model'] ) && '' !== trim( $input['openai_model'] )
+	$output['openai_api_key']    = isset( $input['openai_api_key'] ) ? sanitize_text_field( $input['openai_api_key'] ) : '';
+	$output['openai_model']      = isset( $input['openai_model'] ) && '' !== trim( $input['openai_model'] )
 		? sanitize_text_field( $input['openai_model'] )
 		: $defaults['openai_model'];
+	$output['openai_image_model'] = isset( $input['openai_image_model'] ) && '' !== trim( $input['openai_image_model'] )
+		? sanitize_text_field( $input['openai_image_model'] )
+		: $defaults['openai_image_model'];
 
-	$output['gemini_api_key'] = isset( $input['gemini_api_key'] ) ? sanitize_text_field( $input['gemini_api_key'] ) : '';
-	$output['gemini_model']   = isset( $input['gemini_model'] ) && '' !== trim( $input['gemini_model'] )
+	$output['gemini_api_key']    = isset( $input['gemini_api_key'] ) ? sanitize_text_field( $input['gemini_api_key'] ) : '';
+	$output['gemini_model']      = isset( $input['gemini_model'] ) && '' !== trim( $input['gemini_model'] )
 		? sanitize_text_field( $input['gemini_model'] )
 		: $defaults['gemini_model'];
+	$output['gemini_image_model'] = isset( $input['gemini_image_model'] ) && '' !== trim( $input['gemini_image_model'] )
+		? sanitize_text_field( $input['gemini_image_model'] )
+		: $defaults['gemini_image_model'];
 
 	$output['default_tone']  = isset( $input['default_tone'] ) && '' !== trim( $input['default_tone'] )
 		? sanitize_text_field( $input['default_tone'] )
@@ -112,6 +120,7 @@ function maiw_render_settings_page() {
 	<div class="wrap">
 		<h1>AI 글쓰기 패널 설정</h1>
 		<p>글 편집기 사이드바에서 사용할 AI 엔진과 API 키를 설정합니다. API 키는 서버에만 저장되며 브라우저로 전송되지 않습니다.</p>
+		<p><strong>썸네일 이미지 생성은 OpenAI 또는 Gemini만 지원합니다.</strong> Claude는 이미지 생성 API를 제공하지 않아 썸네일 탭의 생성 엔진으로 선택할 수 없습니다.</p>
 		<form method="post" action="options.php">
 			<?php settings_fields( 'maiw_settings_group' ); ?>
 			<table class="form-table" role="presentation">
@@ -145,10 +154,17 @@ function maiw_render_settings_page() {
 					<td><input type="password" autocomplete="off" id="maiw_openai_api_key" name="<?php echo esc_attr( MAIW_OPTION_KEY ); ?>[openai_api_key]" value="<?php echo esc_attr( $settings['openai_api_key'] ); ?>" class="regular-text" /></td>
 				</tr>
 				<tr>
-					<th scope="row"><label for="maiw_openai_model">모델명</label></th>
+					<th scope="row"><label for="maiw_openai_model">모델명 (글쓰기)</label></th>
 					<td>
 						<input type="text" id="maiw_openai_model" name="<?php echo esc_attr( MAIW_OPTION_KEY ); ?>[openai_model]" value="<?php echo esc_attr( $settings['openai_model'] ); ?>" class="regular-text" placeholder="gpt-4o" />
 						<p class="description">예: gpt-4o.</p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="maiw_openai_image_model">모델명 (썸네일 이미지)</label></th>
+					<td>
+						<input type="text" id="maiw_openai_image_model" name="<?php echo esc_attr( MAIW_OPTION_KEY ); ?>[openai_image_model]" value="<?php echo esc_attr( $settings['openai_image_model'] ); ?>" class="regular-text" placeholder="gpt-image-1" />
+						<p class="description">예: gpt-image-1, dall-e-3.</p>
 					</td>
 				</tr>
 
@@ -158,10 +174,17 @@ function maiw_render_settings_page() {
 					<td><input type="password" autocomplete="off" id="maiw_gemini_api_key" name="<?php echo esc_attr( MAIW_OPTION_KEY ); ?>[gemini_api_key]" value="<?php echo esc_attr( $settings['gemini_api_key'] ); ?>" class="regular-text" /></td>
 				</tr>
 				<tr>
-					<th scope="row"><label for="maiw_gemini_model">모델명</label></th>
+					<th scope="row"><label for="maiw_gemini_model">모델명 (글쓰기)</label></th>
 					<td>
 						<input type="text" id="maiw_gemini_model" name="<?php echo esc_attr( MAIW_OPTION_KEY ); ?>[gemini_model]" value="<?php echo esc_attr( $settings['gemini_model'] ); ?>" class="regular-text" placeholder="gemini-1.5-pro" />
 						<p class="description">예: gemini-1.5-pro.</p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="maiw_gemini_image_model">모델명 (썸네일 이미지)</label></th>
+					<td>
+						<input type="text" id="maiw_gemini_image_model" name="<?php echo esc_attr( MAIW_OPTION_KEY ); ?>[gemini_image_model]" value="<?php echo esc_attr( $settings['gemini_image_model'] ); ?>" class="regular-text" placeholder="gemini-2.5-flash-image" />
+						<p class="description">예: gemini-2.5-flash-image.</p>
 					</td>
 				</tr>
 
