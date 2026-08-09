@@ -322,19 +322,43 @@ function maiw_call_claude( $api_key, $model, $system_prompt, $user_prompt ) {
 		return maiw_error_response( 'Claude API 요청에 실패했습니다: ' . $response->get_error_message(), 502 );
 	}
 
-	$body = json_decode( wp_remote_retrieve_body( $response ), true );
-	$code = wp_remote_retrieve_response_code( $response );
+	$raw_body = wp_remote_retrieve_body( $response );
+	$body     = json_decode( $raw_body, true );
+	$code     = wp_remote_retrieve_response_code( $response );
 
 	if ( isset( $body['error'] ) ) {
 		$message = isset( $body['error']['message'] ) ? $body['error']['message'] : '알 수 없는 오류';
 		return maiw_error_response( 'Claude API 오류: ' . $message, $code ? $code : 502 );
 	}
 
-	if ( empty( $body['content'][0]['text'] ) ) {
-		return maiw_error_response( 'Claude API 응답이 비어 있습니다.', 502 );
+	if ( null === $body ) {
+		// 서버가 JSON이 아닌 응답을 보냈다 — 호스팅사 방화벽/프록시가 외부 API 호출을 가로챘을 가능성이 높다.
+		return maiw_error_response(
+			"Claude API 응답을 해석할 수 없습니다 (HTTP {$code}, JSON 아님). 호스팅사 방화벽이 api.anthropic.com 접속을 막고 있을 수 있습니다. 응답 일부: " . mb_substr( wp_strip_all_tags( $raw_body ), 0, 200 ),
+			502
+		);
 	}
 
-	return $body['content'][0]['text'];
+	// content는 여러 블록으로 올 수 있다(예: 확장 사고 모델의 thinking 블록이 먼저 오는 경우) —
+	// text 타입 블록만 찾아서 이어붙인다. content[0]만 가정하지 않는다.
+	$text_parts = array();
+	if ( ! empty( $body['content'] ) && is_array( $body['content'] ) ) {
+		foreach ( $body['content'] as $block ) {
+			if ( isset( $block['type'] ) && 'text' === $block['type'] && isset( $block['text'] ) ) {
+				$text_parts[] = $block['text'];
+			}
+		}
+	}
+
+	if ( empty( $text_parts ) ) {
+		$stop_reason = isset( $body['stop_reason'] ) ? $body['stop_reason'] : '알 수 없음';
+		return maiw_error_response(
+			"Claude API 응답에 텍스트가 없습니다 (모델: {$model}, stop_reason: {$stop_reason}). 모델명이 올바른지 설정에서 확인하세요.",
+			502
+		);
+	}
+
+	return implode( '', $text_parts );
 }
 
 /**
@@ -367,16 +391,28 @@ function maiw_call_openai( $api_key, $model, $system_prompt, $user_prompt ) {
 		return maiw_error_response( 'OpenAI API 요청에 실패했습니다: ' . $response->get_error_message(), 502 );
 	}
 
-	$body = json_decode( wp_remote_retrieve_body( $response ), true );
-	$code = wp_remote_retrieve_response_code( $response );
+	$raw_body = wp_remote_retrieve_body( $response );
+	$body     = json_decode( $raw_body, true );
+	$code     = wp_remote_retrieve_response_code( $response );
 
 	if ( isset( $body['error'] ) ) {
 		$message = isset( $body['error']['message'] ) ? $body['error']['message'] : '알 수 없는 오류';
 		return maiw_error_response( 'OpenAI API 오류: ' . $message, $code ? $code : 502 );
 	}
 
+	if ( null === $body ) {
+		return maiw_error_response(
+			"OpenAI API 응답을 해석할 수 없습니다 (HTTP {$code}, JSON 아님). 응답 일부: " . mb_substr( wp_strip_all_tags( $raw_body ), 0, 200 ),
+			502
+		);
+	}
+
 	if ( empty( $body['choices'][0]['message']['content'] ) ) {
-		return maiw_error_response( 'OpenAI API 응답이 비어 있습니다.', 502 );
+		$finish_reason = isset( $body['choices'][0]['finish_reason'] ) ? $body['choices'][0]['finish_reason'] : '알 수 없음';
+		return maiw_error_response(
+			"OpenAI API 응답에 텍스트가 없습니다 (모델: {$model}, finish_reason: {$finish_reason}). 모델명이 올바른지 설정에서 확인하세요.",
+			502
+		);
 	}
 
 	return $body['choices'][0]['message']['content'];
@@ -418,19 +454,43 @@ function maiw_call_gemini( $api_key, $model, $system_prompt, $user_prompt ) {
 		return maiw_error_response( 'Gemini API 요청에 실패했습니다: ' . $response->get_error_message(), 502 );
 	}
 
-	$body = json_decode( wp_remote_retrieve_body( $response ), true );
-	$code = wp_remote_retrieve_response_code( $response );
+	$raw_body = wp_remote_retrieve_body( $response );
+	$body     = json_decode( $raw_body, true );
+	$code     = wp_remote_retrieve_response_code( $response );
 
 	if ( isset( $body['error'] ) ) {
 		$message = isset( $body['error']['message'] ) ? $body['error']['message'] : '알 수 없는 오류';
 		return maiw_error_response( 'Gemini API 오류: ' . $message, $code ? $code : 502 );
 	}
 
-	if ( empty( $body['candidates'][0]['content']['parts'][0]['text'] ) ) {
-		return maiw_error_response( 'Gemini API 응답이 비어 있습니다.', 502 );
+	if ( null === $body ) {
+		return maiw_error_response(
+			"Gemini API 응답을 해석할 수 없습니다 (HTTP {$code}, JSON 아님). 응답 일부: " . mb_substr( wp_strip_all_tags( $raw_body ), 0, 200 ),
+			502
+		);
 	}
 
-	return $body['candidates'][0]['content']['parts'][0]['text'];
+	// parts에는 "thought" 파트(사고 과정)가 섞여 올 수 있다 — thought가 아닌 text만 이어붙인다.
+	$text_parts = array();
+	$parts      = isset( $body['candidates'][0]['content']['parts'] ) ? $body['candidates'][0]['content']['parts'] : array();
+	foreach ( $parts as $part ) {
+		if ( ! empty( $part['thought'] ) ) {
+			continue;
+		}
+		if ( isset( $part['text'] ) ) {
+			$text_parts[] = $part['text'];
+		}
+	}
+
+	if ( empty( $text_parts ) ) {
+		$finish_reason = isset( $body['candidates'][0]['finishReason'] ) ? $body['candidates'][0]['finishReason'] : '알 수 없음';
+		return maiw_error_response(
+			"Gemini API 응답에 텍스트가 없습니다 (모델: {$model}, finishReason: {$finish_reason}). 모델명이 올바른지 설정에서 확인하세요.",
+			502
+		);
+	}
+
+	return implode( '', $text_parts );
 }
 
 /**
